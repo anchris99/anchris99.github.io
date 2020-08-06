@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>javaEE开篇</title>
+    <url>/2020/08/06/javaEE%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>javaEE</category>
+      </categories>
+      <tags>
+        <tag>javaEE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java开篇</title>
+    <url>/2020/08/06/java%E5%BC%80%E7%AF%87/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>java基础</category>
+      </categories>
+      <tags>
+        <tag>java基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建博客记录</title>
+    <url>/2020/07/26/%E5%8D%9A%E5%AE%A2%E5%88%9D%E7%BA%A7%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h3 id="安装nodejs-安装gitbash"><a href="#安装nodejs-安装gitbash" class="headerlink" title="安装nodejs,安装gitbash"></a>安装nodejs,安装gitbash</h3><figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line">node -v <span class="comment">#查看node版本</span></span><br><span class="line"><span class="built_in">npm</span> -v <span class="comment">#查看npm版本</span></span><br><span class="line"><span class="built_in">npm</span> install -g cnpm --registry=http://registry.<span class="built_in">npm</span>.taobao.org <span class="comment">#安装淘宝的cnpm 管理器</span></span><br><span class="line">cnpm -v <span class="comment">#查看cnpm版本</span></span><br><span class="line">cnpm install -g hexo-cli <span class="comment">#安装hexo框架</span></span><br><span class="line">hexo -v <span class="comment">#查看hexo版本</span></span><br><span class="line">mkdir blog <span class="comment">#创建blog目录</span></span><br><span class="line"></span><br><span class="line">cd blog <span class="comment">#进入blog目录</span></span><br><span class="line">hexo init <span class="comment"># 初始化hexo框架</span></span><br><span class="line">hexo s <span class="comment">#启动本地博客服务</span></span><br><span class="line">http:<span class="regexp">//localhost:4000/</span> <span class="comment">#本地访问地址`</span></span><br></pre></td></tr></table></figure>
+<h3 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h3><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> clean <span class="comment"># 清理</span></span><br><span class="line">hexo n <span class="string">"title"</span> <span class="comment"># 新建文档</span></span><br><span class="line">hexo g <span class="comment"># 生成</span></span><br></pre></td></tr></table></figure>
+<h3 id="部署到github仓库"><a href="#部署到github仓库" class="headerlink" title="部署到github仓库"></a>部署到github仓库</h3><ul>
+<li>在blog目录下找到_config.yml，vim打开</li>
+<li>找到 Deployment(在末尾)<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="string">deploy:</span></span><br><span class="line"><span class="string">type:</span> git</span><br><span class="line"><span class="string">repo:</span> <span class="string">https:</span><span class="comment">//github.com/...(这里就是github仓库的地址)</span></span><br><span class="line"><span class="string">branch:</span> master</span><br></pre></td></tr></table></figure></li>
+<li><code>hexo  d</code>上传到github</li>
+</ul>
+<h3 id="文档归类等操作"><a href="#文档归类等操作" class="headerlink" title="文档归类等操作"></a>文档归类等操作</h3><p><a href="[http://www.iooeo.com/2017/07/20/Hexo-%E6%96%B0%E5%BB%BA%E8%8F%9C%E5%8D%95-menu-%E5%AD%98%E6%94%BE%E5%BD%92%E6%A1%A3/](http://www.iooeo.com/2017/07/20/Hexo-新建菜单-menu-存放归档/)">参考链接</a></p>
+<h3 id="添加搜索功能（win）"><a href="#添加搜索功能（win）" class="headerlink" title="添加搜索功能（win）"></a>添加搜索功能（win）</h3><p><a href="https://blog.csdn.net/weixin_44381143/article/details/104552635" target="_blank" rel="noopener">参考</a></p>
+]]></content>
+      <categories>
+        <category>各种安装</category>
+      </categories>
+      <tags>
+        <tag>各种安装</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>进程和线程</title>
+    <url>/2020/07/26/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><ul>
+<li>概念： 进程是进程实体的运行过程，是系统进行  ==资源分配的基本单位== 。 </li>
+<li>进程与程序的区别：程序就是一堆代码和数据，是静态的，而进程是程序的运行实例，是动态的。 <a id="more"></a></li>
+<li>特征<ul>
+<li><strong>动态性</strong>：进程是程序的一次执行，它有着创建、活动、暂停、终止等过程，具有一定的生命周期，是动态地产生、变化和消亡的。动态性是进程最基本的特征。</li>
+<li><strong>并发性</strong>：指多个进程实体，同存于内存中，能在一段时间内同时运行，并发性是进程的重要特征，同时也是操作系统的重要特征。引入进程的目的就是为了使程序能与其他进程的程序并发执行，以提高资源利用率。</li>
+<li><strong>独立性</strong>：指进程实体是一个能独立运行、独立获得资源和独立接受调度的基本单位。凡未建立PCB的程序都不能作为一个独立的单位参与运行。</li>
+<li><strong>异步性</strong>：由于进程的相互制约，使进程具有执行的间断性，即进程按各自独立的、 不可预知的速度向前推进。异步性会导致执行结果的不可再现性，为此，在操作系统中必须配置相应的进程同步机制。</li>
+<li><strong>结构性</strong>：每个进程都配置一个PCB（进程控制块Process Control Block)）对其进行描述。从结构上看，进程实体是由程序段、数据段和进程控制段三部分组成的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li>概念 ：==独立调度的基本单位==</li>
+<li>特点： <ul>
+<li>程自己<strong>不拥有系统资源</strong>，只拥有一点在运行中必不可少的资源如（函数栈帧等）。</li>
+<li>可与同属一个进程的其他线程<strong>共享进程所拥有的全部资源</strong>。</li>
+<li>一个线程可以创建和撤销另一个线程，同一进程中的多个线程之间可以并发执行。由于线程之间的相互制约，致使线程在运行中呈现出间断性。</li>
+</ul>
+<hr>
+</li>
+<li>模型：<ul>
+<li>多对一模型： 多个用户级线程映射到一个内核级线程。 </li>
+<li>一对一模型：将每个用户级线程映射到一个内核级线程。</li>
+<li>多对多模型：将 n 个用户级线程映射到 m 个内核级线程上，要求 m &lt;= n。</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程VS线程"><a href="#进程VS线程" class="headerlink" title="进程VS线程"></a>进程VS线程</h2><ul>
+<li><strong>引入进程的目的</strong>，是为==了使多道程序并发执行==，以提高资源利用率和系统吞吐量；</li>
+<li><strong>引入线程</strong>，则是为了==减小程序在并发执行时所付出的时空开销==，提高操作系统的并发性能。</li>
+<li><strong>比较</strong></li>
+</ul>
+<p>1) 调度。<strong>线程是独立调度的基本单位，进程是资源拥有的基本单位</strong>。在同一进程中，线程的切换不会引起进程切换。在不同进程中进行线程切换,如从一个进程内的线程切换到另一个进程中的线程时，会引起进程切换。</p>
+<p>2) <strong>进程有独立的系统资源或地址空间</strong>，而同一进程内的线程<strong>共享</strong>进程的大部分系统资源,包括<strong>堆、代码段、数据段</strong>，每个线程只拥有一些在运行中必不可少的私有属性，比==如线程Id,栈、寄存器、程序计数器PC==(或者说IP)。</p>
+<p>3) 并发性。在引入线程的操作系统中，不仅进程之间可以并发执行，而且多个线程之间也可以并发执行，从而使操作系统具有更好的并发性，提高了系统的吞吐量。</p>
+<p>4) 系统开销。创建或撤销进程时，系统都要为之分配或回收资源，如内存空间、I/O设备等，因此操作系统所付出的<strong>开销远大于创建或撤销线程时的开销</strong>。此外，由于同一进程内的多个线程共享进程的地址空间，因此，这些线程之间的同步与通信非常容易实现，甚至无需操作系统的干预。</p>
+<p>5) 地址空间和其他资源（如打开的文件）：进程的地址空间之间互相独立，同一进程的各线程间共享进程的资源，某进程内的线程对于其他进程不可见。</p>
+<p>6) 通信方面：<strong>进程：进程间通信</strong>；而<strong>线程间可以直接读/写进程数据段</strong>（如全局变量）来进行通信–（<strong>需要进程同步和互斥手段的辅助</strong>）</p>
+<h2 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h2><ul>
+<li><strong>运行状态</strong> ：正在处理器上运行。单处理器器下，每个时刻最多一个进程在运行。</li>
+<li><strong>就绪状态</strong> ：获得了除处理机外的一切资源。</li>
+<li><strong>阻塞状态</strong> ：等待某资源的分配（不包括处理机），即使处理机空闲，也不能运行。</li>
+<li>创建状态：进程正在被创建。</li>
+<li>结束状态：进程正在从系统中消失。</li>
+<li>前三种是<strong>基本运行状态</strong></li>
+</ul>
+<h1 id="多线程共享的资源"><a href="#多线程共享的资源" class="headerlink" title="多线程共享的资源"></a>多线程共享的资源</h1><ul>
+<li>共享： 堆、全局变量、静态变量、文件</li>
+<li>独有： 栈、寄存器</li>
+<li>个性： ID</li>
+</ul>
+<h1 id="父子进程共享资源"><a href="#父子进程共享资源" class="headerlink" title="父子进程共享资源"></a>父子进程共享资源</h1><ul>
+<li><p>共享： </p>
+<ul>
+<li><strong>打开的文件</strong></li>
+<li>实际用户ID、实际组ID、有效用户ID、有效组ID</li>
+<li>添加组ID</li>
+<li><strong>进程组ID</strong></li>
+<li>会话期ID</li>
+</ul>
+</li>
+<li><p>区别：</p>
+</li>
+<li><p>fork的返回值</p>
+</li>
+<li><p>进程ID</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+</search>
