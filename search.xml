@@ -124,4 +124,142 @@
         <tag>各种安装</tag>
       </tags>
   </entry>
+  <entry>
+    <title>java基础小结</title>
+    <url>/2020/08/07/java%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="IDEA快捷操作"><a href="#IDEA快捷操作" class="headerlink" title="IDEA快捷操作"></a>IDEA快捷操作</h2><table>
+<thead>
+<tr>
+<th><strong>ctrl+Y</strong></th>
+<th align="left"><strong>删除一行</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ctrl+D</strong></td>
+<td align="left"><strong>复制一行</strong></td>
+</tr>
+<tr>
+<td><strong>ctrl+/</strong></td>
+<td align="left"><strong>快速注释</strong></td>
+</tr>
+<tr>
+<td><strong>Ctrl+shift+/</strong></td>
+<td align="left"><strong>多行注释</strong></td>
+</tr>
+<tr>
+<td>alt+insert</td>
+<td align="left">插入函数</td>
+</tr>
+<tr>
+<td><strong>alt+shift+方向键</strong></td>
+<td align="left"><strong>整行上下移动</strong></td>
+</tr>
+<tr>
+<td>alt+enter</td>
+<td align="left">导入包依赖</td>
+</tr>
+<tr>
+<td><strong>shift+f6</strong></td>
+<td align="left"><strong>重命名文件</strong></td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+
+
+<ul>
+<li><code>5.fori</code>自动生成<code>for(int i=0;i&lt;5;i++)</code>循环体</li>
+<li><code>psvm</code>-&gt;<code>public static void main()</code></li>
+<li><code>数组名.fori</code>+回车-&gt; 遍历数组</li>
+</ul>
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><h3 id="输入Scanner"><a href="#输入Scanner" class="headerlink" title="输入Scanner"></a>输入Scanner</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">String str = sc.nextLine();; <span class="comment">//整整一行，遇到空格不结束</span></span><br><span class="line">String str = sc.next(); <span class="comment">//遇到空格结束</span></span><br><span class="line"><span class="keyword">int</span> num = sc.nextInt();  <span class="comment">//整数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println(...);  <span class="comment">//输出内容搭配屏幕 并且 换行</span></span><br><span class="line">System.out.print(...);  <span class="comment">//输出内容 但 不换行</span></span><br><span class="line">System.out.printf(<span class="string">"6.3f"</span>,<span class="number">3.24555</span>d);<span class="comment">//控制输出格式： 这里是： 占6位，小数点后保留3位</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常用集合使用"><a href="#常用集合使用" class="headerlink" title="常用集合使用"></a>常用集合使用</h2><h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stack&lt;Integer&gt; s = <span class="keyword">new</span> Stack&lt;&gt;();  <span class="comment">//  &lt;&gt;里面只能写封装类型</span></span><br><span class="line">s.push();   <span class="comment">//将元素压入栈</span></span><br><span class="line">s.pop();   <span class="comment">//获取并弹出栈顶值</span></span><br><span class="line">s.peek();  <span class="comment">//获取栈顶值 但不弹出</span></span><br><span class="line">s.empty();  <span class="comment">//是否为空</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Queue&lt;Integer&gt; q = <span class="keyword">new</span> LinkedList&lt;&gt;();  <span class="comment">//new的是一个 linkedList</span></span><br><span class="line">q.add();   <span class="comment">//添加元素</span></span><br><span class="line">q.remove(); <span class="comment">//删除队首元素</span></span><br><span class="line">q.peek();  <span class="comment">//获取但不删除队首元素</span></span><br><span class="line">q.poll();   <span class="comment">//获取且删除队首元素</span></span><br><span class="line">q.isEmpty(); <span class="comment">//判断是否为空</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">list.add();</span><br><span class="line">list.remove(<span class="keyword">int</span> index);</span><br><span class="line">list.remove(object o); <span class="comment">//移除此列表中首次出现的指定元素</span></span><br><span class="line">list.size();  <span class="comment">//集合的大小</span></span><br><span class="line">list.toArray();<span class="comment">//转变为数组</span></span><br><span class="line">list.isEmpty(); <span class="comment">//是否为空</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Collections中的方法"><a href="#Collections中的方法" class="headerlink" title="Collections中的方法"></a>Collections中的方法</h3><ol>
+<li>排序</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Collections.addAll(list,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">       Collections.sort(list, <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;  <span class="comment">//创建匿名内部类</span></span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">return</span> o2-o1;   <span class="comment">//第二个减去第一个，降序</span></span><br><span class="line">                               <span class="comment">//第一个减去第二个，升序</span></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>最值</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer max = Collections.max(list);</span><br><span class="line">Integer min = Collections.min(list);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>反转</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span>  Collections.reverse(list);   <span class="comment">//将集合反转</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>随机打乱</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span>  Collections.shuffle(list);   <span class="comment">//将集合反转</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Arrays中的方法"><a href="#Arrays中的方法" class="headerlink" title="Arrays中的方法"></a>Arrays中的方法</h3><p><code>Arrays</code>针对的操作对象是数组。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">E [] arr = <span class="keyword">new</span> E[<span class="number">100</span>];</span><br><span class="line">Arrays.sort(<span class="keyword">int</span> []arr);   <span class="comment">//数组正序排列</span></span><br><span class="line">Arrays.fill(E []arr, E val); <span class="comment">//用 val填充 arr数组 </span></span><br><span class="line">Arrays.equals(E a,E b) ;  <span class="comment">//判断 a b 是否相等</span></span><br><span class="line">Arrays.toString(arr) ;  <span class="comment">// 把数组转换为 String类型</span></span><br><span class="line">Arrays.binarySearch(E []arr, <span class="keyword">int</span> val) <span class="comment">//二分法查找val在arr中对应的下标</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="常用类"><a href="#常用类" class="headerlink" title="常用类"></a>常用类</h2><h3 id="Random产生随机数"><a href="#Random产生随机数" class="headerlink" title="Random产生随机数"></a>Random产生随机数</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> Random r = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">int</span> num = r.nextInt();</span><br><span class="line">        System.out.println(num);</span><br><span class="line"> <span class="comment">/*匿名：*/</span>  System.out.println(<span class="keyword">new</span> Random().nextDouble());</span><br><span class="line"></span><br><span class="line"><span class="comment">/*指定范围*/</span> r.nextInt(<span class="number">10</span>); <span class="comment">//0-10之间的随机数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h3><ul>
+<li>String内容<strong>不可改变</strong>，属于<strong>常量</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s=<span class="string">"123455,6"</span>;</span><br><span class="line"></span><br><span class="line">s.substring(<span class="number">1</span>,<span class="number">4</span>); <span class="comment">//结果是 "234"  是左闭右开（即左边下标对应元素可取到，右边取不到)</span></span><br><span class="line">String [] res = s.split(<span class="string">","</span>);  <span class="comment">//以 响应的符号为标志 分割字符串</span></span><br><span class="line"></span><br><span class="line">s1+s2; <span class="comment">//字符串可以直接进行+操作</span></span><br><span class="line"><span class="keyword">boolean</span> s1.equals(s2);  <span class="comment">// 默认的 equals方法是比较内容是否相同,而"==“ 是地址是否相同</span></span><br><span class="line"></span><br><span class="line">s.charAt(<span class="keyword">int</span> index);  <span class="comment">//s在index处的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转变为Integer类型</span></span><br><span class="line">Integer.parseInt(<span class="string">"2323"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic2.zhimg.com/80/v2-d9dc4362f0334802413e3a3ff2f53c2e_1440w.jpg?source=1940ef5c" alt="equals和==的区别"></p>
+<h4 id="其他类型到String的转换"><a href="#其他类型到String的转换" class="headerlink" title="其他类型到String的转换"></a>其他类型到String的转换</h4><ul>
+<li>例如： int i-123; 转换为String类型，有以下方式<ul>
+<li><code>String s = i+&quot;&quot;</code></li>
+<li><code>String s = String.valueof(i);</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="其他类型到String"><a href="#其他类型到String" class="headerlink" title="其他类型到String"></a>其他类型到String</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s=<span class="string">"123"</span>;</span><br><span class="line">Integer.parseInt(s);   <span class="comment">//转换为Integer</span></span><br><span class="line">Float.parseFloat(s);  <span class="comment">//转化为Float</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h4><ul>
+<li>String需要频繁操作时，效率十分低下， 这时候应该采用 <code>StringBuilder</code>。</li>
+</ul>
+<p>​    <code>StringBuilder</code>是 一个可变的字符序列。此类提供一个与 <code>StringBuffer</code> 兼容的 API，但不保证同步</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//StringBuilder功能十分强大</span></span><br><span class="line">StringBuilder stb = <span class="keyword">new</span> StringBuilder(<span class="string">"aaaa"</span>);  <span class="comment">//构造</span></span><br><span class="line">stb.append(o);<span class="comment">//括号内可添加 int  char  boolean  String byte short等各种类型数据</span></span><br><span class="line">stb.deleteCharAt(<span class="keyword">int</span> inex);   <span class="comment">//删除索引处的字符</span></span><br><span class="line">stb.toString();  <span class="comment">//最后转换成String类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Integer类"><a href="#Integer类" class="headerlink" title="Integer类"></a>Integer类</h3><ul>
+<li>自动装箱拆箱,可直接与 基本数据类型 int进行 大小比较 ，加减操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer ii=<span class="number">12</span>;</span><br><span class="line">    System.out.println(ii+<span class="number">11</span>);</span><br><span class="line">    <span class="keyword">int</span> res = ii-<span class="number">13</span>;</span><br><span class="line">    System.out.println(res);</span><br></pre></td></tr></table></figure>
+
+<h3 id="时间戳和Date类"><a href="#时间戳和Date类" class="headerlink" title="时间戳和Date类"></a>时间戳和Date类</h3><ol>
+<li>时间戳</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.currentTimeMillis()  <span class="comment">//返回long类型数据 ，是从1970.01.01到运行时的 ms数值</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Date使用</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取指定类型日期 </span></span><br><span class="line"><span class="keyword">long</span> val = System.currentTimeMillis()-<span class="number">100000000</span>;</span><br><span class="line"> Date date = <span class="keyword">new</span> Date(val);  <span class="comment">//构造date， val是ms值</span></span><br><span class="line"> System.out.println(date);   <span class="comment">//输出date  Thu Aug 06 13:14:50 CST 2020</span></span><br><span class="line"> SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd "</span>); <span class="comment">//指定解析格式</span></span><br><span class="line"> String s=sdf.format(date);    <span class="comment">//解析成为字符串</span></span><br><span class="line"> System.out.println(s);</span><br><span class="line"></span><br><span class="line"><span class="comment">//format相反的操作是parse</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//根据字符串获取指定的Date和ms值</span></span><br><span class="line"> SimpleDateFormat sdf=<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</span><br><span class="line"> Date BirthDate = sdf.parse(BirthDaytxt);    <span class="comment">//将输入的String类型的数据解析成 Date类型</span></span><br><span class="line"> <span class="keyword">long</span> birthDateTime = BirthDate.getTime();   <span class="comment">//对应的ms值</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="继承方式与访问权限"><a href="#继承方式与访问权限" class="headerlink" title="继承方式与访问权限"></a>继承方式与访问权限</h2><ol>
+<li>java中都是<strong>单继承</strong>的，即：每个子类只有<strong>一个直接父类</strong>， 但是可以<strong>多重继承</strong>，即垂直继承。单继承可以避免出现菱形继承的问题， 避免数据出现混乱。</li>
+<li>权限：<code>public&gt;protected&gt;default&gt;private</code></li>
+</ol>
+<p><img src="https://uploadfiles.nowcoder.com/files/20170518/6589111_1495116648005_163162-20160121105831078-570590712.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>java基础</category>
+      </categories>
+      <tags>
+        <tag>Java入门</tag>
+      </tags>
+  </entry>
 </search>
