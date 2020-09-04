@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=黑体:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic|宋体:300,300italic,400,400italic,700,700italic|Inconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大内核和微内核大内核系统： 将操作系统的主要功能模块都作为一个紧密联系的整体运行在核心态。由于各管理模块之间共享信息，能有效利用相互之间的有效特性，所以具有无可比拟的性能优势。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程管理">
+<meta property="og:url" content="http://yoursite.com/2020/09/04/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大内核和微内核大内核系统： 将操作系统的主要功能模块都作为一个紧密联系的整体运行在核心态。由于各管理模块之间共享信息，能有效利用相互之间的有效特性，所以具有无可比拟的性能优势。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/09/04/wF9BZ9.png">
+<meta property="article:published_time" content="2020-09-04T01:02:09.000Z">
+<meta property="article:modified_time" content="2020-09-04T01:53:15.371Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/09/04/wF9BZ9.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/04/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>进程管理 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          进程管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-04 09:02:09 / 修改时间：09:53:15" itemprop="dateCreated datePublished" datetime="2020-09-04T09:02:09+08:00">2020-09-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="大内核和微内核"><a href="#大内核和微内核" class="headerlink" title="大内核和微内核"></a>大内核和微内核</h1><p><strong>大内核</strong>系统： 将操作系统的主要功能模块都作为一个紧密联系的整体运行在核心态。由于各管理模块之间共享信息，能有效利用相互之间的有效特性，所以具有无可比拟的<strong>性能优势</strong>。</p>
+<a id="more"></a>
+
+<p>微内核：它将内核中<strong>最基本的功能</strong>（如进程管理等）保留在内核，将不需要在核心态执行的功能移到<strong>用户态</strong>执行，从而降低了内核的设计复杂性。</p>
+<p>微内核缺点： 需要频繁地在核心态和用户态之间<strong>进行切换</strong>，执行开销偏大，性能降低。</p>
+<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><ul>
+<li>概念： <strong>进程是程序实体的一次运行过程，是系统进行  资源分配的基本单位</strong> 。</li>
+<li><strong>进程与程序的区别</strong>：程序就是一堆代码和数据，是静态的，而进程是程序的运行实例，是动态的。</li>
+<li>特征<ul>
+<li><strong>动态性</strong>：进程是程序的一次执行，它有着创建、活动、暂停、终止等过程，具有一定的生命周期，是动态地产生、变化和消亡的。动态性是进程最基本的特征。</li>
+<li><strong>并发性</strong>：指多个进程实体，同存于内存中，能在一段时间内同时运行，并发性是进程的重要特征，同时也是操作系统的重要特征。引入进程的目的就是为了使程序能与其他进程的程序并发执行，以提高资源利用率。</li>
+<li><strong>独立性</strong>：指进程实体是一个能独立运行、独立获得资源和独立接受调度的基本单位。凡未建立PCB的程序都不能作为一个独立的单位参与运行。</li>
+<li><strong>异步性</strong>：由于进程的相互制约，使进程具有执行的间断性，即进程按各自独立的、 不可预知的速度向前推进。异步性会导致执行结果的不可再现性，为此，在操作系统中必须配置相应的进程同步机制。</li>
+<li><strong>结构性</strong>：每个进程都配置一个PCB（进程控制块Process Control Block)）对其进行描述。从结构上看，进程实体是由程序段、数据段和进程控制段三部分组成的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li>概念 ：一个进程可分为多个线程，线程是<strong>独立调度</strong>的基本单位</li>
+<li>特点： <ul>
+<li>程自己<strong>不拥有系统资源</strong>，只拥有一点在运行中必不可少的资源如（<strong>函数栈帧</strong>等）。</li>
+<li>可与同属一个进程的其他线程<strong>共享进程所拥有的全部资源</strong>。</li>
+<li>一个线程可以创建和撤销另一个线程，同一进程中的多个线程之间可以并发执行。由于线程之间的相互制约，致使线程在运行中呈现出<strong>间断性</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程和线程的比较"><a href="#进程和线程的比较" class="headerlink" title="进程和线程的比较"></a>进程和线程的比较</h2><ol>
+<li><p>拥有资源</p>
+<p>进程是资源分配的基本单位，但是线程不拥有资源，线程可以访问隶属进程的资源。</p>
+</li>
+<li><p>调度</p>
+<p>线程是独立调度的基本单位，在同一进程中，线程的切换不会引起进程切换，从一个进程中的线程切换到另一个进程</p>
+<p>中的线程时，会引起进程切换。</p>
+</li>
+<li><p>系统开销</p>
+<p>由于创建或撤销进程时，系统都要为之分配或回收资源 ,开销比较大。类似地，在进行进程切换时，涉及当前执行进程 CPU 环境的保存及新调度进程 CPU 环境的设置，而</p>
+<p>线程切换时只需保存和设置少量寄存器内容，开销很小。</p>
+</li>
+<li><p>通信方面</p>
+<p>线程间可以通过直接读写同一进程中的数据进行通信，但是进程通信需要借助 IPC。</p>
+</li>
+</ol>
+<h2 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h2><ul>
+<li><strong>运行状态</strong> ：正在处理器上运行。单处理器器下，每个时刻最多一个进程在运行。</li>
+<li><strong>就绪状态</strong> ：获得了<strong>除处理机外</strong>的一切资源。</li>
+<li><strong>阻塞状态</strong> ：<strong>等待某资源的分配</strong>（不包括处理机），<strong>即使处理机空闲</strong>，也不能运行。</li>
+<li>创建状态：进程正在被创建。</li>
+<li>结束状态：进程正在从系统中消失。</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/09/04/wF9BZ9.png" alt="wF9BZ9.png"></p>
+<h1 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h1><h2 id="1-进程调度的概念"><a href="#1-进程调度的概念" class="headerlink" title="1.进程调度的概念"></a>1.进程调度的概念</h2><ul>
+<li>操作系统中，用户进程数一般都多于处理机数、这将导致它<strong>们互相争夺处理机</strong>。另外，系统进程也同样需要使用处理机。这就要求进程调度程序按一定的策略，动态地把处理机分配给处于就绪队列中的某一个进程，以使之执行。<h2 id="2-具体类型"><a href="#2-具体类型" class="headerlink" title="2.具体类型"></a>2.具体类型</h2><h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3></li>
+<li>CFS （completely fair scheduler<strong>完全公平调度器</strong>）并不采用严格规则来为一个优先级分配某个长度的时间片，而是为每个任务分配<strong>一定比例的CPU处理时间</strong>。</li>
+<li>每个任务分配的具体比例是<strong>根据nice值来计算的</strong>。nice值的范围从 <strong>-20 到+19</strong>，<strong>数值较低的nice值表示较高的相对优先级</strong>。具有较低nice值的任务，与具有较高nice值的任务相比，会得到更高比例的处理器处理时间。<strong>默认nice值为 0</strong>。</li>
+</ul>
+<h3 id="FCFS-先来先服务"><a href="#FCFS-先来先服务" class="headerlink" title="FCFS 先来先服务"></a>FCFS 先来先服务</h3><ul>
+<li>每次调度是从就绪队列中选择一个<strong>最先进入该队列的进程</strong>，为之分配处理机。</li>
+</ul>
+<h3 id="短进程优先"><a href="#短进程优先" class="headerlink" title="短进程优先"></a>短进程优先</h3><ul>
+<li>从就绪队列中选出一个<strong>估计运行时间最短</strong>的进程，将处理机分配给它</li>
+</ul>
+<h3 id="时间片轮转"><a href="#时间片轮转" class="headerlink" title="时间片轮转"></a>时间片轮转</h3><ul>
+<li>系统将所有的就绪进程按<strong>先来先服务的原则排成一个队列</strong>、每次调度时，把CPU分<strong>配给队首进程</strong>，并令其执行一个时间片。</li>
+<li>当执行的时间片用完时，停止该进程的执行，并将它<strong>送往就绪队列的末尾</strong>；</li>
+<li>然后，再把处理机分配给就绪队列<strong>中新的队首进程</strong>，同时也让它执行一个时间片。</li>
+</ul>
+<p><strong>优点：系统能在给定的时间内响应所有用户的请求。</strong></p>
+<h3 id="优先级调度"><a href="#优先级调度" class="headerlink" title="优先级调度"></a>优先级调度</h3><p>把处理机分配给就绪队列中<strong>优先权最高</strong>的进程。具体分为两种：</p>
+<p> <strong>1. 抢占式优先权算法</strong></p>
+<ul>
+<li>一旦把处理机分配给就绪队列中优先权最高的进程后，该进程<strong>便一直执行下去，直至完成</strong>- 这种调度算法主要用于<strong>批处理系统</strong>中；也可用于<strong>某些对实时性要求不严的实时系统</strong>中。</li>
+</ul>
+<p><strong>2.  非抢占式优先权调度算法</strong></p>
+<ul>
+<li>系统同样是把处理机分配给优先权最高的进程，使之执行。<strong>但在其执行期间，只要又出现了另一个其优先权更高的进程</strong>，进程调度程序就立即停止当前进程的执行，<strong>重新将处理机分配</strong>给新到的优先权最高的进程。</li>
+<li>常用于比较严格的实时系统中，以及对性能要求较高的批处理和分时系统中。</li>
+</ul>
+<h3 id="多级反馈队列调度"><a href="#多级反馈队列调度" class="headerlink" title="多级反馈队列调度"></a>多级反馈队列调度</h3><p>多级反馈队列调度算法则不必事先知道各种进程所需的执行时间，而且还可以满足各种类型进程的需要，因而它是目前被公认的一种<strong>较好的进程调度算法</strong>。调度算法的实施过程如下所述：</p>
+<p>1）<strong>应设置多个就绪队列，并为各个队列赋予不同的优先级</strong>。第一个队列的优先级最高，第二个队列次之，其余各队列的优先权逐个降低。该算法赋予各个队列中进程执行<strong>时间片的大小也各不相同</strong>，在优先权愈高的队列中，为每个进程所规定的执行时间片就愈小。</p>
+<p>2）当一个新进程进入内存后，<strong>首先将它放入第一队列的末尾</strong>，按<strong>FCFS原则</strong>排队等待调度。当轮到该进程执行时，如它能在该时间片内<strong>完成</strong>，便可准<strong>备撤离系统</strong>；如果它在一个时间片结束时<strong>尚未完成</strong>，调度程序便将该<strong>进程转入第二队列的末尾</strong>，再同样地按FCFS原则等待调度执行；如果它在第二队列中运行一个时间片后仍未完成，再依次将它放入第三队列，……，如此下去。</p>
+<p>3）<strong>仅当第1～(i-1)队列均空时，才会调度第i队列中的进程运行</strong>。如果处理机正在第i队列中为某进程服务时，又有新进程进入优先权较高的队列(第1～(i-1)中的任何一个队列)，则此时新进程将<strong>抢占正在运行进程的处理机</strong>，<strong>即第i队列中某个正在运行的进程的时间片用完后，由调度程序选择优先权较高的队列中的那一个进程，把处理机分配给它</strong>。</p>
+<h1 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h1><h2 id="信号量机制"><a href="#信号量机制" class="headerlink" title="信号量机制"></a>信号量机制</h2><p><strong>PV操作</strong></p>
+<p>信号量机制是一种功能较强的机制，可用来解决<strong>互斥与同步</strong>的问题，它只能被两个标准的原语wait(S)和signal(S)来访问，也可以记为“P操作”和“V操作”。</p>
+<ul>
+<li>P操作，S–; 表示申请</li>
+<li>V操作，S++; 表示释放</li>
+</ul>
+<p><strong>P操作的主要动作</strong>：</p>
+<ol>
+<li>S减1； </li>
+<li>若S减1后仍大于或等于0，则<strong>进程继续执行</strong>；</li>
+<li>若S减1后小于0，则该进程被<strong>阻塞后放入</strong>等待该信号量的等待队列中，然后转进程调度。</li>
+</ol>
+<p><strong>V操作的主要动作</strong>：</p>
+<ol>
+<li>S加1； </li>
+<li>若相加后结果大于0<strong>，则进程继续执行</strong>；</li>
+<li>若相加后结果小于或等于0，则从该信号的等待队列中<strong>释放一个等待进程</strong>，然后再返回原进程继续执行或转进程调度。 </li>
+</ol>
+<h3 id="整型信号量"><a href="#整型信号量" class="headerlink" title="整型信号量"></a>整型信号量</h3><p>定义： 用一个<strong>整型变量</strong>S表示整型信号量</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wait(S)&#123;</span><br><span class="line">    <span class="keyword">while</span> (S&lt;=0);</span><br><span class="line">    <span class="attribute">S</span>=S-1;</span><br><span class="line">&#125;</span><br><span class="line">signal(S)&#123;</span><br><span class="line">    <span class="attribute">S</span>=S+1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>缺点：wait操作中，只要<strong>信号量S&lt;=0即：某些进程得不到处理机，就会不断地测试</strong>。因此，该机<strong>制并未遵循“让权等待” 的准则，而是使进程处于“忙等”的状态</strong>。</p>
+<h3 id="记录型信号量"><a href="#记录型信号量" class="headerlink" title="记录型信号量"></a>记录型信号量</h3><ul>
+<li>用一个<strong>链表</strong>表示记录型信号量,L指向等待该信号量的下一个进程。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">process</span> *<span class="title">L</span>;</span></span><br><span class="line">&#125; semaphore;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wait</span> (<span class="params">semaphore S</span>)</span> &#123; <span class="comment">//相当于申请资源</span></span><br><span class="line">    S.<span class="keyword">value</span>--;</span><br><span class="line">    <span class="keyword">if</span>(S.<span class="keyword">value</span>&lt;<span class="number">0</span>) &#123;</span><br><span class="line">        block(S.L);  <span class="comment">//插入阻塞队列</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">signal</span> (<span class="params">semaphore S</span>)</span> &#123;  <span class="comment">//相当于释放资源</span></span><br><span class="line">    S.<span class="keyword">value</span>++;   </span><br><span class="line">    <span class="keyword">if</span>(S.<span class="keyword">value</span>&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">        wakeup(S.L);  <span class="comment">//进程从阻塞队列释放</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>wait操作，S.value–，当S.value&lt;0时，表示该类资源已分配完毕，因此<strong>进程应调用block原语，进行自我阻塞，放弃处理机</strong>，并插入到该类资源的等待队列S.L中，可见该机制<strong>遵循了“让权等待”的准则</strong>。</li>
+<li>signal操作：value++，表示资源释放一个，因此wake up<strong>唤醒队列中的第一个进程</strong>。</li>
+</ul>
+<h3 id="信号量实现同步"><a href="#信号量实现同步" class="headerlink" title="信号量实现同步"></a>信号量实现同步</h3><ul>
+<li>同步：<strong>一种合作关系，为完成某种任务而建立的多个进程或者线程之间的协调调用，次序等待</strong>，传递消息告知资源占用情况。</li>
+<li>必须保证<strong>一前一后地执行两个操作</strong>。<ul>
+<li>实现方法：</li>
+<li><strong>先执行语句的后面</strong>+<code>V操作</code>，</li>
+<li><strong>后执行的语句前面</strong>+<code>P操作</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">semaphore S = <span class="number">0</span>;  <span class="comment">//初始值为0</span></span><br><span class="line">P<span class="number">1</span> <span class="comment">( )</span> &#123;</span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">    x;  <span class="comment">//语句x</span></span><br><span class="line">    V<span class="comment">(S)</span>;  <span class="comment">//告诉进程P2,语句乂已经完成</span></span><br><span class="line">&#125;</span><br><span class="line">P<span class="number">2</span><span class="comment">()</span>）&#123;</span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">    P<span class="comment">(S)</span> ;  <span class="comment">//检查语句x是否运行完成</span></span><br><span class="line">    y;  <span class="comment">// 检查无误，运行y语句</span></span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上实现的功能就是，保证x在y之前执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="信号量实现互斥"><a href="#信号量实现互斥" class="headerlink" title="信号量实现互斥"></a>信号量实现互斥</h3><ul>
+<li>互斥：<strong>一种制约关系，当一个进程或者多个进程进入临界区后会进行加锁操作，此时其他进程（线程）无法进入临界区，只有当该进程（线程）使用后进行解锁其他人才可以使用</strong>，这种技术往往是通过阻塞完成。</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex = <span class="number">1</span>;  <span class="comment">//初化信号量</span></span><br><span class="line">P1 ( ) &#123;</span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">    <span class="constructor">P(<span class="params">mutex</span>)</span>;  <span class="comment">// 准备开始访问临界资源，加锁</span></span><br><span class="line">    <span class="comment">// 进程P1的临界区</span></span><br><span class="line">    <span class="constructor">V(<span class="params">mutex</span>)</span>;  <span class="comment">// 访问结束，解锁</span></span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="constructor">P2()</span> &#123;</span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">    <span class="constructor">P(<span class="params">mutex</span>)</span>; <span class="comment">//准备开始访问临界资源，加锁</span></span><br><span class="line">    <span class="comment">// 进程P2的临界区；</span></span><br><span class="line">    <span class="constructor">V(<span class="params">mutex</span>)</span>;  <span class="comment">// 访问结束，解锁</span></span><br><span class="line">    <span class="comment">// …</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h2><p><strong>管程定义</strong></p>
+<ul>
+<li>引入原因：信号量机制编写程序困难、容易出错。</li>
+<li>管程是一种<strong>高级的同步机制</strong>。</li>
+</ul>
+<p><strong>管程组成</strong></p>
+<p>1) 局部于管程的共享<strong>结构数据</strong>。</p>
+<p>2) 对该数据结构<strong>进行操作的一组过程</strong>。</p>
+<p>3) 对局部于管程的共享数据<strong>设置初始值的语句</strong>。</p>
+<p>4) 管程的名字</p>
+<p><strong>管程基本特性</strong></p>
+<p>1) 局部于<strong>管程的数据只能被局部于管程内的过程所访问</strong>。</p>
+<p>2) 一个进程只有通过<strong>调用管程内的过程才能进入管程访问共享数据</strong>。（和Ｃ＋＋类有点类似哦！）</p>
+<p>3) 每次仅允许<strong>一个进程</strong>在管程内执行某个内部过程。</p>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><ul>
+<li>自旋锁是一种<strong>基础的同步原语</strong>，用<strong>于保障对共享数据的互斥访问</strong>。与互斥锁的相比，在获取锁失败的时候<strong>不会使得线程阻塞而是一直自旋尝试获取锁</strong>。当线程等待自旋锁的时候，CPU不能做其他事情，而是一直处于<strong>轮询忙等的状态</strong>。</li>
+<li>由于一直要占用CPU，所有<strong>单核CPU不适合该</strong>机制，适合<strong>多核</strong>的情况。</li>
+</ul>
+<h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h1><p><strong>进程的通信方式</strong></p>
+<h2 id="匿名管道-pipe"><a href="#匿名管道-pipe" class="headerlink" title="匿名管道(pipe)"></a>匿名管道(pipe)</h2><ul>
+<li>管道是<strong>半双工</strong>的，数据只能向一个方向流动；</li>
+<li>需要双方通信时，需要建立起两个管道。</li>
+<li>只能用于<strong>父子进程或者兄弟进程</strong>之间(具有亲缘关系的进程);<h2 id="有名管道-FIFO"><a href="#有名管道-FIFO" class="headerlink" title="有名管道(FIFO)"></a>有名管道(FIFO)</h2></li>
+<li>匿名管道，由于没有名字，只能用于亲缘关系的进程间通信。为了克服这个缺点，提出了有名管道(FIFO)。</li>
+<li>有名管道不同于匿名管道之处在于<strong>它提供了一个路径名与之关联</strong>，即使与有名管道的创建进程不存在亲缘关系的进程，只<strong>要可以访问该路径</strong>，<strong>就能够彼此通过有名管道相互通信</strong>.<h2 id="信号-sinal"><a href="#信号-sinal" class="headerlink" title="信号(sinal)"></a>信号(sinal)</h2></li>
+<li>用于通知接收进程某个事件已经发生。</li>
+<li>信号是Linux系统中用于<strong>进程间互相通信</strong>或者操作的一种机制，信号可以在<strong>任何时候发给某一进程</strong>，而无需知道该进程的状态。</li>
+</ul>
+<h2 id="共享内存-share-memory"><a href="#共享内存-share-memory" class="headerlink" title="共享内存(share memory)"></a>共享内存(share memory)</h2><ul>
+<li>是<strong>最快</strong>的可用IPC形式。是针对其他通信机制运行效率较低而设计的。</li>
+<li><strong>内核专门留出了一块内存区</strong>，可以由<strong>需要访问的进程将其映射到自己的私有地址空间</strong>。进程就可以直接读写这一块内存而<strong>不需要进行数据的拷贝</strong>，从而大大提高效率。</li>
+<li>由于多个进程共享一段内存，因此需要依靠某种同步机制（如<strong>信号量</strong>）来达到<strong>进程间的同步及互斥</strong>。</li>
+</ul>
+<h2 id="信号量-semaphore"><a href="#信号量-semaphore" class="headerlink" title="信号量(semaphore)"></a>信号量(semaphore)</h2><ul>
+<li><p><strong>信号量是一个计数器</strong>，用于多进程对共享数据的访问，信号量的<strong>意图在于进程间互斥与同步，而不是用于存储进程间通信数据，若要在进程间传递数据需要结合共享内存</strong>。</p>
+</li>
+<li><p>为了获得共享资源，进程需要执行下列操作：</p>
+<p>（1）<strong>创建一个信号量</strong>：这要求调用者指定初始值，对于二值信号量来说，它通常是1，也可是0。</p>
+<p>（2）<strong>等待一个信号量</strong>：该操作会测试这个信号量的值，如<strong>果小于0，就阻塞</strong>。也称为P操作。</p>
+<p>（3）挂出一个信号量：该操作将信号量的<strong>值加1，也称为V操作</strong>。</p>
+</li>
+</ul>
+<h2 id="套接字-socket"><a href="#套接字-socket" class="headerlink" title="套接字(socket)"></a>套接字(socket)</h2><ul>
+<li>套接字是支持TCP/IP的网络通信的基本操作单元，可以看做是<strong>不同主机之间的进程进行双向通信的端点</strong>，简单的说就是通信的两方的一种约定，用套接字中的相关函数来完成通信过程。<h2 id="消息队列-message"><a href="#消息队列-message" class="headerlink" title="消息队列(message)"></a>消息队列(message)</h2></li>
+<li>消息队列是存放在<strong>内核中的消息链表</strong>，每个消息队列由消息队列标识符表示。</li>
+<li>消息队列在某个进程往一个队列写入消息之前，并<strong>不需要另外某个进程在该队列上等待</strong>消息的到达。</li>
+</ul>
+<h1 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h1><h2 id="什么是僵尸进程"><a href="#什么是僵尸进程" class="headerlink" title="什么是僵尸进程"></a>什么是僵尸进程</h2><ul>
+<li>僵尸进程是当<strong>子进程比父进程先结束</strong>，而<strong>父进程又没有回收子进程</strong>，释放子进程占用的资源，此时<strong>子进程</strong>将成为一个僵尸进程。</li>
+<li>僵尸进程已经不再运行，但是仍然占用系统资源，积累过多会造成内存泄漏。<h2 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h2>1) 父进程通过<strong>wait和waitpid等函数等待子进程结束</strong>，这会导致父进程<strong>挂起</strong>。<br>2) 如果父进程很忙，那么可以在子进程结束时发送<strong>SIGCHLD</strong>信号，父进程会<strong>收到该信号</strong>，<strong>调用wait回收</strong>。<br>3)kill发送SIGTERM或者SIGKILL信号，使产生的僵死进程就变成了孤儿进程，这些孤儿进程会被init进程接管</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/03/java-IO/" rel="prev" title="java IO">
+      <i class="fa fa-chevron-left"></i> java IO
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大内核和微内核"><span class="nav-number">1.</span> <span class="nav-text">大内核和微内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程和线程"><span class="nav-number">2.</span> <span class="nav-text">进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">2.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程和线程的比较"><span class="nav-number">2.3.</span> <span class="nav-text">进程和线程的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程的状态"><span class="nav-number">2.4.</span> <span class="nav-text">进程的状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程调度"><span class="nav-number">3.</span> <span class="nav-text">进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-进程调度的概念"><span class="nav-number">3.1.</span> <span class="nav-text">1.进程调度的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-具体类型"><span class="nav-number">3.2.</span> <span class="nav-text">2.具体类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CFS"><span class="nav-number">3.2.1.</span> <span class="nav-text">CFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FCFS-先来先服务"><span class="nav-number">3.2.2.</span> <span class="nav-text">FCFS 先来先服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#短进程优先"><span class="nav-number">3.2.3.</span> <span class="nav-text">短进程优先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间片轮转"><span class="nav-number">3.2.4.</span> <span class="nav-text">时间片轮转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级调度"><span class="nav-number">3.2.5.</span> <span class="nav-text">优先级调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多级反馈队列调度"><span class="nav-number">3.2.6.</span> <span class="nav-text">多级反馈队列调度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程同步"><span class="nav-number">4.</span> <span class="nav-text">进程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量机制"><span class="nav-number">4.1.</span> <span class="nav-text">信号量机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整型信号量"><span class="nav-number">4.1.1.</span> <span class="nav-text">整型信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记录型信号量"><span class="nav-number">4.1.2.</span> <span class="nav-text">记录型信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量实现同步"><span class="nav-number">4.1.3.</span> <span class="nav-text">信号量实现同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量实现互斥"><span class="nav-number">4.1.4.</span> <span class="nav-text">信号量实现互斥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管程"><span class="nav-number">4.2.</span> <span class="nav-text">管程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁"><span class="nav-number">4.3.</span> <span class="nav-text">自旋锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程通信"><span class="nav-number">5.</span> <span class="nav-text">进程通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#匿名管道-pipe"><span class="nav-number">5.1.</span> <span class="nav-text">匿名管道(pipe)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有名管道-FIFO"><span class="nav-number">5.2.</span> <span class="nav-text">有名管道(FIFO)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号-sinal"><span class="nav-number">5.3.</span> <span class="nav-text">信号(sinal)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共享内存-share-memory"><span class="nav-number">5.4.</span> <span class="nav-text">共享内存(share memory)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量-semaphore"><span class="nav-number">5.5.</span> <span class="nav-text">信号量(semaphore)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#套接字-socket"><span class="nav-number">5.6.</span> <span class="nav-text">套接字(socket)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息队列-message"><span class="nav-number">5.7.</span> <span class="nav-text">消息队列(message)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#僵尸进程"><span class="nav-number">6.</span> <span class="nav-text">僵尸进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是僵尸进程"><span class="nav-number">6.1.</span> <span class="nav-text">什么是僵尸进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何避免"><span class="nav-number">6.2.</span> <span class="nav-text">如何避免</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description">戒骄戒躁，努力向前</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
