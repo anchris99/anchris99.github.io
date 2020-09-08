@@ -1361,4 +1361,117 @@
         <tag>操作系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>死锁</title>
+    <url>/2020/09/07/%E6%AD%BB%E9%94%81/</url>
+    <content><![CDATA[<h1 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h1><p><strong>多个进程的并发执行</strong>，改善了系统资源的<strong>利用率并提高了系统的处理能力</strong>，为了保证并发的安全运行，也带来了新的问题——死锁。</p>
+<p>所谓死锁是指<strong>多个进程因竞争资源</strong>而造成的一种<strong>互相等待</strong>资源的情况，若无外力作用，这些进程都将无法向前推进。</p>
+<a id="more"></a>
+
+<h1 id="死锁产生的必要条件"><a href="#死锁产生的必要条件" class="headerlink" title="死锁产生的必要条件"></a>死锁产生的必要条件</h1><ul>
+<li><strong>互斥条件</strong>：进程要求对所分配的资源（如打印机）进行排他性控制，即在一段时间内某 资源仅为一个进程所占有。此时若有其他进程请求该资源，则请求进程只能等待。</li>
+<li><strong>不剥夺条件</strong>：进程所获得的资源在未使用完毕之前，<strong>不能被其他进程强行夺走</strong>，即只能 由获得该资源的进程自己来释放（只能是主动释放)。</li>
+<li><strong>请求和保持条件</strong>：进程已经保持了<strong>至少一个资源</strong>，但又提出了<strong>新的资源请求</strong>，同时对自己已获得的<strong>资源保持不放</strong>。</li>
+<li><strong>循环等待条件</strong>：有两个或者两个以上的进程组成一条<strong>环路</strong>，该环路中的每个进程都在<strong>等待下一个进程所占有的资源</strong>。</li>
+</ul>
+<h1 id="死锁处理策略"><a href="#死锁处理策略" class="headerlink" title="死锁处理策略"></a>死锁处理策略</h1><h2 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h2><h4 id="破坏互斥条件"><a href="#破坏互斥条件" class="headerlink" title="破坏互斥条件"></a>破坏互斥条件</h4><p>如果<strong>允许系统资源都能共享使用</strong>，则系统不会进入死锁状态。不过，在有的场合应该保护这种互斥性，所以<strong>破坏互斥条件而预防死锁的方法不太可行</strong>。</p>
+<h4 id="破坏不剥夺条件"><a href="#破坏不剥夺条件" class="headerlink" title="破坏不剥夺条件"></a>破坏不剥夺条件</h4><p>一个已保持了资源的进程，请求新的资源而得不到满足时，它<strong>必须释放已经保持的所有资源</strong>，待以后需要时再重新申请。</p>
+<h4 id="破坏请求和保持条件"><a href="#破坏请求和保持条件" class="headerlink" title="破坏请求和保持条件"></a>破坏请求和保持条件</h4><p>釆用预先静态分配方法，即进程<strong>在运行前一次申请完它所需要的全部资源</strong>，在它的资源未满足前，不把它投入运行。一旦投入运行后，这些资源就一直归它所有，<strong>也不再提出其他资源请求</strong>，这样就可以保证系统不会发生死锁。</p>
+<h4 id="破坏循环等待条件"><a href="#破坏循环等待条件" class="headerlink" title="破坏循环等待条件"></a>破坏循环等待条件</h4><p>为了破坏循环等待条件，可<strong>釆用顺序资源分配法</strong>。首先给系统中的资源编号，规定每个进程，<strong>必须按编号递增的顺序请求资源</strong>，同类资源一次申请完。</p>
+<p>这种方法存在的问题是<strong>限制了新类型设备的增</strong>加；而且容易<strong>造成资源的浪费</strong>；</p>
+<h2 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h2><p>避免死锁同样是属于<strong>事先预防</strong>的策略，是在资源动态分配过程中，<strong>防止系统进入不安全状态</strong>，以避免发生死锁。</p>
+<h4 id="系统安全状态"><a href="#系统安全状态" class="headerlink" title="系统安全状态"></a>系统安全状态</h4><p>避免死锁的方法中，允许进程<strong>动态地申请资源</strong>，但系统在进行资源分配之前，应先计算此次资源分配的<strong>安全性</strong>。若此次分配不会导致系统进入不安全状态，则将资源分配给进程； 否则，让进程等待。</p>
+<p>所谓安全状态，是指系统能按<strong>某种进程推进顺序</strong> ，为每个进程Pi分配其所需资源，直至满足每个进程对资源的<strong>最大需求</strong>，使每个进程都可顺序地完成。此时称 P1, P2, …, Pn 为安全序列。如果系统无法找到一个安全序列，则称系统处于<strong>不安全状态</strong>。</p>
+<p>假设系统中有三个进程P1、P2和P3,共有12 台磁带机。进程P1总共需要10台磁带机，P2和P3 分别需要4台和9台。假设在T0时刻，进程P1、P2 和P3已分别获得5合、2台和2台，尚有3台未分配，见表2-15。</p>
+<p><img src="https://s2.ax1x.com/2020/03/10/8iVETg.png" alt="8iVETg.png"></p>
+<p>则在T0时刻是安全的，因为存在一个安全序列P2、Pl、P3，即<strong>只要系统按此进程序列分配资源</strong>，则每个进程都能顺利完成。若在T0时刻后，系统分配1台磁带机给P3，则此时系统便进入不安全状态，因为此时已<strong>无法再找到一个安全序列</strong>。</p>
+<p><strong>并非所有的不安全状态都是死锁状态，但当系统进入不安全状态后，便可能进入死锁状态</strong>；反之，只要系统处于安全状态，系统便可以避免进入死锁状态。</p>
+<h4 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h4><p>把<strong>操作系统看做是银行家</strong>，操作系统管理的<strong>资源</strong>相当于银行家管理的<strong>资金</strong>，进程向操作系统请求分<strong>配资源相当于用户向银行家贷款</strong>。 </p>
+<p>当进<strong>程首次</strong>申请资源时，要测试该进程对资源的<strong>最大需求量</strong>，如果系统现存的资源可以满足它的<strong>最大需求量</strong>则按当前的申请量分配资源，<strong>否则就推迟分配</strong>。</p>
+<p>当进程在执行中继续申请资源时，先测试该进程<strong>已占用的资源数与本次申请的资源数之和是否超过了该进程对资源的最大需求量</strong>。若<strong>超过则拒绝分配资源</strong>，若没有超过则再测试系统现存的资源能否满足该进程尚需的最大资源量，若能满足则按当前的申请量分配资源，否则也要推迟分配。</p>
+<h2 id="死锁检测与解除"><a href="#死锁检测与解除" class="headerlink" title="死锁检测与解除"></a>死锁检测与解除</h2><p>思想：不阻止死锁，而是当检测到<strong>死锁发生时，采取措施进行恢复</strong>。</p>
+<p> 资源分配图描述如下：圆圈代表<strong>一个进程</strong>，用框代表<strong>一类资源</strong>。 </p>
+<p><img src="http://c.biancheng.net/cpp/uploads/allimg/140630/1-1406301I940246.jpg" alt="image"></p>
+<p>可以通过将资源分配图简化的方法来检测系统状态是否为死锁状态。简化方法如下：</p>
+<p>1) 在资源分配图中，找出<strong>既不阻塞又不是孤点</strong>的进程Pi。消去它所有的<strong>请求边和分配边</strong>，使之成为<strong>孤立的结点</strong>。</p>
+<p>2) 进程Pi所释放的资源，可以<strong>唤醒</strong>某些因等待这些资源而<strong>阻塞的进程</strong>，原来的阻塞进程可能变为非阻塞进程。进行一系列简化后,若能消去图中所有的边，则称该图是<strong>可完全简化的</strong>。</p>
+<p>死锁的条件是：当且仅当 <strong>资源分配图是 不可完全简化的</strong>,该条件为死锁定理。</p>
+<p><img src="http://c.biancheng.net/cpp/uploads/allimg/140630/1-1406301JP45A.jpg" alt="image"></p>
+<h4 id="死锁的解除"><a href="#死锁的解除" class="headerlink" title="死锁的解除"></a>死锁的解除</h4><p> <strong>资源剥夺法</strong>：挂起某些死锁进程，并<strong>抢占它的资源</strong>，但<strong>不撤销</strong>进程。将这些资源分配给<strong>其他的死锁进程</strong>。</p>
+<p> <strong>撤销进程法</strong>：<strong>强制撤销部分、甚至全部死锁进程</strong>并剥夺这些进程的资源。</p>
+<p> <strong>进程回退法</strong>：让一（多）个进程回退到足以<strong>回避死锁</strong>的地步，进程回退时<strong>自愿释放</strong>资源而不是被剥夺。</p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p><img src="https://s2.ax1x.com/2020/03/10/8PHBct.png" alt="8PHBct.png"></p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>内存管理</title>
+    <url>/2020/09/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>一个程序<strong>不需要全部调入内存</strong>就可以运行，只调入一部分，当需要的部分不在主存中时，发生缺页中断，从磁盘中调入所需部分。这样使得有限的物理内存可以运行<strong>大的多的程序</strong>，好像<strong>内存增大</strong>了一样。这就是虚拟内存技术。</p>
+<a id="more"></a>
+
+<h2 id="内存分配方式"><a href="#内存分配方式" class="headerlink" title="内存分配方式"></a>内存分配方式</h2><h3 id="基本分页存储"><a href="#基本分页存储" class="headerlink" title="基本分页存储"></a>基本分页存储</h3><p>为了尽量避免碎片的产生，引入了分页的思想，把主存<strong>划分为大小固定的块</strong>，块相对较小，作为主存的基本单位。</p>
+<p>进程中的块称为页，页的大小应该适中。太大会碎片化加剧，太小置换次数太多，效率降低。</p>
+<p>页由<strong>页号</strong>（高地址）和<strong>页内偏量</strong>组成（低地址）。</p>
+<p><strong>页表</strong>：操作系统建立的，实现<strong>页号到物理块号</strong>的映射。</p>
+<h3 id="基本分段管理"><a href="#基本分段管理" class="headerlink" title="基本分段管理"></a>基本分段管理</h3><p>按照用户进程中的<strong>自然段</strong>来划分逻辑空间。段内空间是连续的，段间空间不要求。</p>
+<p>由<strong>段号</strong>（高地址）和<strong>段内偏移</strong>（低地址）组成。</p>
+<h3 id="段页式管理"><a href="#段页式管理" class="headerlink" title="段页式管理"></a>段页式管理</h3><p>页式存储能够提高<strong>内存利用率</strong>，段式存储有利于<strong>段的共享</strong>，二者结合起来就是段页存储。</p>
+<p>作业的地址空间首先被<strong>划分为多个段</strong>，每个段有自己的<strong>段号</strong>。<strong>每个段中划分为多个页</strong>，每个页有自己的页号。每个进程有<strong>段表</strong>，每个<strong>段有页表</strong>。</p>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p><strong>分段分页的比较：</strong></p>
+<p>对程序员的透明性：分页透明，但是分段需要程序员显式划分每个段。 </p>
+<p>大小是否可变：页的大小不可变，段的大小可以动态改变。</p>
+<p>出现原因：分页主要用于实现<strong>虚拟内存</strong>，从而获得更大的地址空间；分段主要是为了有助于<strong>程序和数据</strong>的<strong>共享和保护</strong>。</p>
+<h1 id="虚拟内存管理"><a href="#虚拟内存管理" class="headerlink" title="虚拟内存管理"></a>虚拟内存管理</h1><p>请<strong>求分页管理</strong>是当前最流行的实现虚拟存储器的方法。</p>
+<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><h3 id="什么是页面置换"><a href="#什么是页面置换" class="headerlink" title="什么是页面置换"></a>什么是页面置换</h3><p>当发生缺页中断时，如果操作系统内存中<strong>没有空闲页面</strong>，操作系统必须在内存<strong>选择一个页面将其移出内存</strong>，以便为即将调入的页面让出空间。而<strong>用来选择淘汰哪一页的规则叫做页面置换算法</strong>。</p>
+<h3 id="最佳置换算法"><a href="#最佳置换算法" class="headerlink" title="最佳置换算法"></a>最佳置换算法</h3><p>这是一种<strong>理想情况下的页面置换算法</strong>，但实际上是<strong>不可能实现</strong>的。</p>
+<p><strong>基本思想是</strong>：选择距离下一次被访问间隔指令数目最多的页面进行置换。</p>
+<p>这个算法唯一的一个问题就是它无法实现。但是最佳页面置换算法可以用于对可实现算法的<strong>性能进行衡量比较</strong>。</p>
+<h3 id="先进先出置换算法（FIFO）"><a href="#先进先出置换算法（FIFO）" class="headerlink" title="先进先出置换算法（FIFO）"></a>先进先出置换算法（FIFO）</h3><p>实质：总是<strong>选择在主存中停留时间最长的一页置换</strong>，即<strong>先进入内存的页，先退出内存</strong>。</p>
+<p>理由：最早调入内存的页，其<strong>不再被使用</strong>的可能性比刚调入内存的可能性大。</p>
+<p>实现：建立一个<strong>FIFO队列</strong>，收容所有在内存中的页。<strong>被置换页面总是在队列头上进行</strong>。当一个页面被放入内存时，就把它插在队尾上。</p>
+<p>缺点：这种算法只是在按<strong>线性顺序访问地址空间时才是理想的</strong>，否则效率不高。因为那些<strong>常被访问的页，往往在主存中也停留得最久</strong>，结果它们因变“老”而不得不被置换出去。</p>
+<h3 id="最近最久未使用（LRU）算法"><a href="#最近最久未使用（LRU）算法" class="headerlink" title="最近最久未使用（LRU）算法"></a>最近最久未使用（LRU）算法</h3><p>实质：<strong>当需要置换一页时，选择在最近一段时间里最久没有使用过的页面</strong>予以置换。</p>
+<p>LRU算法需要<strong>实际硬件的支持</strong>。其问题是<strong>怎么确定最后使用时间的顺</strong>序，对此有两种可行的办法：</p>
+<ul>
+<li><p>1.<strong>计数器</strong>:  使每个页表项对应一个使用<strong>时间字段</strong>，并给CPU增加一个计数器。每次存储访问，该时钟都加1。在置换页面时，选择该<strong>计数值最小</strong>的页面。</p>
+</li>
+<li><p>2.<strong>栈</strong>。用一个<strong>栈保留页号</strong>。每当<strong>访问一个页面时，就把它从栈中取出放在栈顶上</strong>。这样一来，<strong>栈顶总是放有目前使用最多的页，而栈底放着目前最少使用的页</strong>。</p>
+</li>
+</ul>
+<h3 id="未使用算法-NRU"><a href="#未使用算法-NRU" class="headerlink" title="未使用算法(NRU)"></a>未使用算法(NRU)</h3><ul>
+<li><p>因实现LRU算法必须有大量硬件支持，一定的软件开销。</p>
+<p><strong>最近未使用算法</strong> ： 它在存储分块表的每一表项中<strong>增加一个引用位</strong>，<strong>操作系统定期地将它们置为0</strong>。当某一页被访问时，由<strong>硬件将该位置1</strong>。需要置换时将对应<strong>位置为是的页淘汰出去</strong>，</p>
+</li>
+</ul>
+<h2 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h2><p>页面的<strong>过于频繁的调度</strong>行为成为抖动，造成处理机大部分时间都是在进行页面的置换，而<strong>不执行进程的指令</strong>，造成效率降低。</p>
+<p>原因：<strong>实际可用的物理页面数目小于频繁使用的页面数目</strong>。</p>
+<h1 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h1><h2 id="逻辑地址"><a href="#逻辑地址" class="headerlink" title="逻辑地址"></a>逻辑地址</h2><p>编译后，<strong>每个模块</strong>都是从0号单元开始编址，称为模板模块的相对地址。</p>
+<p>链接器将各个模块连接以后，按照各个模块的顺序，统一从0开始同一编址。</p>
+<h2 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h2><p>物理地址空间是指内存单元中物理单元的集合，是地址转换的<strong>最终地址</strong>，是物理上存在的。程序运行的时候，<strong>必须把逻辑地址映射到物理地址上执行</strong>，这个过程叫做<strong>地址重定位</strong>。</p>
+<h1 id="堆区内存申请"><a href="#堆区内存申请" class="headerlink" title="堆区内存申请"></a>堆区内存申请</h1><h2 id="malloc原理"><a href="#malloc原理" class="headerlink" title="malloc原理"></a>malloc原理</h2><p>为了减少内存碎片和系统调用的开销，malloc其采用<strong>内存池的方式</strong>，<strong>先申请大块内存作为堆区，然后将堆区分为多个内存块</strong>，以<strong>块</strong>作为内存管理的基本单位。</p>
+<p>当用户申请内存时，直接从堆区<strong>分配一块合适的空闲块</strong>。</p>
+<p>malloc在申请内存时，一般会通<strong>过brk或者mmap系统调用进行申请</strong>。其中当申请内存小于<strong>128K</strong>时，会使用系统函数<strong>brk在堆区中</strong>分配；而当申请内存<strong>大于128K</strong>时，会使用系统函数<strong>mmap在映射区分配</strong>。</p>
+<hr>
+<p>malloc采用<strong>隐式链表</strong>结构将堆区分成连续的、大小不一的块，包含已分配块和未分配块；</p>
+<p>同时malloc采用<strong>显示链表结构</strong>来管理所有的<strong>空闲块</strong>。</p>
+<p>当进行内存分配时，malloc会通过<strong>链表遍历所有的空闲块</strong>，选择满足要求的块进行分配；</p>
+<p>当进行内存合并时，malloc<strong>采用边界标记法</strong>，根据每个块的前后块是否已经分配来决定是否进行块合并。</p>
+<h2 id="内存分配原理brk-mmap"><a href="#内存分配原理brk-mmap" class="headerlink" title="内存分配原理brk/mmap"></a>内存分配原理brk/mmap</h2><p>1、malloc<strong>小于128k的内存</strong>，使用<strong>brk分配内存</strong>，将_edata往高地址推(只分配虚拟空间，不对应物理内存(因此没有初始化)。</p>
+<p>2、malloc<strong>大于128k的内存，使用mmap分配内存</strong>，在<strong>堆和栈之间</strong>找一块空闲内存分配(对应独立内存，而且初始化为0)</p>
+<hr>
+<p>这两种方式分配的<strong>都是虚拟内存</strong>，没有分配物理内存。在第一次访问已分配的虚拟地址空间的时候，发生缺页中断，操作系统负责分配物理内存，然后建立虚拟内存和物理内存之间的映射关系。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
 </search>
