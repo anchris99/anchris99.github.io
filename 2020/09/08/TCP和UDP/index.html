@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=黑体:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic|宋体:300,300italic,400,400italic,700,700italic|Inconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="TCP&amp;UDP区别1、TCP面向连接;UDP是无连接的。 2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP不保证可靠交付。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP和UDP">
+<meta property="og:url" content="http://yoursite.com/2020/09/08/TCP%E5%92%8CUDP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TCP&amp;UDP区别1、TCP面向连接;UDP是无连接的。 2、TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP不保证可靠交付。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://c.biancheng.net/uploads/allimg/190124/1-1Z1241445324H.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/13/8uTl7j.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/13/8uTe9P.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/13/8KcO1J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/13/8K2wZt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/13/8KRmY8.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6333705-0341036bd6f18bc2?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp">
+<meta property="article:published_time" content="2020-09-08T10:04:07.000Z">
+<meta property="article:modified_time" content="2020-09-09T10:41:00.067Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://c.biancheng.net/uploads/allimg/190124/1-1Z1241445324H.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/08/TCP%E5%92%8CUDP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>TCP和UDP | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/08/TCP%E5%92%8CUDP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TCP和UDP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-08 18:04:07" itemprop="dateCreated datePublished" datetime="2020-09-08T18:04:07+08:00">2020-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-09 18:41:00" itemprop="dateModified" datetime="2020-09-09T18:41:00+08:00">2020-09-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="TCP-amp-UDP区别"><a href="#TCP-amp-UDP区别" class="headerlink" title="TCP&amp;UDP区别"></a>TCP&amp;UDP区别</h1><p>1、<strong>TCP面向连接</strong>;<strong>UDP是无连接的</strong>。</p>
+<p>2、TCP<strong>提供可靠的服务</strong>。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;<strong>UDP不保证可靠交付</strong>。</p>
+<a id="more"></a>
+
+<p>3、<strong>TCP面向字节流</strong>，实际上是TCP把数据看成一连串无结构的字节流;<strong>UDP是面向报文</strong>的。</p>
+<p>4、每一<strong>条TCP连接只能是点到点的</strong>;<strong>UDP支持一对一，一对多，多对一和多对多的交互通信</strong>。</p>
+<p>5、<strong>TCP首固定部分20字节</strong>;<strong>UDP的首部开销小，只有8个字节</strong>。</p>
+<p>6、<strong>TCP有拥塞控制，UDP没有拥塞控制</strong>。因此网络出现拥塞<strong>不会使源主机的发送速率降低</strong>（对实时应用很有用，如IP电话，实时视频会议等）</p>
+<h1 id="UDP应用场景："><a href="#UDP应用场景：" class="headerlink" title="UDP应用场景："></a>UDP应用场景：</h1><p>  1.面向<strong>数据报方式</strong>。</p>
+<p>  2.网络数据大多为<strong>短消息。</strong></p>
+<p>  3.拥有<strong>大量Client</strong>。</p>
+<p>  4.<strong>对数据安全性无特殊要求</strong>。</p>
+<p>  5.<strong>网络负担非常重，但对响应速度要求高。</strong></p>
+<h1 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h1><p>  <img src="http://c.biancheng.net/uploads/allimg/190124/1-1Z1241445324H.jpg" alt="image"></p>
+<h1 id="TCP可靠传输的实现"><a href="#TCP可靠传输的实现" class="headerlink" title="TCP可靠传输的实现"></a>TCP可靠传输的实现</h1><h2 id="什么是可靠传输"><a href="#什么是可靠传输" class="headerlink" title="什么是可靠传输"></a>什么是可靠传输</h2><p>一是能<strong>够正确地传输数据</strong>，</p>
+<p>二是接收方能够及时<strong>处理发送方发送的数据</strong>。</p>
+<h2 id="怎么实现"><a href="#怎么实现" class="headerlink" title="怎么实现"></a>怎么实现</h2><p>（1）首先，采用<strong>三次握手</strong>来建立TCP连接，<strong>四次挥手</strong>来释放TCP连接，从而保证<strong>建立的传输信道是可靠的</strong>。</p>
+<p>（2）其次，TCP采用了<strong>连续ARQ协议</strong>（回退N，Go-back-N；超时自动重传）来保证数据传输的正确性，使用<strong>滑动窗口协议</strong>来保证接方能够及时处理所接收到的数据，同时进行流量控制。</p>
+<p>（3）最后，TCP使用<strong>慢启动、拥塞避免、快重传和快恢复</strong>来进行<strong>拥塞控制</strong>，避免网络拥塞。</p>
+<p>（4）<strong>存在确认号和序号</strong>。</p>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p><img src="https://s1.ax1x.com/2020/03/13/8uTl7j.png" alt="8uTl7j.png"></p>
+<p>（1）第一次握手</p>
+<ul>
+<li><strong>A的TCP客户进程向B发出建立连接请求报文段，其中SYN（同步位）=1，ACK（确认位）=0，seq（序号）=x。</strong>（SYN=1且ACK=0时，表明这是一个请求建立连接的；SYN报文段（SYN=1的报文段）不能携带数据，但是要消耗掉一个序号。）</li>
+<li>在A发送完毕之后，A的TCP客户端进程进入SYN-SENT（同步已发送）状态。</li>
+</ul>
+<p>（2）第二次握手</p>
+<ul>
+<li><strong>B在收到连接请求报文段之后，向A发送确认报文段。其中SYN=1，ACK=1，ack（确认号）=x+1，同时设置自己的初始序号seq=y。</strong>（TCP规定，当报文段的SYN=1且ACK=1时，表明这是一个同一建立连接响应报文段；这个报文段也不能携带数据，同样需要消耗掉一个序号。）</li>
+<li>在B发送完毕之后，B的TCP服务端进程进入SYN-RCVD（同步收到）状态。</li>
+</ul>
+<p>（3）第三次握手</p>
+<ul>
+<li><p><strong>A在收到B的确认报文段之后，还需要向B给出确认报文段。其中ACK=1，seq=x+1，ack=y+1</strong><br>（TCP规定，这个ACK报文段可以携带数据；如果<strong>不携带数据则不消耗序号</strong>，即A下一个数据报文段的序号仍然是seq=x+1。）</p>
+</li>
+<li><p>在A发送完毕之后，A的TCP客户端进程进入ESTABLISHED（已建立连接）状态；B在接收到A的确认报文段之后，B的服务端进程也进入ESTABLISHED（已建立连接）状态。</p>
+</li>
+</ul>
+<h4 id="三次握手的原因"><a href="#三次握手的原因" class="headerlink" title="三次握手的原因"></a>三次握手的原因</h4><ul>
+<li><p><strong>防止已失效的请求连接报文段突然又传送到了server，因而产生错误</strong>：</p>
+<p>client发出的第一个连接请求报文段并没有丢失，<strong>而是在某个网络结点长时间的滞留了</strong>，以致延误到连接释放以后的某个时间才到达server。本来这是一个<strong>早已失效</strong>的报文段。但server收到此失效的连接请求报文段后，就误认为是client再次发出的一个新的连接请求。于是就向client发出确认报文段，同意建立连接。</p>
+<p>假设不采用“三次握手”，那么只要server发出确认，新的连接就建立了。由于现在client并没有发出建立连接的请求，因此不会理睬server的确认，也不会向server发送数据。但server却以为新的运输连接已经建立，并一直等待client发来数据。这样，server的很多资源就白白浪费掉了。</p>
+<p>因此，采用“三次握手”的办法可以防止上述现象发生。 <strong>client不会向server的确认进行回应</strong>。server由于收不到确认，就知道client并没有要求建立连接。<strong>避免server端一直等待，浪费资源</strong>。</p>
+</li>
+</ul>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p><img src="https://s1.ax1x.com/2020/03/13/8uTe9P.png" alt="8uTe9P.png"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>1）第一次挥手  A→ B</p>
+<ul>
+<li><strong>A的TCP客户进程向B发出释放连接请求报文段，其中FIN（终止位）=1，seq（序号）=u</strong>。</li>
+</ul>
+<p>（TCP规定，当报文段<strong>的FIN=1时，表明此报文段的发送方的数据已发生完毕</strong>，<strong>并要求释放连接</strong>；FIN报文段（FIN=1的报文段）<strong>不能携带数据</strong>，但是要<strong>消耗掉一个序号</strong>。）</p>
+<ul>
+<li>在A发送完毕之后，A的TCP客户端进程进入FIN-WAIT-1（终止等待1）状态。</li>
+</ul>
+<p>（2）第二次挥手  B→A</p>
+<ul>
+<li><p><strong>B在收到连接释放连接请求报文段之后，随即向A发送确认报文段</strong>。其中ACK=1，seq=v，ack（确认号）=u+1。</p>
+</li>
+<li><p>在B发送完毕之后，B的TCP服务端进程进入<strong>CLOSE-WAIT</strong>（关闭等待）状态。</p>
+</li>
+<li><p>TCP服务器进程这时<strong>应该通知高层应用</strong>，从A到B这个方向的连接就要释放了，这时的TCP连接处于<strong>半关闭（half-close）状态</strong>。</p>
+</li>
+<li><p>A在收到B的确认报文段之后，就进入FIN-WAIT-2（终止等待2）状态，等待B发出的连接释放报文段。</p>
+</li>
+</ul>
+<p>（3）第三次挥手 B→A</p>
+<ul>
+<li><p>若B已<strong>经没有要向A发送的数据</strong>，其应用进程就通知TCP释放连接。B向A发出释放连接报文段，其中FIN=1，ACK=1，seq=w，ack=u+1。</p>
+</li>
+<li><p>在B发送完毕之后，B的TCP服务端进程进入LAST-ACK（最后确认）状态。</p>
+</li>
+</ul>
+<p>（4）第四次挥手 A→B</p>
+<ul>
+<li>A在接收到B的释放连接请求报文段之后，必须对此发出确认。其中ACK=1，seq=u+1，ack=w+1。</li>
+<li>A在发送完毕之后，进入到TIME-WAIT（时间等待）状态。</li>
+<li>B在接收到A的确认之后，进入到CLOSED（关闭）状态。</li>
+<li>A在经过时间等待计时器设置的时间<strong>2MSL之后，A才进入到CLOSED状态</strong>。</li>
+</ul>
+<h4 id="四次挥手原因"><a href="#四次挥手原因" class="headerlink" title="四次挥手原因"></a>四次挥手原因</h4><ul>
+<li>四次握手可以看成是两个二次握手，分别是A的TCP客户端进程请求释放连接和B的TCP服务端进程请求释放连接。</li>
+</ul>
+<h4 id="client等待2MSL的原因"><a href="#client等待2MSL的原因" class="headerlink" title="client等待2MSL的原因"></a>client等待2MSL的原因</h4><ul>
+<li><strong>一是为了让B能够按照正常步骤进入CLOSED状态，二是为了防止已失效的请求连接报文段出现在下次连接中，因而产生错误</strong>。<ul>
+<li>为了保证A发送的最后一个ACK报文段能够到达B。因为这个ACK报文段有可能丢失，这样B就无法接收到而进入CLOSED状态。于是B会重传请求释放连接的报文段，A在这段等待时间接收到了，重传ACK报文段，这样B还是会顺利接收到确认报文段，进入CLOSED状态。如果此时A已经关闭了，那么就无法收到B的请求报文段，也不会发送ACK报文段，这样B就无法进入CLOSED状态了。</li>
+<li>第二，在这2MSL的等待时间内，本次连接的所有报文都已经从网络中消失，从<strong>而不会出现失效的报文出现在下次连接中</strong>。</li>
+</ul>
+</li>
+<li>MSL （Maximum Segment Lifetime） 报文最大生存时间。</li>
+</ul>
+<h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><ul>
+<li><p>ARQ协议，即<strong>自动重传请求</strong>（Automatic Repeat-reQuest）通过使用<strong>确认和超时</strong>这两个机制，在不可靠服务的基础上实现可靠的信息传输。</p>
+</li>
+<li><p>连续ARQ协议发送方采用流水线传输。流水线传输就是发送方可以连续发送多个分组，不必每发完一个分组就停下来等待对方确认。结合滑动窗口来实现，<br><img src="https://s1.ax1x.com/2020/03/13/8KcO1J.png" alt="8KcO1J.png"></p>
+</li>
+<li><p>位于发送窗口内的5个分组都可以连续发送出去，而不需要等待对方的确认，这样就提高了信道利用率。 </p>
+</li>
+<li><p>发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置。例如上面的图（b），当发送方收到第一个分组的确认，就把发送窗口向前移动一个分组的位置。如果原来已经发送了前5个分组，则现在可以发送窗口内的第6个分组。 </p>
+</li>
+<li><p>接收方一般都是采用<strong>累积确认</strong>的方式。也就是说接收方不必对收到的分组逐个发送确认。而是<strong>在收到几个分组后，对按序到达的最后一个分组发送确认</strong>。<strong>如果收到了这个分组确认信息，则表示到这个分组为止的所有分组都已经正确接收到了</strong>。 </p>
+</li>
+<li><p>累积确认的<strong>优点</strong>：容易实现。</p>
+</li>
+<li><p><strong>缺点</strong>：不能正确的向发送方反映出接收方已经正确收到的所以分组的信息。比如发送方发送了前5个分组，而中间的第3个分组丢失了，这时候接收方只能对前2个发出确认。而不知道后面3个分组的下落，因此只能把后面的3个分组都重传一次，这种机制叫<strong>Go-back-N（回退N）</strong>，表示需要再退回来重传已发送过的N个分组。</p>
+</li>
+</ul>
+<h3 id="超时重传和快速重传"><a href="#超时重传和快速重传" class="headerlink" title="超时重传和快速重传"></a>超时重传和快速重传</h3><ul>
+<li>设置一个计时器，如果在计时器计算完的时间内没有收到确认消息，则重新发送。</li>
+<li>快速重传，连续收到三个ACK的时候，立即重传，不必等待计时器到时。</li>
+</ul>
+<h3 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h3><ul>
+<li><p><strong>概念</strong></p>
+<ul>
+<li>滑动窗口协议在在发送方和接收方之间各自维持一个滑动窗口，窗口是随着时间可以向前滑动的。它允许发送方发送多个分组而不需等待确认。TCP的滑动窗口是以<strong>字节为单位</strong>的。发送和接收窗口的结构如下：<br><img src="https://s1.ax1x.com/2020/03/13/8K2wZt.png" alt="8K2wZt.png"></li>
+</ul>
+</li>
+<li><p><strong>规则</strong></p>
+<ul>
+<li><p>（1）凡是已经发送过的数据，在未收到确认之前，都必须<strong>暂时保留</strong>，以便在超时重传时使用。</p>
+</li>
+<li><p>（2）只有当发送方A<strong>收到了接收方的确认报文段时</strong>，发送方窗口才可以向前滑动几个序号。</p>
+</li>
+<li><p>（3）当发送方A发送的数据经过一段时间没有收到确认，就要使用回退N步协议，回到最后接收到确认号的地方，重新发送这部分数据。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>可变窗口流量控制</strong><br><a href="https://imgchr.com/i/8KRmY8" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/03/13/8KRmY8.png" alt="8KRmY8.png"></a></p>
+</li>
+<li><p>滑动窗口可以进行流量控制，使得接受端可以及时处理收到的信息。</p>
+</li>
+</ul>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><h4 id="拥塞控制与流量控制的区别"><a href="#拥塞控制与流量控制的区别" class="headerlink" title="拥塞控制与流量控制的区别"></a>拥塞控制与流量控制的区别</h4><ul>
+<li><p>拥塞控制就是防止过多的数据注入到网络中，这样可以防止网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机、所有的路由器，以及与降低网络传输性能有关的所有因素。</p>
+</li>
+<li><p>流量控制往往指点对点通信量的控制，是个端到端的问题。流量控制所要做的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+</li>
+</ul>
+<h4 id="相关算法"><a href="#相关算法" class="headerlink" title="相关算法"></a>相关算法</h4><ul>
+<li>cwnd&lt;ssthresh  慢启动算法</li>
+<li>cwnd=ssthresh  慢启动算法/拥塞避免算法</li>
+<li>cwnd&gt;ssthresh  拥塞避免算法</li>
+<li>cwnd–congestion window拥塞控制窗口  ssthresh– slow start thresh 慢启动门限</li>
+</ul>
+<p>（1）慢启动算法</p>
+<p>启动时，cwnd设置为一，每个传输轮次后将 cwnd 大小加倍。</p>
+<p>（3）ssthresh设置</p>
+<p>只要发生拥塞，ssthresh就在当前cwnd的大小下折半。</p>
+<p>（3）拥塞避免算法</p>
+<p>每个传输轮次后将 <strong>cwnd的大小加一</strong>（线性增加），如果发现出现网络拥塞的话就按照上面的方法重新设置ssthresh的大小（乘法减小），<strong>并从cwnd=1开始重新执行慢开始算法</strong>。</p>
+<p>（4）快重传</p>
+<ul>
+<li>快重传是允许发送方再连续收到<strong>3个重复的确认后就可以立即重传丢失的报文</strong>而<strong>不必再等待所设置的重传计时器到时</strong>。</li>
+</ul>
+<p>（5）快恢复</p>
+<p>发生拥塞后，ssthresh折半，cwnd并不从一开始，而是直接恢复到门限值ssthresh执行拥塞避免算法。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6333705-0341036bd6f18bc2?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="image"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="prev" title="内存管理">
+      <i class="fa fa-chevron-left"></i> 内存管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/11/java%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98-1/" rel="next" title="java并发问题(1)">
+      java并发问题(1) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-amp-UDP区别"><span class="nav-number">1.</span> <span class="nav-text">TCP&amp;UDP区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UDP应用场景："><span class="nav-number">2.</span> <span class="nav-text">UDP应用场景：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSI七层模型"><span class="nav-number">3.</span> <span class="nav-text">OSI七层模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP可靠传输的实现"><span class="nav-number">4.</span> <span class="nav-text">TCP可靠传输的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是可靠传输"><span class="nav-number">4.1.</span> <span class="nav-text">什么是可靠传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么实现"><span class="nav-number">4.2.</span> <span class="nav-text">怎么实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三次握手"><span class="nav-number">4.2.1.</span> <span class="nav-text">三次握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三次握手的原因"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">三次握手的原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四次挥手"><span class="nav-number">4.2.2.</span> <span class="nav-text">四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">4.2.2.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四次挥手原因"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">四次挥手原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#client等待2MSL的原因"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">client等待2MSL的原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续ARQ协议"><span class="nav-number">4.2.3.</span> <span class="nav-text">连续ARQ协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时重传和快速重传"><span class="nav-number">4.2.4.</span> <span class="nav-text">超时重传和快速重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动窗口协议"><span class="nav-number">4.2.5.</span> <span class="nav-text">滑动窗口协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞控制"><span class="nav-number">4.2.6.</span> <span class="nav-text">拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拥塞控制与流量控制的区别"><span class="nav-number">4.2.6.1.</span> <span class="nav-text">拥塞控制与流量控制的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关算法"><span class="nav-number">4.2.6.2.</span> <span class="nav-text">相关算法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description">戒骄戒躁，努力向前</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
