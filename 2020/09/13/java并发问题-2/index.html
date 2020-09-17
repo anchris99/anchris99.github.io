@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。 Synchronized相关问题问题一:  Synchronized原理">
+  <meta name="description" content="注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。 Synchronized相关问题 ##问题一:Synchronized原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java并发问题(2)">
 <meta property="og:url" content="http://yoursite.com/2020/09/13/java%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98-2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。 Synchronized相关问题问题一:  Synchronized原理">
+<meta property="og:description" content="注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。 Synchronized相关问题 ##问题一:Synchronized原理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-13T01:19:53.000Z">
-<meta property="article:modified_time" content="2020-09-14T05:42:06.178Z">
+<meta property="article:modified_time" content="2020-09-17T00:51:25.555Z">
 <meta property="article:author" content="AnChris">
 <meta property="article:tag" content="java并发">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-14 13:42:06" itemprop="dateModified" datetime="2020-09-14T13:42:06+08:00">2020-09-14</time>
+                <time title="修改时间：2020-09-17 08:51:25" itemprop="dateModified" datetime="2020-09-17T08:51:25+08:00">2020-09-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,126 +243,71 @@
 
       
         <p>注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。</p>
-<h1 id="Synchronized相关问题"><a href="#Synchronized相关问题" class="headerlink" title="Synchronized相关问题"></a>Synchronized相关问题</h1><h2 id="问题一-Synchronized原理"><a href="#问题一-Synchronized原理" class="headerlink" title="问题一:  Synchronized原理"></a>问题一:  Synchronized原理</h2><a id="more"></a>
-
-<p>答：</p>
-<p>Synchronized 是 由 <strong>JVM 实 现</strong> 的 一 种 实 现互 斥 同 步 的 一 种方式 ， 被 Synchronized 修饰过的程序块，在编译前后被编译器生成了<code>monitorenter</code> 和 <code>monitorexit</code>两 个 字 节 码 指 令 。</p>
-<p>这 两 个 指 令 是 什 么 意 思 呢 ？</p>
+<h1 id="Synchronized相关问题"><a href="#Synchronized相关问题" class="headerlink" title="Synchronized相关问题"></a>Synchronized相关问题</h1><p> ##问题一:Synchronized原理<br>  <a id="more"></a><br>  答：<br>    Synchronized是由<strong>JVM实现</strong>的一种实现互斥同步的一种方式，被Synchronized修饰过的程序块，在编译前后被编译器生成了<code>monitorenter</code>和<code>monitorexit</code>两个字节码指令。这两个指令是什么意思呢？-在虚拟机执行到<code>monitorenter</code>指令时，首先要<strong>尝试获取对象的锁</strong>：如果这个对象<strong>没有锁定</strong>，或者当前线程<strong>已经拥有了这个对象的锁</strong>，把锁的<strong>计数器+1</strong>；-当执行monitorexit指令时<strong>锁计数器-1</strong>；当计数器为0时，锁就被<strong>释放</strong>了。Java中Synchronize通过在<strong>对象头设置标记</strong>，达到了<strong>获取锁和释放锁</strong>的目的。</p>
+<h2 id="问题二-获取对象的锁这个“锁”到底是什么？"><a href="#问题二-获取对象的锁这个“锁”到底是什么？" class="headerlink" title="问题二:获取对象的锁这个“锁”到底是什么？"></a>问题二:获取对象的锁这个“锁”到底是什么？</h2><p>“锁”的<strong>本质是一种资源</strong>，是<code>monitorenter</code>和<code>monitorexit</code>字节码指令的一个Reference类型的参数，即<strong>要锁定和解锁的对象。</strong>1.如果Synchronized明确指定了锁对象，比如Synchronized（变量名）、Synchronized(this)等，说明加解锁<strong>对象为该对象。</strong>2.如果没有明确指定：若Synchronized修饰的方法为<strong>非静态</strong>方法，表示<strong>此方法对应的对象</strong>为<strong>锁对象</strong>；若Synchronized修饰的方法为<strong>静态</strong>方法，则表示<strong>此方法对应的类</strong>对象为锁对象。注意，当一个对象被锁住时，对象里所有用Synchronized修饰的方法都将产生堵塞，而对象里<strong>非Synchronized修饰的方法可正常被调用</strong>，不受锁影响。</p>
+<p>问题三:Synchronized为什么是可重入锁<br>可重入性是<strong>锁的一个基本要求</strong>，是为了<strong>解决自己锁死自己的情况</strong>。比如，一个类中的同步方法调用另一个同步方法，假如Synchronized不支持重入，进入<code>method2</code>方法时当前线程获得锁,<code>method2</code>方法里面执行<code>method1</code>时当前线程又要去尝试获取锁，这时如果不支持重入，它就要等待释放，把自己阻塞，导致<strong>自己锁死自己</strong>。对Synchronized来说，在执行monitorenter指令时，如果这个对象没有锁定，就获对象的取锁，如果当前线程<strong>已经拥有了</strong>这个对象的锁，就<strong>把锁的计数器+1</strong>，而不是阻塞等待。本质上就通过这种方式实现了<strong>可重入性</strong>。</p>
+<h2 id="问题四-JVM对Java的原生锁做了哪些优化"><a href="#问题四-JVM对Java的原生锁做了哪些优化" class="headerlink" title="问题四:JVM对Java的原生锁做了哪些优化"></a>问题四:JVM对Java的原生锁做了哪些优化</h2><p>在Java6之前，Monitor的实现<strong>完全依赖底层操作系统的互斥锁</strong>来实现。如果要将一个线程进行阻塞或唤起都需要操作系统的协助，这就需要从<strong>用户态切换到内核态</strong>来执行，这种切换代价十分昂贵，很耗处理器时间。一种优化是使用<strong>自旋锁</strong>，即在把线程进行阻塞操作之前先让线程自旋等待一段时间，可能在等待期间其他线程已经解锁，这时就无需再让线程执行阻塞操作，避免了用户态到内核态的切换。现代JDK中还提供了三种不同的Monitor实现，也就是三种不同的锁：<br> -<strong>偏向锁（BiasedLocking）</strong><br> -<strong>轻量级锁</strong><br> -<strong>重量级锁</strong></p>
 <ul>
-<li><p>在 虚 拟 机 执 行 到 <code>monitorenter</code> 指 令 时 ， 首 先 要 <strong>尝 试 获 取 对 象 的 锁</strong> ：</p>
-<p>如 果 这 个 对 象 <strong>没 有 锁 定</strong> ， 或 者 当 前 线 程 <strong>已 经 拥 有 了 这 个 对 象 的 锁</strong> ， 把 锁的 <strong>计 数 器 +1</strong>；</p>
+<li><p>这三种锁使得JDK得以优化Synchronized的运行，当JVM检测到<strong>不同的竞争状况时，会自动切换到适合的锁实现</strong>，这就是锁的升级、降级。</p>
 </li>
-<li><p>当 执 行 monitorexit 指 令 时 </p>
-<p> <strong>锁 计 数 器 -1</strong>； 当 计 数 器为 0 时 ， 锁 就 被 <strong>释 放</strong> 了 。 </p>
+<li><p>当没有竞争出现时，默认会使用<strong>偏向锁</strong>。JVM会利用<strong>CAS操作</strong>，在对象头上的<strong>MarkWord部分设置线程ID</strong>，以表示<strong>这个对象偏向当前线程</strong>，所以并不涉及真正的互斥锁，因为在很多应用场景中，大部分对象生命周期中最多会被一个线程锁定，使用偏向锁可以降低<strong>无竞争开销</strong>。</p>
+</li>
+<li><p>如果有<strong>另一线程试图锁定</strong>某个被偏斜过的对象，JVM就<strong>撤销偏向锁</strong>，切换到轻量级锁实现。轻量级锁依赖<strong>CAS操作MarkWord来试图获取锁</strong>，如果重试成功，就使用普通的轻量级锁；否则，进一步升级为<strong>重量级锁</strong>，升级为重量级锁也叫<strong>锁膨胀</strong>。</p>
 </li>
 </ul>
-<p>Java 中 Synchronize 通 过 在 <strong>对 象 头 设 置 标 记</strong> ， 达 到 了 <strong>获取锁和释放锁</strong> 的 目 的 。</p>
-<h2 id="问题二-获取对象的锁这个-“-锁-”-到底是什么-？"><a href="#问题二-获取对象的锁这个-“-锁-”-到底是什么-？" class="headerlink" title="问题二:获取对象的锁这个 “ 锁 ” 到底是什么 ？"></a>问题二:获取对象的锁这个 “ 锁 ” 到底是什么 ？</h2><p>“ 锁 ” 的<strong>本质是一种资源</strong>， 是 <code>monitorenter</code> 和 <code>monitorexit</code> 字 节 码 指 令 的 一个 Reference 类 型 的 参 数 ， 即 <strong>要锁定和解锁的 对象 。</strong> </p>
+<h2 id="问题五-Synchronized为什么是非公平锁？"><a href="#问题五-Synchronized为什么是非公平锁？" class="headerlink" title="问题五:Synchronized为什么是非公平锁？"></a>问题五:Synchronized为什么是非公平锁？</h2><p>非公平主要表现在获取锁的行为上，并非是按照申<strong>请锁的时间</strong>前后给等待线程分配锁的，每当锁被释放后，<strong>任何一个线程都有机会</strong>竞争到锁，<br>这样做的目的是为了<strong>提高执行性能</strong>，缺点是可能会产生<strong>线程饥饿现象</strong>。</p>
+<h2 id="问题六-什么是锁消除和锁粗化？"><a href="#问题六-什么是锁消除和锁粗化？" class="headerlink" title="问题六:什么是锁消除和锁粗化？"></a>问题六:什么是锁消除和锁粗化？</h2><ul>
+<li>锁消除：指虚拟机即时编译器在运行时，对一些<strong>代码上要求同步</strong>，但<strong>被检测到不可能存在共享数据竞争</strong>的锁进行消除。</li>
+<li>锁粗化：原则上，同步块的作用范围要尽量小。但是如果一系列的连续操作都<strong>对同一个对象反复加锁和解锁</strong>，频繁地进行互斥同步操作也会导致不必要的性能损耗。<strong>锁粗化就是增大锁的作用域</strong>。以降低加锁解锁的频率。</li>
+</ul>
+<h2 id="问题七：为什么Synchronized是一个悲观锁？"><a href="#问题七：为什么Synchronized是一个悲观锁？" class="headerlink" title="问题七：为什么Synchronized是一个悲观锁？"></a>问题七：为什么Synchronized是一个悲观锁？</h2><p>乐观锁的实现原理Synchronized的并发策略是悲观的：<strong>不管是否会产生竞争，任何的数据操作都必须要加锁</strong>、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要被唤醒等操作。</p>
+<p>乐观锁：<strong>先进行操作</strong>，如果没有其他线程征用数据，那操作就成功了；如果共享数据有<strong>征用</strong>，产生冲突，那就再进行其他的<strong>补偿措施</strong>。这种乐观的并发策略<strong>不需要线程挂起</strong>，所以被称为<strong>非阻塞同步</strong>。</p>
+<p>乐观锁的核心算法是CAS：它涉及到三个操作数：<strong>内存值、预期值、新值</strong>。<br>当且仅当<strong>预期值和内存值相等</strong>时才将内存值修改为新值。这样处理的逻辑是:首先检查某块内存值是否跟之前我读取时的一样，如不一样则表示期间此内存值已经被别的线程更改过，<strong>舍弃本次操作</strong>，否则说明期间没有其他线程对此内存值操作，可以把新值设置给此块内存。</p>
+<p>CAS具有<strong>原子性</strong>，它的原子性由<strong>CPU硬件指令</strong>实现保证。</p>
+<h2 id="问题八-乐观锁一定就是好的吗？"><a href="#问题八-乐观锁一定就是好的吗？" class="headerlink" title="问题八: 乐观锁一定就是好的吗？"></a>问题八: 乐观锁一定就是好的吗？</h2><p>乐观锁避免了悲观锁独占对象的现象，同时也提高了并发性能，但它也有缺点：</p>
+<p>1.乐观锁只能保证<strong>一个共享变量的原子操作</strong>。如果<strong>多一个或几个变量</strong>，乐观锁将变得力不从心，但<strong>互斥锁</strong>能易解决，不管对象数量多少及对象颗粒度大小。</p>
+<p>2.<strong>长时间自旋</strong>可能导致开销大。假如CAS长时间不成功而一直自旋，<strong>会给CPU带来很大的开销</strong>。</p>
+<p>3.<strong>ABA问题</strong>。CAS的核心思想是通过比对内存值与预期值是否一样而判断内存值是否被改过，但<strong>这个判断逻辑不严谨</strong>，假如内存值原来是A后来被一条线程改为B，最后又被改成了A，则CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过值的情景的运算结果影响很大。解决的思路是<strong>引入版本号</strong>，每次变量更新都把版本号加一。</p>
+<h1 id="ReentrantLock及其他显式锁相关问题"><a href="#ReentrantLock及其他显式锁相关问题" class="headerlink" title="ReentrantLock及其他显式锁相关问题"></a>ReentrantLock及其他显式锁相关问题</h1><h2 id="问题一-Synchronized和ReentrantLock实现原理的不同"><a href="#问题一-Synchronized和ReentrantLock实现原理的不同" class="headerlink" title="问题一:Synchronized和ReentrantLock实现原理的不同"></a>问题一:Synchronized和ReentrantLock实现原理的不同</h2><p>其实，锁的实现原理基本是为了达到一个目的，<strong>让所有的线程都能看到某种标记</strong>。Synchronized通过在<strong>对象头中设置标记</strong>实现了这一目的，是一种<strong>JVM原生的锁</strong>实现方式。</p>
+<p>ReentrantLock以及所有的基于Lock接口的实现类，都是通过用一个<strong>volitile修饰的int型变量</strong>，<strong>并保证每个线程都能拥有对该int的可见性和原子修改</strong>，其本质是基于所谓的<strong>AQS框架</strong>。</p>
+<h2 id="问题二-AQS框架"><a href="#问题二-AQS框架" class="headerlink" title="问题二:AQS框架"></a>问题二:AQS框架</h2><p>AQS（AbstractQueuedSynchronizer类）是一个用来<strong>构建锁和同步器的框架</strong>，各种Lock包都是基于AQS来构建。</p>
 <ol>
-<li><p>如果Synchronized 明确指定了锁对象 ，比如Synchronized（ 变量名 ）、 Synchronized(this) 等 ， 说明加解锁<strong>对象为该对象 。</strong></p>
+<li><p>AQS在内部定义了一个<code>volatile intstate</code>变量，表示<strong>同步状态</strong>：当线程调用lock方法时，如果state=0，说明没有任何线程占有共享资源的锁，可以获得锁并将state=1  ; 如果state=1，则说明有线程目前正使用共享变量，其他线程必须<strong>加入同步队列进行等待</strong>。</p>
 </li>
-<li><p>如 果 没 有 明 确 指 定 ：</p>
-<p>若 Synchronized 修饰的方法为<strong>非 静 态</strong>方法 ， 表 示 <strong>此 方 法 对 应 的 对 象</strong> 为<strong>锁对象</strong> ；</p>
-<p>若 Synchronized 修饰的方 法为<strong>静 态</strong> 方 法 ，则表示 <strong>此 方 法 对 应 的 类</strong> 对 象为锁对象 。</p>
+<li><p>AQS通过Node内部类构成的一个双向链表结构的<strong>同步队列</strong>，来完成<strong>线程获取锁的排队工作</strong>，当有线程获取锁<strong>失败</strong>后，就被添加到<strong>队列末尾</strong>。</p>
+<ul>
+<li>Node类是对要访问同步代码的线程的封装，包含了线程本身及其状态叫waitStatus（有五种不同取值，分别表示是否被阻塞，是否等待唤醒，是否已经被取消等），每个Node结点关联其prev结点和next结点，方便线程释放锁后快速唤醒下一个在等待的线程，是一个FIFO的过程</li>
+<li>Node类有两个常量，SHARED和EXCLUSIVE，分别代表共享模式和独占模式。所谓共享模式是一个锁允许多条线程同时操作（信号量Semaphore就是基于AQS的共享模式实现的），独占模式是同一个时间段只能有一个线程对共享资源进行操作，多余的请求线程需要排队等待（如ReentranLock）。</li>
+</ul>
+</li>
+<li><p>AQS通过内部类<code>ConditionObject</code>构建<strong>等待队列</strong>,当Condition调用<strong>wait()方法后</strong>，线程将会加<strong>入等待队列中</strong>，而Condition<strong>调用signal()方法后</strong>，线程将从<strong>等待队列</strong>转移动<strong>同步队列</strong>中进行锁竞争。</p>
+</li>
+<li><p>AQS和Condition各自维护了不同的队列，在使用Lock和Condition的时候，其实就是<strong>两个队列的互相移动</strong>。</p>
 </li>
 </ol>
-<p>注 意 ， 当一个对象被锁住时， 对象里所有用Synchronized 修饰的方法都将产生堵塞 ， 而 对 象 里 <strong>非 Synchronized修饰的方法可正常被调用</strong> ， 不 受 锁 影 响 。</p>
-<h2 id="问题三-Synchronized-为什么是可重入锁"><a href="#问题三-Synchronized-为什么是可重入锁" class="headerlink" title="问题三: Synchronized 为什么是可重入锁"></a>问题三: Synchronized 为什么是可重入锁</h2><p>可重入性是<strong>锁的一个基本要求</strong>，是为了<strong>解决自己锁死自己的情况</strong> 。</p>
-<p>比如 ，一 个类中的同步方法调用另一个同步方法 ， 假 如Synchronized 不 支持重入 ， 进入<code>method2</code>方法 时当前线程获得锁 , <code>method2</code> 方法里面执行<code>method1</code>时 当前线程又要去尝试获取锁 ，这时如果不支持重入 ，它就要等待释放 ，把自己阻塞 ，导致<strong>自己锁死自己</strong> 。</p>
-<p>对 Synchronized 来 说 ，在执行monitorenter 指令时 ，如果这个对象没有锁定 ，就获对象的取锁，如果当前线程<strong>已经拥有了</strong>这个对象的锁 ，就<strong>把锁的计数器 +1</strong>，而不是阻塞等待。 本质上就通过这种方式实现了<strong>可重入性</strong> 。</p>
-<h2 id="问题四-JVM对Java的原生锁做了哪些优化"><a href="#问题四-JVM对Java的原生锁做了哪些优化" class="headerlink" title="问题四 : JVM对Java的原生锁做了哪些优化"></a>问题四 : JVM对Java的原生锁做了哪些优化</h2><p>在 Java 6 之 前 ，Monitor的实现<strong>完全依赖底层操作系统的互斥锁</strong>来实现 。</p>
-<p>如果要将一个线程进行阻塞或唤起都需要操作系统的协助 ， 这就需要从 <strong>用户态切换到内核态</strong> 来执行 ，这种切换代价十分昂贵 ，很耗处理器时间 。</p>
-<p>一种优化是使用<strong>自旋锁</strong> ，即在把线程进行阻塞操作之前先让线程自旋等待一段时间 ，可能在等待 期 间 其 他 线 程 已 经 解 锁 ， 这时就 无需再让线程执行阻塞操作 ，避免了用户态到内核态的切 换 。</p>
-<p>现 代 JDK 中 还 提 供 了 三 种 不 同 的 Monitor 实 现 ， 也 就 是 三 种 不 同 的锁 ：</p>
-<p> <strong>偏 向 锁 （ Biased Locking）</strong> </p>
-<p> <strong>轻 量 级 锁</strong></p>
-<p> <strong>重 量 级 锁</strong></p>
+<h2 id="问题三-SynchronizedReentrantLock的异同"><a href="#问题三-SynchronizedReentrantLock的异同" class="headerlink" title="问题三:SynchronizedReentrantLock的异同"></a>问题三:SynchronizedReentrantLock的异同</h2><p>ReentrantLock是Lock的实现类,是一个互斥的同步锁。<br><strong>从功能角度,</strong>ReentrantLock比Synchronized的同步操作<strong>更精细</strong>：</p>
 <ul>
-<li><p>这 三 种 锁 使 得 JDK 得 以 优 化 Synchronized 的 运 行 ， 当 JVM 检 测到 <strong>不 同 的 竞 争 状 况 时 ， 会 自 动 切 换 到 适 合 的 锁 实 现</strong> ， 这 就 是 锁 的 升 级 、降 级 。</p>
-</li>
-<li><p>当 没 有 竞 争 出 现 时 ，默认会使用 <strong>偏向锁</strong> 。JVM会利用<strong>CAS操作</strong> ，在对象头上的<strong>MarkWord部分设置线程ID</strong>， 以表示<strong>这个对象偏向当前线程</strong> ，所以并不涉及真正的互斥锁 ，因为在很多应用场景中 ， 大部分对象生命周期中最多会被一个线程锁 定 ，使用偏向锁可以降低<strong>无竞争开销</strong> 。</p>
-</li>
-<li><p>如果有<strong>另一线程试图锁定</strong>某个被偏斜过的对象 ， JVM就<strong>撤销偏向锁</strong> ，切换到轻量级锁实现 。轻量级锁依赖<strong>CAS操作Mark Word来试 图获取锁</strong> ，如果重试成 功 ，就使用普通的轻量级锁 ；否则 ， 进一步升级为<strong>重量级锁</strong> ，升级为重量级锁也叫<strong>锁膨胀</strong>。</p>
-</li>
+<li><strong>等待可中断</strong>：当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，对处理执行时间非常长的同步块很有用。</li>
+<li><strong>带超时的获取锁尝试</strong>：在指定的时间范围内获取锁，如果时间到了仍然无法获取则返回。</li>
+<li>可以判断是否有线程在排队等待获取锁。    </li>
+<li>可以<strong>响应中断请求</strong>：与Synchronized不同，当获取到锁的线程被中断时，能够响应中断，中断异常将会被抛出，同时锁会被释放。</li>
+<li>可以<strong>实现公平锁</strong>。</li>
 </ul>
-<h2 id="问题五-Synchronized-为什么是非公平锁-？"><a href="#问题五-Synchronized-为什么是非公平锁-？" class="headerlink" title="问题五 : Synchronized 为什么是非公平锁 ？"></a>问题五 : Synchronized 为什么是非公平锁 ？</h2><p>非公平主要表现在获取锁的行为上 ，并非是按照申<strong>请锁的时间</strong>前后给等待线程分配锁的 ，每当锁被释放后 ，<strong>任何一个线程都有机会</strong>竞争到锁 ，这样做的目的是为了<strong>提高执行性能</strong> ，缺点是可能会产生<strong>线程饥饿现象</strong> 。</p>
-<h2 id="问题六-什么是锁消除和锁粗化-？"><a href="#问题六-什么是锁消除和锁粗化-？" class="headerlink" title="问题六: 什么是锁消除和锁粗化 ？"></a>问题六: 什么是锁消除和锁粗化 ？</h2><ul>
-<li><p>锁消除 ：指虚拟机即时编译器在运行时 ，对一 些<strong>代码上要求同步</strong> ，但<strong>被检测到不可能存在共享数据竞争</strong>的锁进行消除 。</p>
-</li>
-<li><p>锁粗化 ： 原则上 ，同步块的作用范围要尽量小 。但是如果一系列的连续操作都<strong>对同 一个对象反复加锁和解锁</strong> ，频繁地进行互斥同步操作也会导致不必要的性能损耗 。<strong>锁 粗 化 就 是 增 大 锁 的 作 用 域</strong> 。以降低加锁解锁的频率。</p>
-</li>
-</ul>
-<h2 id="问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理"><a href="#问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理" class="headerlink" title="问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理"></a>问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理</h2><p>Synchronized 的并发策略是悲观的 ：</p>
-<p><strong>不管是否会产生竞争 ，任何的数据操作都必须要加锁</strong> 、用户态核心态转换 、维护锁计数器和检查是否有被阻塞的线程需要被唤醒等操作 。</p>
-<p>乐观锁：</p>
-<p><strong>先 进 行 操 作</strong> ， 如果没有其他线程征用数据 ，那操作就成功了 ；如果共享数据有<strong>征用</strong> ， 产生冲突 ，那就再进行其他的 <strong>补偿措施</strong> 。 </p>
-<p>这 种乐 观 的并发策略 <strong>不需要线程挂起</strong> ， 所以被称为 <strong>非阻塞同步</strong> 。</p>
-<p>乐 观 锁 的 核 心 算 法 是 CAS：</p>
-<p> 它 涉及 到 三 个操作数 ：<strong>内存值 、预期值 、新值</strong> 。当且仅 当<strong>预期值和内存值相等</strong>时才将内存值修改为新值 。这样处理的逻辑是 ，首 先检查某块内存 值是否跟之前我读取时的一样 ， 如 不 一 样 则 表 示 期 间 此 内 存 值 已 经 被 别 的 线 程 更 改 过 ， <strong>舍 弃 本 次 操作</strong> ， 否则说明期间没有其他线程对此内存值操作，可以把新值设置给此块内存 。</p>
-<p>CAS具有<strong>原子性</strong> ， 它的原子性由<strong>CPU硬件指令</strong> 实现保证。</p>
-<h2 id="问-题-八-：-乐-观-锁-一-定-就-是-好-的-吗-？"><a href="#问-题-八-：-乐-观-锁-一-定-就-是-好-的-吗-？" class="headerlink" title="问 题 八 ： 乐 观 锁 一 定 就 是 好 的 吗 ？"></a><strong>问 题 八 ：</strong> 乐 观 锁 一 定 就 是 好 的 吗 ？</h2><p>乐观锁避免了悲观锁独占对象的现象 ，同时也提高了并发性能 ，但它也有缺点 ：</p>
-<ol>
-<li><p>乐观锁只能保证 <strong>一个共享变量的原子操作</strong> 。 如果<strong>多一个或几个变量</strong> ， 乐观锁将变得力不从心 ， 但 <strong>互斥锁</strong> 能 易解决 ，不管对象数量多少及对象颗粒度大小 。</p>
-</li>
-<li><p><strong>长时间自旋</strong>可能导致开销大 。假 如CAS长时间不成功而一直自旋 ， <strong>会给CPU带来很大的开销</strong> 。</p>
-</li>
-<li><p><strong>ABA 问 题</strong> 。CAS 的 核 心 思 想 是 通 过 比 对 内 存 值 与 预 期 值 是 否 一 样 而 判断内存值是否被改过 ， 但 <strong>这个判断逻辑不严谨</strong> ，假如内存值原来是A后来被 一条线程改为B，最后又被改成了A，则 CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过值的情景的运算结果影响很大 。 解决的思路 是<strong>引入版本号</strong> ， 每次变量更新都把版本号加一 。</p>
-</li>
-</ol>
-<h1 id="ReentrantLock及其他显式锁相关问题"><a href="#ReentrantLock及其他显式锁相关问题" class="headerlink" title="ReentrantLock及其他显式锁相关问题"></a>ReentrantLock及其他显式锁相关问题</h1><h2 id="问题一-Synchronized和ReentrantLock实现原理的不同"><a href="#问题一-Synchronized和ReentrantLock实现原理的不同" class="headerlink" title="问题一 :Synchronized和ReentrantLock实现原理的不同"></a>问题一 :Synchronized和ReentrantLock实现原理的不同</h2><p>其实 ，锁的实现原理基本是为了达到一个目的 ，<strong>让所有的线程都能看到某种标记</strong>。</p>
-<p>Synchronized通过在<strong>对象头中设置标记</strong>实现了这一目的，是一种<strong>JVM原生的锁</strong>实现方式  。</p>
-<p>ReentrantLock以及所有的基于Lock接口的实现类 ，都是通过用 一个<strong>volitile修饰的int型变量</strong> ，<strong>并保证每个线程都能拥有对该int的可见性和原子修改</strong> ，其本质是基于所谓的<strong>AQS框架</strong> 。</p>
-<h2 id="问-题-二-AQS框架"><a href="#问-题-二-AQS框架" class="headerlink" title="问 题 二 :AQS框架"></a>问 题 二 :AQS框架</h2><p>AQS（ AbstractQueuedSynchronizer类）是一个用来 <strong>构建锁和同步器的框架</strong> ，各种Lock 包都是基于AQS来构建 。</p>
-<ol>
-<li><p>AQS 在 内 部 定 义 了 一 个 <code>volatile int state</code> 变 量 ， 表 示 <strong>同 步 状 态</strong> ：当线程调用lock方法时 ，如果state=0，说 明没有任何线程占有共享资源的锁 ，可以获得锁并将state=1; 如果state=1，则说明有线程目前正使用共享变 量 ，其他线程必须 <strong>加入同步队列进行等待</strong> 。</p>
-</li>
-<li><p>AQS 通过Node 内 部 类 构 成 的 一 个 双 向 链 表 结 构 的 <strong>同步队列</strong> ， 来完成 <strong>线程获取锁的排队工作</strong> ， 当有线程获取锁<strong>失败</strong> 后 ， 就被添加到<strong>队列末尾</strong> 。</p>
-<ul>
-<li><p>Node 类 是 对 要 访 问 同 步 代 码 的 线 程 的 封 装 ， 包 含 了 线 程 本 身 及 其 状 态 叫waitStatus（ 有 五 种 不 同 取 值 ， 分 别 表 示 是 否 被 阻 塞 ， 是 否 等 待 唤 醒 ，是 否 已 经 被 取 消 等 ） ， 每 个 Node 结 点 关 联 其 prev 结 点 和 next 结点 ， 方 便 线 程 释 放 锁 后 快 速 唤 醒 下 一 个 在 等 待 的 线 程 ， 是 一 个 FIFO 的 过程 。</p>
-</li>
-<li><p>Node 类 有 两 个 常 量 ， SHARED 和 EXCLUSIVE， 分 别 代 表 共 享 模 式 和 独占 模 式 。 所 谓 共 享 模 式 是 一 个 锁 允 许 多 条 线 程 同 时 操 作 （ 信 号 量Semaphore 就 是 基 于 AQS 的 共 享 模 式 实 现 的 ） ， 独 占 模 式 是 同 一 个 时间 段 只 能 有 一 个 线 程 对 共 享 资 源 进 行 操 作 ， 多 余 的 请 求 线 程 需 要 排 队 等 待（ 如 ReentranLock） 。</p>
-</li>
-</ul>
-</li>
-<li><p>AQS 通 过 内 部 类 <code>ConditionObject</code>  构 建 <strong>等待队列</strong>, 当Condition 调用<strong>wait()方法后</strong> ，线程将会加<strong>入等待队列中</strong>，而Condition<strong>调用signal()方法后</strong>，线程将从  <strong>等待队列</strong>  转移动  <strong>同步队列</strong>  中进行锁竞争。</p>
-</li>
-<li><p>AQS 和 Condition 各自维护了不同的队列 ，在使用Lock 和Condition 的 时 候 ， 其 实 就 是 <strong>两个队列的互相移动</strong> 。</p>
-</li>
-</ol>
-<h2 id="问-题-三-Synchronized-和-ReentrantLock的异同-。"><a href="#问-题-三-Synchronized-和-ReentrantLock的异同-。" class="headerlink" title="问 题 三: Synchronized 和 ReentrantLock的异同 。"></a>问 题 三: Synchronized 和 ReentrantLock的异同 。</h2><p>ReentrantLock是Lock的实现类 ,是一个互斥的同步锁 。</p>
-<p><strong>从功能角度 ,</strong></p>
-<p>ReentrantLock比Synchronized的同步操作<strong>更精细</strong> ：</p>
-<ul>
-<li><p><strong>等 待 可 中 断</strong> ： 当 持 有 锁 的 线 程 长 期 不 释 放 锁 的 时 候 ， 正 在 等 待 的 线 程 可以 选 择 放 弃 等 待 ， 对 处 理 执 行 时 间 非 常 长 的 同 步 块 很 有 用 。</p>
-</li>
-<li><p><strong>带 超 时 的 获 取 锁 尝 试</strong> ： 在 指 定 的 时 间 范 围 内 获 取 锁 ， 如 果 时 间 到 了 仍 然无 法 获 取 则 返 回 。</p>
-</li>
-<li><p>可以判断是否有线程在排队等待获取锁 。</p>
-</li>
-<li><p>可 以 <strong>响 应 中 断 请 求</strong> ： 与 Synchronized 不 同 ， 当 获 取 到 锁 的 线 程 被 中断 时 ， 能 够 响 应 中 断 ， 中 断 异 常 将 会 被 抛 出 ， 同 时 锁 会 被 释 放 。</p>
-</li>
-<li><p>可 以 <strong>实 现 公 平 锁</strong> 。</p>
-</li>
-</ul>
-<p><strong>从锁释放角度:</strong></p>
-<p> Synchronized在<strong>JVM层面上实现的</strong>，不但可以通过一些监控工具监控Synchronized的锁定 ，而且在<strong>代码执行出现异常</strong>时 ，<strong>JVM会自动释放锁定</strong> ；</p>
-<p>Lock是通过代码实现的，要保证锁定一定会被释放 ，就必须 将 unLock() 放 到finally{} 中 。</p>
-<p><strong>从 性 能 角 度</strong> :</p>
-<p> Synchronized 早 期 实 现 比 较 低 效 ， 对 比ReentrantLock， 大 多 数 场 景 性 能 都 相 差 较 大 。</p>
-<p> 改进后在竞争不激烈时 ，Synchronized的性能要优于ReetrantLock；在高竞争情况下 ，Synchronized的性能会下降 几十倍 ，但是ReetrantLock的性可以维持常态 。</p>
+<p><strong>从锁释放角度:</strong><br>Synchronized在<strong>JVM层面上实现的</strong>，不但可以通过一些监控工具监控Synchronized的锁定，而且在<strong>代码执行出现异常</strong>时，<strong>JVM会自动释放锁定</strong>；<br>Lock是通过代码实现的，要保证锁定一定会被释放，就必须将<strong>unLock()放到finally{}中</strong>。</p>
+<p><strong>从性能角度</strong>:<br>Synchronized早期实现比较低效，对比ReentrantLock，大多数场景性能都相差较大。改进后在竞争不激烈时，Synchronized的性能要优于ReetrantLock；在高竞争情况下，Synchronized的性能会下降几十倍，但是ReetrantLock的性可以维持常态。</p>
 <h2 id="问-题-四-ReentrantLock如何实现可重入性"><a href="#问-题-四-ReentrantLock如何实现可重入性" class="headerlink" title="问 题 四: ReentrantLock如何实现可重入性"></a>问 题 四: ReentrantLock如何实现可重入性</h2><p>ReentrantLock内部自定义了<strong>同步器Sync</strong> ,其实就是<strong>加锁的时候通过CAS算法 ，将线程对象放到一个双向链表中 ，每次获取锁的时候 ，看下当前维护的那个线程ID和当前请求的线程ID是否一样 ,一样就可重入了</strong> 。</p>
 <h2 id="问-题-五-JUC-中-的其他并-发-工-具-？"><a href="#问-题-五-JUC-中-的其他并-发-工-具-？" class="headerlink" title="问 题 五 :  JUC 中 的其他并 发 工 具 ？"></a>问 题 五 :  JUC 中 的其他并 发 工 具 ？</h2><p>通常所说的并发包（JUC）也就是java.util.concurrent及其子包，集中了Java并发的各种基础工具类，具体主要包括几个方面：</p>
 <ul>
-<li><p>提供了CountDownLatch、CyclicBarrier、Semaphore等，比Synchronized更加高级，可以实现更加丰富多线程操作的同步结构。</p>
+<li><p>提供了<code>CountDownLatch、CyclicBarrier、Semaphore</code>等，比Synchronized更加高级，可以实现更加丰富多线程操作的同步结构。</p>
 </li>
-<li><p>提供了ConcurrentHashMap、有序的ConcunrrentSkipListMap，或者通过类似快照机制实现线程安全的动态数组CopyOnWriteArrayList等，各种线程安全的容器。</p>
+<li><p>提供了<code>ConcurrentHashMap、有序的ConcunrrentSkipListMap</code>，或者通过类似快照机制实现线程安全的动态数组CopyOnWriteArrayList等，各种线程安全的容器。</p>
 </li>
-<li><p>提供了ArrayBlockingQueue、SynchorousQueue或针对特定场景的PriorityBlockingQueue等，各种并发队列实现。</p>
+<li><p>提供了<code>ArrayBlockingQueue、SynchorousQueue</code>或针对特定场景的PriorityBlockingQueue等，各种并发队列实现。</p>
 </li>
-<li><p>-强大的Executor框架，可以创建各种不同类型的线程池，调度任务运行等。</p>
+<li><p>强大的<code>Executor</code>框架，可以创建各种不同类型的线程池，调度任务运行等。</p>
 </li>
 </ul>
-<h2 id="问-题-六-ReadWriteLock-和-StampedLock。"><a href="#问-题-六-ReadWriteLock-和-StampedLock。" class="headerlink" title="问 题 六 :ReadWriteLock 和 StampedLock。"></a>问 题 六 :ReadWriteLock 和 StampedLock。</h2><p>虽然ReentrantLock和Synchronized简单实用，但是行为上有一定局限性，<strong>要么不占，要么独占</strong>。实际应用场景中，有时候不需要大量竞争的写操作，<strong>而是以并发读取为主</strong>，为了进一步优化并发操作的粒度，<strong>Java提供了读写锁</strong>。</p>
+<h2 id="问-题-六-ReadWriteLock-和-StampedLock"><a href="#问-题-六-ReadWriteLock-和-StampedLock" class="headerlink" title="问 题 六 :ReadWriteLock 和 StampedLock"></a>问 题 六 :ReadWriteLock 和 StampedLock</h2><p>虽然ReentrantLock和Synchronized简单实用，但是行为上有一定局限性，<strong>要么不占，要么独占</strong>。实际应用场景中，有时候不需要大量竞争的写操作，<strong>而是以并发读取为主</strong>，为了进一步优化并发操作的粒度，<strong>Java提供了读写锁</strong>。</p>
 <hr>
 <h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>读写锁基于的原理是<strong>多个读操作不需要互斥</strong>，如果<strong>读锁试图锁定</strong>时，<strong>写锁是被某个线程持有，读锁将无法获得</strong>，而只好等待对方操作结束，这样就可以<strong>自动保证不会读取到有争议的数据</strong>。</p>
 <p>ReadWriteLock代表了<strong>一对锁</strong>，当数据量较大，<strong>并发读多、并发写少</strong>的时候，能够比纯同步版本凸显出优势。</p>
@@ -411,14 +356,14 @@
 </li>
 </ul>
 <h1 id="Java线程池相关问题"><a href="#Java线程池相关问题" class="headerlink" title="Java线程池相关问题"></a>Java线程池相关问题</h1><p><a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html" target="_blank" rel="noopener">美团线程池总结</a></p>
-<h2 id="问题一：Java中的线程池是如何实现的？"><a href="#问题一：Java中的线程池是如何实现的？" class="headerlink" title="问题一：Java中的线程池是如何实现的？"></a>问题一：Java中的线程池是如何实现的？</h2><p>java中线程池中的<strong>“线程”</strong>，其实是被抽象为了<strong>一个静态内部类Worker</strong>，它基于AQS实现，存放在线程池的<code>HashSet &lt;Worker&gt;workers</code> 成员变量中。</p>
+<h2 id="问题一：Java中的线程池是如何实现的"><a href="#问题一：Java中的线程池是如何实现的" class="headerlink" title="问题一：Java中的线程池是如何实现的"></a>问题一：Java中的线程池是如何实现的</h2><p>java中线程池中的<strong>“线程”</strong>，其实是被抽象为了<strong>一个静态内部类Worker</strong>，它基于AQS实现，存放在线程池的<code>HashSet &lt;Worker&gt;workers</code> 成员变量中。</p>
 <p><strong>需要执行的任务</strong>则存放在成员变量<code>workQueue</code>（<code>BlockingQueue&lt;Runnable&gt;workQueue</code>）中。</p>
 <p>这样，整个线程池实现的基本思想就是：<strong>从workQueue中不断取出需要执行的任务，放在Workers（线程的抽象）中进行处理</strong>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> HashSet&lt;Worker&gt; workers = <span class="keyword">new</span> HashSet&lt;&gt;(); </span><br><span class="line">BlockingQueue&lt;Runnable&gt;workQueue</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="问题二：创建线程池的几个核心构造参数？"><a href="#问题二：创建线程池的几个核心构造参数？" class="headerlink" title="问题二：创建线程池的几个核心构造参数？"></a>问题二：创建线程池的几个核心构造参数？</h2><p>Java中的线程池的创建其实非常灵活，我们可以通过配置不同的参数，创建出行为不同的线程池，这几个参数包括：</p>
+<h2 id="问题二：创建线程池的几个核心构造参数"><a href="#问题二：创建线程池的几个核心构造参数" class="headerlink" title="问题二：创建线程池的几个核心构造参数"></a>问题二：创建线程池的几个核心构造参数</h2><p>Java中的线程池的创建其实非常灵活，我们可以通过配置不同的参数，创建出行为不同的线程池，这几个参数包括：</p>
 <ul>
 <li><p><code>corePoolSize</code>：线程池的<strong>核心线程数</strong>。</p>
 </li>
@@ -494,7 +439,7 @@
 </li>
 </ol>
 <ol start="4">
-<li><p>ScheduledThreadPool线程池 ：<strong>核心线程池固定</strong>，<strong>大小无限</strong>的线程池。此线程池支持定时以及周期性执行任务的需求。创建一个周期性执行任务的线程池。如果闲置，非核心线程池会在<code>DEFAULT_KEEPALIVEMILLIS</code>时间内回收。</p>
+<li><p><code>ScheduledThreadPool</code> 线程池 ：<strong>核心线程池固定</strong>，<strong>大小无限</strong>的线程池。此线程池支持定时以及周期性执行任务的需求。创建一个周期性执行任务的线程池。如果闲置，非核心线程池会在<code>DEFAULT_KEEPALIVEMILLIS</code>时间内回收。</p>
 <ul>
 <li><p><code>corePoolSize：corePoolSize</code></p>
 </li>
@@ -598,7 +543,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronized相关问题"><span class="nav-number">1.</span> <span class="nav-text">Synchronized相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-Synchronized原理"><span class="nav-number">1.1.</span> <span class="nav-text">问题一:  Synchronized原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-获取对象的锁这个-“-锁-”-到底是什么-？"><span class="nav-number">1.2.</span> <span class="nav-text">问题二:获取对象的锁这个 “ 锁 ” 到底是什么 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三-Synchronized-为什么是可重入锁"><span class="nav-number">1.3.</span> <span class="nav-text">问题三: Synchronized 为什么是可重入锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四-JVM对Java的原生锁做了哪些优化"><span class="nav-number">1.4.</span> <span class="nav-text">问题四 : JVM对Java的原生锁做了哪些优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题五-Synchronized-为什么是非公平锁-？"><span class="nav-number">1.5.</span> <span class="nav-text">问题五 : Synchronized 为什么是非公平锁 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题六-什么是锁消除和锁粗化-？"><span class="nav-number">1.6.</span> <span class="nav-text">问题六: 什么是锁消除和锁粗化 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理"><span class="nav-number">1.7.</span> <span class="nav-text">问题七：为什么Synchronized是一个悲观锁？乐观锁的实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-八-：-乐-观-锁-一-定-就-是-好-的-吗-？"><span class="nav-number">1.8.</span> <span class="nav-text">问 题 八 ： 乐 观 锁 一 定 就 是 好 的 吗 ？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ReentrantLock及其他显式锁相关问题"><span class="nav-number">2.</span> <span class="nav-text">ReentrantLock及其他显式锁相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-Synchronized和ReentrantLock实现原理的不同"><span class="nav-number">2.1.</span> <span class="nav-text">问题一 :Synchronized和ReentrantLock实现原理的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-二-AQS框架"><span class="nav-number">2.2.</span> <span class="nav-text">问 题 二 :AQS框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-三-Synchronized-和-ReentrantLock的异同-。"><span class="nav-number">2.3.</span> <span class="nav-text">问 题 三: Synchronized 和 ReentrantLock的异同 。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-四-ReentrantLock如何实现可重入性"><span class="nav-number">2.4.</span> <span class="nav-text">问 题 四: ReentrantLock如何实现可重入性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-五-JUC-中-的其他并-发-工-具-？"><span class="nav-number">2.5.</span> <span class="nav-text">问 题 五 :  JUC 中 的其他并 发 工 具 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-六-ReadWriteLock-和-StampedLock。"><span class="nav-number">2.6.</span> <span class="nav-text">问 题 六 :ReadWriteLock 和 StampedLock。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">2.6.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StampedLock"><span class="nav-number">2.6.2.</span> <span class="nav-text">StampedLock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题七-Java的线程如何彼此同步"><span class="nav-number">2.7.</span> <span class="nav-text">问题七: Java的线程如何彼此同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题八-对比CyclicBarrier和CountDownLatch"><span class="nav-number">2.8.</span> <span class="nav-text">问题八:对比CyclicBarrier和CountDownLatch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java线程池相关问题"><span class="nav-number">3.</span> <span class="nav-text">Java线程池相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：Java中的线程池是如何实现的？"><span class="nav-number">3.1.</span> <span class="nav-text">问题一：Java中的线程池是如何实现的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：创建线程池的几个核心构造参数？"><span class="nav-number">3.2.</span> <span class="nav-text">问题二：创建线程池的几个核心构造参数？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：线程池中的线程创建"><span class="nav-number">3.3.</span> <span class="nav-text">问题三：线程池中的线程创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四：Java实现好的线程池"><span class="nav-number">3.4.</span> <span class="nav-text">问题四：Java实现好的线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题六：Java线程池中如何提交线程"><span class="nav-number">3.5.</span> <span class="nav-text">问题六：Java线程池中如何提交线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java内存模型"><span class="nav-number">4.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：Java的内存模型，各个线程怎么看到对方的变量的"><span class="nav-number">4.1.</span> <span class="nav-text">问题一：Java的内存模型，各个线程怎么看到对方的变量的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：volatile-特点，为什么能保证可见性"><span class="nav-number">4.2.</span> <span class="nav-text">问题二：volatile 特点，为什么能保证可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：-volatile变量的运算就是并发安全的吗"><span class="nav-number">4.3.</span> <span class="nav-text">问题三： volatile变量的运算就是并发安全的吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四：volatile对比Synchronized的异同。"><span class="nav-number">4.4.</span> <span class="nav-text">问题四：volatile对比Synchronized的异同。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题五：ThreadLocal怎么解决并发安全的？"><span class="nav-number">4.5.</span> <span class="nav-text">问题五：ThreadLocal怎么解决并发安全的？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronized相关问题"><span class="nav-number">1.</span> <span class="nav-text">Synchronized相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-获取对象的锁这个“锁”到底是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">问题二:获取对象的锁这个“锁”到底是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四-JVM对Java的原生锁做了哪些优化"><span class="nav-number">1.2.</span> <span class="nav-text">问题四:JVM对Java的原生锁做了哪些优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题五-Synchronized为什么是非公平锁？"><span class="nav-number">1.3.</span> <span class="nav-text">问题五:Synchronized为什么是非公平锁？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题六-什么是锁消除和锁粗化？"><span class="nav-number">1.4.</span> <span class="nav-text">问题六:什么是锁消除和锁粗化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题七：为什么Synchronized是一个悲观锁？"><span class="nav-number">1.5.</span> <span class="nav-text">问题七：为什么Synchronized是一个悲观锁？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题八-乐观锁一定就是好的吗？"><span class="nav-number">1.6.</span> <span class="nav-text">问题八: 乐观锁一定就是好的吗？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ReentrantLock及其他显式锁相关问题"><span class="nav-number">2.</span> <span class="nav-text">ReentrantLock及其他显式锁相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-Synchronized和ReentrantLock实现原理的不同"><span class="nav-number">2.1.</span> <span class="nav-text">问题一:Synchronized和ReentrantLock实现原理的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-AQS框架"><span class="nav-number">2.2.</span> <span class="nav-text">问题二:AQS框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三-SynchronizedReentrantLock的异同"><span class="nav-number">2.3.</span> <span class="nav-text">问题三:SynchronizedReentrantLock的异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-四-ReentrantLock如何实现可重入性"><span class="nav-number">2.4.</span> <span class="nav-text">问 题 四: ReentrantLock如何实现可重入性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-五-JUC-中-的其他并-发-工-具-？"><span class="nav-number">2.5.</span> <span class="nav-text">问 题 五 :  JUC 中 的其他并 发 工 具 ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问-题-六-ReadWriteLock-和-StampedLock"><span class="nav-number">2.6.</span> <span class="nav-text">问 题 六 :ReadWriteLock 和 StampedLock</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">2.6.1.</span> <span class="nav-text">读写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StampedLock"><span class="nav-number">2.6.2.</span> <span class="nav-text">StampedLock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题七-Java的线程如何彼此同步"><span class="nav-number">2.7.</span> <span class="nav-text">问题七: Java的线程如何彼此同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题八-对比CyclicBarrier和CountDownLatch"><span class="nav-number">2.8.</span> <span class="nav-text">问题八:对比CyclicBarrier和CountDownLatch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java线程池相关问题"><span class="nav-number">3.</span> <span class="nav-text">Java线程池相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：Java中的线程池是如何实现的"><span class="nav-number">3.1.</span> <span class="nav-text">问题一：Java中的线程池是如何实现的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：创建线程池的几个核心构造参数"><span class="nav-number">3.2.</span> <span class="nav-text">问题二：创建线程池的几个核心构造参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：线程池中的线程创建"><span class="nav-number">3.3.</span> <span class="nav-text">问题三：线程池中的线程创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四：Java实现好的线程池"><span class="nav-number">3.4.</span> <span class="nav-text">问题四：Java实现好的线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题六：Java线程池中如何提交线程"><span class="nav-number">3.5.</span> <span class="nav-text">问题六：Java线程池中如何提交线程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java内存模型"><span class="nav-number">4.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一：Java的内存模型，各个线程怎么看到对方的变量的"><span class="nav-number">4.1.</span> <span class="nav-text">问题一：Java的内存模型，各个线程怎么看到对方的变量的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二：volatile-特点，为什么能保证可见性"><span class="nav-number">4.2.</span> <span class="nav-text">问题二：volatile 特点，为什么能保证可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三：-volatile变量的运算就是并发安全的吗"><span class="nav-number">4.3.</span> <span class="nav-text">问题三： volatile变量的运算就是并发安全的吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四：volatile对比Synchronized的异同。"><span class="nav-number">4.4.</span> <span class="nav-text">问题四：volatile对比Synchronized的异同。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题五：ThreadLocal怎么解决并发安全的？"><span class="nav-number">4.5.</span> <span class="nav-text">问题五：ThreadLocal怎么解决并发安全的？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
