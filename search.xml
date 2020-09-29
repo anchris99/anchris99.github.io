@@ -3,7 +3,11 @@
   <entry>
     <title>daily review</title>
     <url>/2020/09/10/daily-review/</url>
-    <content><![CDATA[<h1 id="2020-09-16"><a href="#2020-09-16" class="headerlink" title="2020.09.16"></a>2020.09.16</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="1-最大矩形"><a href="#1-最大矩形" class="headerlink" title="1. 最大矩形"></a><a href="https://leetcode-cn.com/problems/maximal-rectangle/" target="_blank" rel="noopener">1. 最大矩形</a></h3><figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"0"</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<a id="more"></a>
+
+
+
+<h1 id="2020-09-16"><a href="#2020-09-16" class="headerlink" title="2020.09.16"></a>2020.09.16</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="1-最大矩形"><a href="#1-最大矩形" class="headerlink" title="1. 最大矩形"></a><a href="https://leetcode-cn.com/problems/maximal-rectangle/" target="_blank" rel="noopener">1. 最大矩形</a></h3><figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>,<span class="string">"1"</span>],</span><br><span class="line">  [<span class="string">"1"</span>,<span class="string">"0"</span>,<span class="string">"0"</span>,<span class="string">"1"</span>,<span class="string">"0"</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>分析： 该题目可以有两种方法来做，动态规划和 栈</p>
 <p><strong>动态规划的话</strong>，我们要获得<strong>每个结点作为 矩形的 右下角</strong> 形成的矩形的最大 宽度 进一步获得 相应的面积</p>
@@ -472,7 +476,6 @@
 </ol>
 <p>​        MyISAM 的索引是<strong>非聚簇索引</strong>，<strong>可以加载更多索引</strong> ，内存利用率高</p>
 <p>​        InnoDB 的索引是 <strong>聚簇索引</strong> ， 体积庞大。</p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p><a href="https://zhuanlan.zhihu.com/p/50597960" target="_blank" rel="noopener">解析</a></p>
 <h1 id="2020-09-28"><a href="#2020-09-28" class="headerlink" title="2020.09.28"></a>2020.09.28</h1><h2 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h2><h3 id="1-车队"><a href="#1-车队" class="headerlink" title="1 车队"></a><a href="https://leetcode-cn.com/problems/car-fleet/" target="_blank" rel="noopener">1 车队</a></h3><p>感悟：</p>
 <p>​    把同一个对象的属性 定义到一个类中，再使用 ，更方便</p>
 <p>​    <strong>从右向左计算</strong>，距离终点近的 用时又少，那么肯定<strong>单独成为一个车队</strong>，ans++</p>
@@ -494,13 +497,52 @@
 <h4 id="4-6字节的rowid"><a href="#4-6字节的rowid" class="headerlink" title="4. 6字节的rowid?"></a>4. 6字节的rowid?</h4><h4 id="5-基数的概念"><a href="#5-基数的概念" class="headerlink" title="5. 基数的概念"></a>5. 基数的概念</h4><p>hyperloglog算法</p>
 <p>用处： MySQL ，redis</p>
 <p><img src="https://s1.ax1x.com/2020/09/28/0EQE4S.png" alt="0EQE4S.png"></p>
-<h4 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h4><ul>
+<h4 id="6-ACID"><a href="#6-ACID" class="headerlink" title="6. ACID"></a>6. ACID</h4><ul>
 <li>各个实现原理</li>
 <li>最重要的性质： 一致性</li>
 </ul>
 <p>undo  log保证原子性的同时 ， 也有MVCC</p>
 <h5 id="可重复读和读已提交"><a href="#可重复读和读已提交" class="headerlink" title="可重复读和读已提交"></a>可重复读和读已提交</h5><p><img src="https://s1.ax1x.com/2020/09/28/0ElqJO.png" alt="0ElqJO.png"></p>
-]]></content>
+<h4 id="7-预写日志"><a href="#7-预写日志" class="headerlink" title="7. 预写日志"></a>7. 预写日志</h4><p>WAL：write ahead  log</p>
+<p>在使用WAL的系统中，所有的修改在<strong>提交之前都要先写入log文件中</strong>，log文件中通常包括<strong>redo和undo信息</strong>，通过<strong>日志记录</strong>描述好数据的改变后(redo和undo)，再<strong>写入缓存</strong>，等缓存区写满后，最后再往持久层修改数据。</p>
+<h4 id="8-主从复制原理"><a href="#8-主从复制原理" class="headerlink" title="8. 主从复制原理"></a>8. 主从复制原理</h4><h4 id="9-主从复制延迟原因-解决方案"><a href="#9-主从复制延迟原因-解决方案" class="headerlink" title="9. 主从复制延迟原因 + 解决方案"></a>9. 主从复制延迟原因 + 解决方案</h4><h4 id="10-日志数据写过程"><a href="#10-日志数据写过程" class="headerlink" title="10. 日志数据写过程"></a>10. 日志数据写过程</h4><p><img src="https://s1.ax1x.com/2020/09/28/0VujTf.png" alt="0VujTf.png"></p>
+<h4 id="11-二阶段提交"><a href="#11-二阶段提交" class="headerlink" title="11. 二阶段提交"></a>11. 二阶段提交</h4><h1 id="2020-09-29"><a href="#2020-09-29" class="headerlink" title="2020.09.29"></a>2020.09.29</h1><h2 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h2><h3 id="1-数组的相对排序"><a href="#1-数组的相对排序" class="headerlink" title="1. 数组的相对排序"></a><a href="https://leetcode-cn.com/problems/relative-sort-array/" target="_blank" rel="noopener">1. 数组的相对排序</a></h3><p>主要练习 <strong>hashmap  的使用</strong>， 以及注意： 不在arr2出现的元素，可能也不止一个，所以添加的时候也应该注意。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] relativeSortArray(<span class="keyword">int</span>[] arr1, <span class="keyword">int</span>[] arr2) &#123;</span><br><span class="line">        <span class="keyword">int</span> len=arr1.length;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">            map.put(arr1[i],map.getOrDefault(arr1[i],<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num:arr2)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(num))&#123;</span><br><span class="line">                <span class="keyword">int</span> count=map.get(num);</span><br><span class="line">                <span class="keyword">while</span>(count&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                list.add(num); </span><br><span class="line">                count--; </span><br><span class="line">                &#125;</span><br><span class="line">                map.remove(num);             </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(!map.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">for</span>(Integer i:map.keySet())&#123;</span><br><span class="line">                <span class="keyword">int</span> count=map.get(i);</span><br><span class="line">                <span class="keyword">while</span>(count--&gt;<span class="number">0</span>)</span><br><span class="line">                    tmp.add(i);</span><br><span class="line">            &#125;             </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Collections.sort(tmp);</span><br><span class="line">        <span class="keyword">for</span>(Integer i:tmp)</span><br><span class="line">        list.add(i);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[]res=<span class="keyword">new</span> <span class="keyword">int</span>[list.size()];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;list.size();i++)&#123;</span><br><span class="line">            res[i]=list.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-重构字符串"><a href="#2-重构字符串" class="headerlink" title="2. 重构字符串"></a><a href="https://leetcode-cn.com/problems/reorganize-string/" target="_blank" rel="noopener">2. 重构字符串</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同。</span><br><span class="line">若可行，输出任意可行的结果。若不可行，返回空字符串。</span><br></pre></td></tr></table></figure>
+
+<p>思路： 记录 字母以及对应出现的频率， 根据频率降序排序。</p>
+<p>设频率最高为x, 那么我们可以发现， 把这些字母先分为x组，循环给这些组分配字母， 第一轮循环分配字母频率最高的字母（由于在不同的组中，所以一定不会重复）， 第二轮分配字母频率第二高的字母…一直到分配完毕。</p>
+<p>将这些分组合并起来， 检查是否有相邻相同， 有，则返回<code>&quot;&quot;</code>， 否则返回拼接好的字符串。</p>
+<p>注意： 使用 StringBuilder数组时， 要先new好了，否则会造成空引用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">reorganizeString</span><span class="params">(String S)</span> </span>&#123;           </span><br><span class="line">        <span class="keyword">int</span> len = S.length();</span><br><span class="line">        <span class="keyword">int</span> [][]arr=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>][<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            arr[S.charAt(i)-<span class="string">'a'</span>][<span class="number">0</span>]=S.charAt(i);   <span class="comment">//记录 字符</span></span><br><span class="line">            arr[S.charAt(i)-<span class="string">'a'</span>][<span class="number">1</span>]++;             <span class="comment">//记录频率</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        Arrays.sort(arr,(o1,o2)-&gt; Integer.compare(o2[<span class="number">1</span>],o1[<span class="number">1</span>]));  <span class="comment">//频率降序排列</span></span><br><span class="line">        StringBuilder tmp = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> count=arr[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">while</span>(count--&gt;<span class="number">0</span>)</span><br><span class="line">                tmp.append((<span class="keyword">char</span>)arr[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> max=arr[<span class="number">0</span>][<span class="number">1</span>];</span><br><span class="line">        StringBuilder []stb=<span class="keyword">new</span> StringBuilder[max]; </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;max;i++) stb[i]=<span class="keyword">new</span> StringBuilder(); <span class="comment">//这里要先 new 好了，否则会有 NULLpointerException     </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> total=<span class="number">0</span>;total&lt;len;total++)&#123;</span><br><span class="line">            stb[total%max].append(tmp.charAt(total));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        StringBuilder res=<span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;max;i++)</span><br><span class="line">            res.append(stb[i]);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len-<span class="number">1</span>;i++)    <span class="comment">//检查是否有重复字符串</span></span><br><span class="line">            <span class="keyword">if</span>(res.charAt(i)==res.charAt(i+<span class="number">1</span>))</span><br><span class="line">                <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res.toString();                </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="SQL练习-4"><a href="#SQL练习-4" class="headerlink" title="SQL练习"></a>SQL练习</h2><h3 id="not-in"><a href="#not-in" class="headerlink" title="not in"></a>not in</h3><p>查找非 manager 的员工 id， 使用not  in</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">E.emp_no</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">employees E  </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">E.emp_no </span><br><span class="line"><span class="keyword">NOT</span> <span class="keyword">IN</span></span><br><span class="line">(<span class="keyword">SELECT</span> dept_manager.emp_no <span class="keyword">FRom</span> dept_manager) ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="group-by"><a href="#group-by" class="headerlink" title="group by"></a>group by</h3><p>获取所有部门中当前(dept_emp.to_date = ‘9999-01-01’)员工当前(salaries.to_date=’9999-01-01’)薪水最高的相关信息，给出dept_no, emp_no以及其对应的salary，<strong>按照部门升序排列</strong>。</p>
+<p>按照部门分类的，要使用到 group by</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">e.dept_no,e.emp_no,<span class="keyword">MAX</span>(s.salary)</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">dept_emp e  </span><br><span class="line"><span class="keyword">join</span> </span><br><span class="line">salaries s</span><br><span class="line"><span class="keyword">on</span> </span><br><span class="line">e.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">where</span> </span><br><span class="line">s.to_date=<span class="string">'9999-01-01'</span> <span class="keyword">and</span> e.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">e.dept_no;   <span class="comment">-- 根据部门进行分类</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h3><p>where 在 group by前面， group by之后只能用 HAVING</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">title , <span class="keyword">COUNT</span>(emp_no)<span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">FROM</span> titles <span class="keyword">GROUP</span> <span class="keyword">BY</span> title</span><br><span class="line"><span class="keyword">HAVING</span>  t&gt;=<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="奇偶操作"><a href="#奇偶操作" class="headerlink" title="奇偶操作"></a>奇偶操作</h3><p>同Java语法一样。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">emp_no%2=1  <span class="comment">--奇数</span></span><br><span class="line">emp_no%2=0  <span class="comment">--偶数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="limit-操作"><a href="#limit-操作" class="headerlink" title="limit 操作"></a>limit 操作</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">limit 1,4  ;    <span class="comment">-- 从下标为1 开始取4个（从下标为0 开始计数）</span></span><br><span class="line">limit 4 offset 1; <span class="comment">-- 同上面等价</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="记录-8"><a href="#记录-8" class="headerlink" title="记录"></a>记录</h2>]]></content>
   </entry>
   <entry>
     <title>javaEE开篇</title>
@@ -2957,6 +2999,323 @@ as - if - serial</code></pre><p>4：hotspot实现</p>
 <h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><p><code>CREATE TRIGGER+名称</code>: 创建 触发器。</p>
 <p><code>AFTER INSERT</code>： 在插入之后触发</p>
 <p><code>BEFORE INSERT</code>: 在删除之前触发</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap的使用</title>
+    <url>/2020/09/29/HashMap%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>HashMap是个使用频率非常高的数据结构， 但是对它的一些 API 和操作还不是很清楚，造成每次使用都迷迷糊糊，所以决定好好整理一下它的一些常用方法。</p>
+<a id="more"></a>
+
+<h1 id="增删"><a href="#增删" class="headerlink" title="增删"></a>增删</h1><ol>
+<li>定义HashMap</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>hashmap存放的是 key-value键值对， 在 &lt;&gt;中指定对应的类型， 只能使用包装类型， 不可以使用基本类型。</p>
+<ol start="2">
+<li>加入元素</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">map.put(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>删除元素</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">map.remove(<span class="number">1</span>);   <span class="comment">// 删除 key值 为1 的内容</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><strong>使用hashMap计数</strong></li>
+</ol>
+<p>我们经常使用 HashMap进行元素的个数计数， 用<code>key</code>存放元素，用<code>value</code>存放 出现的次数， 这个时候因为要累计计数，所以使用下面的方法十分方便</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">map.put(key, getOrDefault(map.get(key),<span class="number">0</span>)+<span class="number">1</span>);  </span><br><span class="line"><span class="comment">//getOrDefault的意思是说， 如果之前有key 在map中，则获取它的value值，否则就是为 0</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>全部删除</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">map.clear();   <span class="comment">//删除 map中的全部内容</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h1><ol>
+<li><strong>根据键值判断</strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> map.containsKey(key);   <span class="comment">//判断map中是否有 键值 为key的元素</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>根据内容判断</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> map.containsValue(value);  <span class="comment">//判断map 中是否有 值为 value的元素</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>是否为空</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">boolean</span> map.isEmpty();</span><br></pre></td></tr></table></figure>
+
+<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><ol>
+<li><p>通过 key 获得 value</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(Integer key:map.keySet())    </span><br><span class="line">    System.out.println(<span class="string">"Key: "</span>+key+<span class="string">" Value: "</span>+map.get(key));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过entrySet的迭代器遍历 entry</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterator it=map.entrySet().iterator();  </span><br><span class="line">    <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">      Map.Entry&lt;Integer, Integer&gt; entry=it.next();</span><br><span class="line">      System.out.println(<span class="string">"Key: "</span>+entry.getKey()+<span class="string">" Value: "</span>+entry.getValue());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>遍历 entrySet</strong>  </p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(Map.Entry&lt;Integer, Integer&gt; entry: map.entrySet())</span><br><span class="line">System.out.println(<span class="string">"Key: "</span>+ entry.getKey()+ <span class="string">"Value:"</span>+entry.getValue());</span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>只获得 value  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(Integer v:map.values())</span><br><span class="line">     System.out.println(<span class="string">"The value is "</span>+v);</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p><strong>推荐使用 第三钟方法</strong>，或者第二种。 牢记<code>Map.Entry&lt; Integer, Integer&gt;entry</code>的用法。</p>
+<h1 id="map中的方法（重要）"><a href="#map中的方法（重要）" class="headerlink" title="map中的方法（重要）"></a>map中的方法（重要）</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Set&lt;Integer&gt; integers = map.keySet();   <span class="comment">//获取 key 的set集合</span></span><br><span class="line">Collection&lt;Integer&gt; values = map.values(); <span class="comment">//获取所有的value</span></span><br><span class="line">Set&lt;Map.Entry&lt;Integer, Integer&gt;&gt; entries = map.entrySet();  <span class="comment">//获取 entry集合</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>java基础</category>
+      </categories>
+      <tags>
+        <tag>java基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主从复制</title>
+    <url>/2020/09/28/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>一直在说主从复制，这到底是个什么东西？到底是为了什么提出？ 其实从字面上就可以知道， 这是个<strong>数据的复制过程， 把一个服务器数据库上的数据 复制 到另外一个或者几个服务器上</strong> ，数据源服务器就是“主”， 数据目的服务器就是“从”。</p>
+<a id="more"></a>
+
+<h1 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h1><ol>
+<li><strong>实时备份数据</strong>，发生意外时，让从库随时接管有故障的主库。</li>
+<li><strong>读写分离</strong>，主服务器性能较高，可以用作<strong>数据写操作</strong>，从服务器做查询读操作。 读写分离提高性能（主从服务器各自负责读写，<strong>减缓了锁的争用</strong>；  从服务器可以使用<strong>MyIsam存储引擎</strong>，提高查询速度）</li>
+</ol>
+<h1 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h1><ol>
+<li>单向主从（单向数据传输， 主服务器到从服务器）</li>
+<li>双向主从 （双向数据传输， 服务器互为对方的master 和 slave）</li>
+<li>级联主从 （从服务器后面接着 从服务器）</li>
+<li>一主多从 （一台主服务器 多态从服务器）</li>
+<li>多主一从     </li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>拿单向主从复制举例， 复制的过程主要涉及三个线程：</p>
+<ol>
+<li>主机的 <strong>binlog线程</strong>（<strong>IO Dump Thread)</strong>： 把主库接收到的<strong>SQL记录存入 bin_log中</strong>。</li>
+<li>从机的 <strong>IO Thread</strong>：  负责请求主机的binlog日志，将得到的内容写入 <strong>从机的 Relay log(中继日志)中</strong>。</li>
+<li>从机的 <strong>SQL Thread</strong>：重做Relay log 中的SQL语句。实现内容复制。</li>
+</ol>
+<p>可见，传递的不是直接的数据，而是传递的SQL操作，<strong>在从机中重做了。</strong></p>
+<p>这三个过程中<strong>，前两个都是 顺序 IO，速度较快。 而最后一步则是 随机IO，速度较慢。</strong></p>
+<p><img src="https://s1.ax1x.com/2020/09/28/0V6CIf.png" alt="0V6CIf.png"></p>
+<h1 id="延迟"><a href="#延迟" class="headerlink" title="延迟"></a>延迟</h1><p>由于种种原因，主从服务器上的数据不可能完全没有延迟，延迟的原因主要有以下几点 ：</p>
+<ol>
+<li><p>从服务器的 SQL Thread只有<strong>单线程</strong>执行任务。</p>
+</li>
+<li><p><strong>大事务执行</strong>： binlog的写入必须在事务完成之后，如果事务执行时间过长，那么就会造成在主机写入 binlog时长时间等待，造成延迟。</p>
+</li>
+<li><p>主库写binlog是顺序IO， IO Thread请求binlog也是顺序IO， 而SQL Thread执行是随机IO，效率低。</p>
+</li>
+<li><p>网络抖动。</p>
+</li>
+<li><p>从服务器性能较低。</p>
+</li>
+</ol>
+<h1 id="解决延迟"><a href="#解决延迟" class="headerlink" title="解决延迟"></a>解决延迟</h1><h2 id="并行复制"><a href="#并行复制" class="headerlink" title="并行复制"></a>并行复制</h2><p>上面提到，最主要的原因就是 在 SQL Thread执行阶段效率低，且只有单线程，所以针对这个缺点提出了 并行复制的方案。</p>
+<p>从 realy log读取SQL 记录 重做的时候，我们创建多个线程去执行，如下图所示：</p>
+<p><img src="https://s1.ax1x.com/2020/09/28/0V2lJf.png" alt="0V2lJf.png"></p>
+<p>所谓的并行复制，就是在中间添加了<code>coordinator</code>分发过程，<strong>将任务分发给多个worker同时执行</strong>（人多力量大，很简单的道理）。worker是真正的执行者。</p>
+<h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><p>并行操作的时候，如果不遵守一定的规则，就会造成执行混乱， 那么应该遵守什么样的规则呢？</p>
+<ol>
+<li><strong>同一行的多个事务必须要分发到同一个woker中执行</strong>（ 若分发到不同的 woker, 可能会造成执行顺序不遵守原来的顺序，产生错误）</li>
+<li>同一个事务不能被拆开到不同的事务中， 必须在同一个事务中。</li>
+</ol>
+<h1 id="分组提交二阶段提交"><a href="#分组提交二阶段提交" class="headerlink" title="分组提交二阶段提交"></a>分组提交二阶段提交</h1><p>我们知道，磁盘的读写速度相较于CPU 或者主存而言，速度极慢，而且过多的IO 也会造成性能下降，所以写日志的时候，如果不进行相应的改良，那么将比较耗费时间和资源。</p>
+<p>分组的提交：为了尽量<strong>减少 IO的次数，同时保证数据的 持久性和一致性</strong>，提出了<strong>分组的提交</strong>的概念。 大致思想就是写redolog和 binlog的时候，将操作以组的方式 进行提交。</p>
+<p>redolog是 存储引擎级别的，里面记录的是一些具体的物理操作，比如去磁盘的哪个地方执行什么操作</p>
+<p>而binlog是属于 服务层次级别的 ， 里面记录的是SQL逻辑操作。</p>
+<p>参考<a href="https://mp.weixin.qq.com/s/_LK8bdHPw9bZ9W1b3i5UZA" target="_blank" rel="noopener">图解分组提交</a>写的，</p>
+<p><img src="https://s1.ax1x.com/2020/09/29/0ekrAe.png" alt="0ekrAe.png"></p>
+<p><strong>Flush 阶段 (图中第一个渡口)</strong></p>
+<ul>
+<li>首先获取队列中的<strong>事务组</strong></li>
+<li>将Redo log中prepare阶段的数据<strong>刷盘(图中Flush Redo log)</strong></li>
+<li>将binlog数据写入文件，当然此时只是写入<strong>文件系统的缓冲</strong>，并不能保证数据库崩溃时binlog不丢失 (图中Write binlog)</li>
+<li><strong>Flush阶段队列</strong>的作用是提供了<strong>Redo log的组提交</strong>。</li>
+<li>如果在这一步完成后数据库崩溃，由于协调者binlog中不保证有该组事务的记录，所以MySQL可能会在重启后回滚该组事务</li>
+</ul>
+<p><strong>Sync 阶段 (图中第二个渡口)</strong></p>
+<ul>
+<li>这里为了增加一组事务中的事务数量，提高刷盘收益，MySQL使用两个参数控制获取队列事务组的时机： </li>
+</ul>
+<p>​    binlog_group_commit_sync_delay=N：在等待N μs后，开始事务刷盘(图中Sync binlog)</p>
+<p>​    binlog_group_commit_sync_no_delay_count=N：如果队列中的事务数达到N个，就忽视binlog_group_commit_sync_delay的设置，直接开始刷盘(图中Sync binlog)</p>
+<ul>
+<li><strong>Sync阶段队列</strong>的作用是<strong>支持binlog的组提交</strong></li>
+<li>如果在这一步完成后数据库崩溃，由于协调者binlog中<strong>已经有了事务记录</strong>，MySQL会在重启后通过Flush 阶段中Redo log刷盘的数据继续进行事务的提交</li>
+</ul>
+<p><strong>Commit 阶段 (图中第三个渡口)</strong></p>
+<ul>
+<li>首先获取队列中的事务组</li>
+<li>依次将Redo log中已经prepare的事务在引擎层提交(图中InnoDB Commit)</li>
+<li>Commit阶段不用刷盘，如上所述，Flush阶段中的Redo log刷盘已经足够保证数据库崩溃时的数据安全了</li>
+<li>Commit阶段队列的作用是承接Sync阶段的事务，完成最后的引擎提交，使得Sync可以尽早的处理下一组事务，最大化组提交的效率</li>
+</ul>
+<p>这种实现的<strong>优势在于三个阶段可以并发执行，从而提升效率</strong>。注意prepare阶段没有变，还是write/sync redo log.</p>
+<p>由上面可知，<strong>binlog的提交方式是二阶段提交（flush阶段是 binlog 的prepare阶段，完成数据的一些操作， sync阶段是 commit阶段，进行提交，只不过是多了分组操作。</strong></p>
+<h2 id="二阶段提交："><a href="#二阶段提交：" class="headerlink" title="二阶段提交："></a><strong>二阶段提交：</strong></h2><p><strong>可以保证数据的一致性。</strong></p>
+<ol>
+<li><p><strong>prepare</strong>阶段：执行数据<strong>修改和日志记录等处理</strong>，处理完成后只是把事务的状态改成”可以提交”,然后把<strong>结果返回给事务管理器</strong>。</p>
+</li>
+<li><p><strong>commit</strong>阶段： 如果在第一阶段内有<strong>任何一个数据库的操作发生了错误</strong>，或者事务管理器收不到某个数据库的回应，则认为事务失败，<strong>回撤所有数据库的事务</strong>。数据库服务器收不到第二阶段的确认提交请求，也会把”可以提交”的事务回撤。如果第一阶段中所有数据库都提交成功，那么事务管理器向数据库服务器发出”确认提交”请求，数据库服务器把事务的”可以提交”状态改为”提交完成”状态，然后返回应答。</p>
+</li>
+<li><p><strong>binlog就是二阶段提交。</strong></p>
+</li>
+</ol>
+<h2 id="二阶段提交参考"><a href="#二阶段提交参考" class="headerlink" title="二阶段提交参考"></a><a href="https://juejin.im/post/6844903929847742478" target="_blank" rel="noopener">二阶段提交参考</a></h2>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql概念杂记</title>
+    <url>/2020/09/29/mysql%E6%A6%82%E5%BF%B5%E6%9D%82%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="预写日志"><a href="#预写日志" class="headerlink" title="预写日志"></a>预写日志</h1><p>WAL：(write ahead  log) 就是在写数据之前 先写日志的情况。</p>
+<a id="more"></a>
+
+<p>在使用WAL的系统中，所有的修改在<strong>提交之前都要先写入log文件中</strong>，log文件中通常包括<strong>redo和undo信息</strong>，通过<strong>日志记录</strong>描述好数据的改变后(redo和undo)，再<strong>写入缓存</strong>，等缓存区写满后，最后再<strong>往持久层修改数据</strong>。</p>
+<h1 id="GTID"><a href="#GTID" class="headerlink" title="GTID"></a>GTID</h1><h1 id="MTS"><a href="#MTS" class="headerlink" title="MTS"></a>MTS</h1><p>就是<strong>并行复制</strong>  <strong>multi-threaded slave（简称MTS）</strong></p>
+<h1 id="TPS"><a href="#TPS" class="headerlink" title="TPS"></a>TPS</h1><p><strong>Transactions Per Second：每秒处理事务数</strong></p>
+<h1 id="MySql的整体架构图"><a href="#MySql的整体架构图" class="headerlink" title="MySql的整体架构图"></a>MySql的整体架构图</h1><p><img src="https://user-gold-cdn.xitu.io/2017/10/22/436c6beeb41e0b3980c57df6d5ed4dca?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MVCC</title>
+    <url>/2020/09/29/MVCC/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><code>MVCC (Multiversion Concurrency Control)</code> 中文全程叫<strong>多版本并发控制</strong>， 是数据库存储引擎实现中常用的<strong>处理读写冲突</strong>的手段，<strong>目的在于提高数据库高并发场景下的吞吐性能</strong>。</p>
+<a id="more"></a>
+
+<p> <code>MySQL</code> 中的 <code>MVCC</code> 实现，从 <code>《高性能 MySQL》</code>一书中对 <code>MVCC</code> 的介绍可知：</p>
+<ol>
+<li><code>MySQL</code> 中 <code>InnoDB</code> 引擎支持 <code>MVCC</code></li>
+<li>应对高并发事务, <code>MVCC</code> <strong>比单纯的加行锁更有效, 开销更小</strong></li>
+<li><code>MVCC</code> 在<strong>读已提交</strong><code>（Read Committed）</code>和<strong>可重复读</strong><code>（Repeatable Read）</code>隔离级别下起作用</li>
+<li><code>MVCC</code> 既可以基于<strong>乐观锁</strong>又可以基于<strong>悲观锁</strong>来实现</li>
+</ol>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>MVCC的实现，是通过<strong>保存数据在某一个结点的快照实</strong>现的。</p>
+<p>MVCC只应用 在 <strong>读已提交</strong>和<strong>可重复读</strong>   隔离级别， 而   <strong>未提交读</strong>  隔离级别总是<strong>读取最新的数据行</strong>，无需使用MVCC。<strong>可串行化隔离</strong>级别需要对  所有读取的行<strong>都加锁</strong>，单纯使用 MVCC 无法实现。</p>
+<p>不同的存储引擎，其MVCC的实现原理也不同， 这里主要学习 主流存储引擎InnoDB的实现方式。</p>
+<hr>
+<p>MVCC 在每行记录后面都保存着<strong>两个隐藏的列</strong>，用来存储两个版本号：</p>
+<p><strong>创建版本号</strong>：指示创建一个数据行的快照时的系统版本号；</p>
+<p><strong>删除版本号：</strong>如果该快照的删除版本号大于当前事务版本号表示该快照有效，否则表示该快照已经被删除了</p>
+<hr>
+<p>版本号： 标志当前版本的<strong>连续递增</strong>的号码， <strong>每开启一个事务，系统版本号都会递增</strong>。</p>
+<h2 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h2><ol>
+<li>InnoDB只查找  <strong>版本早于</strong>   当前事务版本的<strong>数据行</strong> ，这样可以确保事务读取的行，要么是在事务<strong>开始前</strong>已经存在的，要么是事务<strong>自身插入或者修改</strong>过的。</li>
+<li>行的删除版本要么<strong>未定义</strong>，要么<strong>大于</strong>当前事务版本号。（小于等于的话说明已经被删除了） 这可以确保事务读取到的行，在事务开始之前<strong>未被删除</strong>。</li>
+</ol>
+<p>只有符合上述两个条件的记录，才能返回作为查询结果</p>
+<h2 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h2><p>InnoDB为<strong>新插入的每一行</strong>保存<strong>当前系统版本号</strong>作为行版本号。</p>
+<h2 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h2><p>InnoDB为<strong>删除的每一行</strong>保存<strong>当前系统版本号</strong>作为<strong>行删除标识</strong>。</p>
+<h2 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h2><p>InnoDB为<strong>插入一行新记录</strong>，保存当<strong>前系统版本号作为行版本号</strong>，同时保存当前系统版本号到原来的行作为<strong>行删除标识</strong>。</p>
+<p>可以理解为 新 插入一条数据，同时作废（删除） 之前旧的数据。</p>
+<h1 id="MVCC优缺点"><a href="#MVCC优缺点" class="headerlink" title="MVCC优缺点"></a>MVCC优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>由于MVCC的 存在，使得很多操作不用加锁就可以正确的完成，简单高效， 极大的提高了<strong>并发的效率</strong>。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>由于要为每行记录都增加 创建和删除版本号， 所以增加了存储空间</p>
+<p>要进行版本号的比较，需要做额外的 <strong>维护工作</strong>和  <strong>查询比较</strong>工作。</p>
+<h1 id="乐观锁悲观锁"><a href="#乐观锁悲观锁" class="headerlink" title="乐观锁悲观锁"></a>乐观锁悲观锁</h1><p>上面提到，不同的存储引擎其MVCC实现思想是不一样的，有悲观锁，有乐观锁，那么二者有什么区别呢？</p>
+<ul>
+<li>悲观锁（Pessimistic Lock），顾名思义，就是很悲观，<strong>每次去拿数据的时候都认为别人会修改</strong>，所以每次<strong>在拿数据的时候都会上锁</strong>，这样别人想拿这个数据就会block直到它拿到锁。<strong>假定会发生并发冲突</strong>，<strong>事先屏蔽一切</strong>可能违反数据完整性的操作。</li>
+</ul>
+<ul>
+<li>乐观锁（Optimistic Lock），顾名思义，就是很乐观，<strong>每次去拿数据的时候都认为别人不会修改</strong>，所以<strong>不会上锁</strong>，但是在<strong>提交更新的时候会判断一下</strong>在此期间别人有没有去更新这个数据。乐观锁适用于<strong>读多写少</strong>的应用场景，这样可以提高吞吐量。乐观锁假设不会发生并发冲突，<strong>只在提交操作时检查是否违反数据是否和预期的一致</strong></li>
+</ul>
+<h1 id="当前读快照读"><a href="#当前读快照读" class="headerlink" title="当前读快照读"></a>当前读快照读</h1><ol>
+<li>快照读： 读取的是 快照中的内容， 不需要加锁。</li>
+</ol>
+<p><strong>使用场景：</strong></p>
+<p><strong>单纯的select操作</strong>，<strong>不包括</strong> </p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> ... <span class="keyword">lock</span> <span class="keyword">in</span> <span class="keyword">share</span> <span class="keyword">mode</span> </span><br><span class="line"><span class="keyword">select</span> ... <span class="keyword">for</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p> Read Committed隔离级别：<strong>每次select都生成一个快照读。</strong></p>
+<p> Read Repeatable隔离级别：<strong>开启事务后第一个select语句才是快照读的地方，而不是一开启事务就快照读。</strong></p>
+<ol start="2">
+<li>当前读： <strong>读取的是当前内容，需要加锁</strong></li>
+</ol>
+<p><strong>使用场景：</strong></p>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span>...lock <span class="keyword">in</span> share mode (共享读锁)</span><br><span class="line"><span class="keyword">select</span>...<span class="keyword">for</span> <span class="keyword">update</span></span><br><span class="line"><span class="keyword">update</span> , <span class="keyword">delete</span> , <span class="keyword">insert</span></span><br></pre></td></tr></table></figure>
+
+<p>因为<strong>必须获取 最新的信息</strong>，所以必须 使用 当前读。</p>
+<p>实现方式： <strong>next -key -locks</strong>, 由两部分组成 gap_lock 和 record_lock组成。</p>
+<table>
+<thead>
+<tr>
+<th>record lock</th>
+<th>锁定记录上的索引</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gap lock</td>
+<td>锁定 索引间的间隙，不包括索引本身</td>
+</tr>
+<tr>
+<td>next -key -locks</td>
+<td>由record lock+gap lock组成， 既锁定索引本身也锁定索引的间隙</td>
+</tr>
+</tbody></table>
+<h1 id="解决幻读"><a href="#解决幻读" class="headerlink" title="解决幻读"></a>解决幻读</h1><p>MVCC并没有从根本上解决 幻读的问题， MVCC+next_key_locks 二者一起可解决 幻读的问题。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-118bd607f107b4e7e333aa91a81161c3_1440w.jpg" alt=""></p>
+<p>幻读： <strong>T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次</strong></p>
+<p><strong>读取的结果不同。</strong></p>
+<p>由于有<strong>next_key_locks</strong>的存在，T1读取某个范围的时候，T2不能对其进行修改，所以解决了幻读这个问题。</p>
+<p>实际上就是 <strong>MVCC+当前读，</strong> 这样就不会产生读取的时候被插入新数据的情况了。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyIsam和InnoDB比较</title>
+    <url>/2020/09/27/MyIsam%E5%92%8CInnoDB%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<h3 id="MYISAM和INNODB"><a href="#MYISAM和INNODB" class="headerlink" title="MYISAM和INNODB"></a>MYISAM和INNODB</h3><p><a href="http://www.expertphp.in/article/what-are-the-main-differences-between-innodb-and-myisam#:~:text=InnoDB%20does%20not%20support%20FULLTEXT,is%20suitable%20for%20small%20project." target="_blank" rel="noopener">参考链接</a></p>
+<p>Mysql 数据库中，最常用的两种引擎是 innordb 和 myisam。InnoDB 是 Mysql 的默认存储引擎。</p>
+<a id="more"></a>
+
+<ol>
+<li><p>事务处理上方面<br>MyISAM 强调的是<strong>性能</strong>，查询的速度比 InnoDB 类型更快，但是<strong>不提供事务支持</strong>。<br><strong>InnoDB 提供事务支持事务。</strong></p>
+</li>
+<li><p>外键<br>MyISAM 不支持外键，InnoDB 支持外键。</p>
+</li>
+<li><p><strong>锁</strong><br>MyISAM <strong>只支持表级锁</strong>，InnoDB 支持<strong>行级锁和表级锁</strong>，默认是<strong>行级锁</strong>，行锁大幅度提高了多用户并发操作的性能。</p>
+<p>innodb 比较适合于<strong>插入和更新操作比较多的情况</strong>，而 myisam 则适合用于<strong>频繁查询</strong>的情况。另外，InnoDB 表的<strong>行锁</strong>也不是绝对的，如果在执行一个 SQL 语句时，MySQL <strong>不能确定要扫描的范围</strong>，InnoDB 表同样会锁全表。</p>
+</li>
+<li><p><strong>表主键</strong><br>MyISAM：<strong>允许没有主键</strong>的表存在。<br>InnoDB：如果没有设定主键，就会自动生成一个 <strong>6 字节的主键(</strong>用户不可见)。</p>
+</li>
+<li><p><strong>表的具体行数</strong><br>MyISAM：select count(<em>) from table,MyISAM 只要简单的读出保存好的行数。因为<br>MyISAM <strong>内置了一个计数器</strong>，count(</em>)时它直接从计数器中读。<br>InnoDB：<strong>不保存表的具体行数</strong>，也就是说，执行 select count(*) from table 时，InnoDB要扫描一遍整个表来计算有多少行。</p>
+</li>
+<li><p>索引的结构</p>
+</li>
+</ol>
+<p>​        MyISAM 的索引是<strong>非聚簇索引</strong>，<strong>可以加载更多索引</strong> ，内存利用率高</p>
+<p>​        InnoDB 的索引是 <strong>聚簇索引</strong> ， 体积庞大。</p>
 ]]></content>
       <categories>
         <category>数据库</category>

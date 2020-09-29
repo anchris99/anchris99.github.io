@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="戒骄戒躁，努力向前">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/page/2/index.html">
+  <meta name="description" content="MYISAM和INNODB参考链接 Mysql 数据库中，最常用的两种引擎是 innordb 和 myisam。InnoDB 是 Mysql 的默认存储引擎。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyIsam和InnoDB比较">
+<meta property="og:url" content="http://yoursite.com/2020/09/27/MyIsam%E5%92%8CInnoDB%E6%AF%94%E8%BE%83/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="戒骄戒躁，努力向前">
+<meta property="og:description" content="MYISAM和INNODB参考链接 Mysql 数据库中，最常用的两种引擎是 innordb 和 myisam。InnoDB 是 Mysql 的默认存储引擎。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-27T11:09:51.000Z">
+<meta property="article:modified_time" content="2020-09-29T11:14:59.208Z">
 <meta property="article:author" content="AnChris">
-<meta property="article:tag" content="slow is fast">
+<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/archives/2020/page/2/">
+<link rel="canonical" href="http://yoursite.com/2020/09/27/MyIsam%E5%92%8CInnoDB%E6%AF%94%E8%BE%83/">
 
 
 <script id="page-configurations">
@@ -39,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Hexo</title>
+  <title>MyIsam和InnoDB比较 | Hexo</title>
   
 
 
@@ -180,234 +182,119 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 29 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/27/MyIsam%E5%92%8CInnoDB%E6%AF%94%E8%BE%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MyIsam和InnoDB比较
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-27 19:09:51" itemprop="dateCreated datePublished" datetime="2020-09-27T19:09:51+08:00">2020-09-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-29 19:14:59" itemprop="dateModified" datetime="2020-09-29T19:14:59+08:00">2020-09-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+        <h3 id="MYISAM和INNODB"><a href="#MYISAM和INNODB" class="headerlink" title="MYISAM和INNODB"></a>MYISAM和INNODB</h3><p><a href="http://www.expertphp.in/article/what-are-the-main-differences-between-innodb-and-myisam#:~:text=InnoDB%20does%20not%20support%20FULLTEXT,is%20suitable%20for%20small%20project." target="_blank" rel="noopener">参考链接</a></p>
+<p>Mysql 数据库中，最常用的两种引擎是 innordb 和 myisam。InnoDB 是 Mysql 的默认存储引擎。</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-13T09:19:53+08:00"
-              content="2020-09-13">
-          09-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/13/java%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98-2/" itemprop="url">
-            <span itemprop="name">java并发问题(2)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-11T15:03:32+08:00"
-              content="2020-09-11">
-          09-11
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/11/java%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98-1/" itemprop="url">
-            <span itemprop="name">java并发问题(1)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-10T20:54:58+08:00"
-              content="2020-09-10">
-          09-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/10/daily-review/" itemprop="url">
-            <span itemprop="name">daily review</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-08T18:04:07+08:00"
-              content="2020-09-08">
-          09-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/08/TCP%E5%92%8CUDP/" itemprop="url">
-            <span itemprop="name">TCP和UDP</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-07T22:48:04+08:00"
-              content="2020-09-07">
-          09-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" itemprop="url">
-            <span itemprop="name">内存管理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-07T22:00:07+08:00"
-              content="2020-09-07">
-          09-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/07/%E6%AD%BB%E9%94%81/" itemprop="url">
-            <span itemprop="name">死锁</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-04T09:02:09+08:00"
-              content="2020-09-04">
-          09-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/04/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" itemprop="url">
-            <span itemprop="name">进程管理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-03T17:05:00+08:00"
-              content="2020-09-03">
-          09-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/03/java-IO/" itemprop="url">
-            <span itemprop="name">java IO</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-30T19:47:21+08:00"
-              content="2020-08-30">
-          08-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/30/java%E6%B3%9B%E5%9E%8B/" itemprop="url">
-            <span itemprop="name">java泛型</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-08-30T14:34:36+08:00"
-              content="2020-08-30">
-          08-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/30/java%E6%B3%A8%E8%A7%A3/" itemprop="url">
-            <span itemprop="name">java注解</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<ol>
+<li><p>事务处理上方面<br>MyISAM 强调的是<strong>性能</strong>，查询的速度比 InnoDB 类型更快，但是<strong>不提供事务支持</strong>。<br><strong>InnoDB 提供事务支持事务。</strong></p>
+</li>
+<li><p>外键<br>MyISAM 不支持外键，InnoDB 支持外键。</p>
+</li>
+<li><p><strong>锁</strong><br>MyISAM <strong>只支持表级锁</strong>，InnoDB 支持<strong>行级锁和表级锁</strong>，默认是<strong>行级锁</strong>，行锁大幅度提高了多用户并发操作的性能。</p>
+<p>innodb 比较适合于<strong>插入和更新操作比较多的情况</strong>，而 myisam 则适合用于<strong>频繁查询</strong>的情况。另外，InnoDB 表的<strong>行锁</strong>也不是绝对的，如果在执行一个 SQL 语句时，MySQL <strong>不能确定要扫描的范围</strong>，InnoDB 表同样会锁全表。</p>
+</li>
+<li><p><strong>表主键</strong><br>MyISAM：<strong>允许没有主键</strong>的表存在。<br>InnoDB：如果没有设定主键，就会自动生成一个 <strong>6 字节的主键(</strong>用户不可见)。</p>
+</li>
+<li><p><strong>表的具体行数</strong><br>MyISAM：select count(<em>) from table,MyISAM 只要简单的读出保存好的行数。因为<br>MyISAM <strong>内置了一个计数器</strong>，count(</em>)时它直接从计数器中读。<br>InnoDB：<strong>不保存表的具体行数</strong>，也就是说，执行 select count(*) from table 时，InnoDB要扫描一遍整个表来计算有多少行。</p>
+</li>
+<li><p>索引的结构</p>
+</li>
+</ol>
+<p>​        MyISAM 的索引是<strong>非聚簇索引</strong>，<strong>可以加载更多索引</strong> ，内存利用率高</p>
+<p>​        InnoDB 的索引是 <strong>聚簇索引</strong> ， 体积庞大。</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%86%E5%9B%BE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="视图存储过程触发器">
+      <i class="fa fa-chevron-left"></i> 视图存储过程触发器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/28/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" rel="next" title="主从复制">
+      主从复制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2020/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2020/page/3/">3</a><a class="extend next" rel="next" href="/archives/2020/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -459,6 +346,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MYISAM和INNODB"><span class="nav-number">1.</span> <span class="nav-text">MYISAM和INNODB</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
