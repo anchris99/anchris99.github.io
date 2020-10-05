@@ -186,6 +186,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/14/java%E5%86%85%E9%83%A8%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/14/java%E5%86%85%E9%83%A8%E7%B1%BB/" class="post-title-link" itemprop="url">java内部类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-14 20:27:47" itemprop="dateCreated datePublished" datetime="2020-09-14T20:27:47+08:00">2020-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-17 08:28:01" itemprop="dateModified" datetime="2020-09-17T08:28:01+08:00">2020-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">java基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>定义在<strong>类内部的类</strong>就被称为 <strong>内部类</strong>。根据定义的方式不同，内部类分为 <strong>静态内部类，成员内部类，局部内部类，匿名内部类</strong> 四种。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/14/java%E5%86%85%E9%83%A8%E7%B1%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/13/java%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -383,7 +464,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-29 19:09:23" itemprop="dateModified" datetime="2020-09-29T19:09:23+08:00">2020-09-29</time>
+                <time title="修改时间：2020-10-05 09:31:19" itemprop="dateModified" datetime="2020-10-05T09:31:19+08:00">2020-10-05</time>
               </span>
 
           
@@ -907,7 +988,7 @@
 
 <h3 id="2-重构字符串"><a href="#2-重构字符串" class="headerlink" title="2. 重构字符串"></a><a href="https://leetcode-cn.com/problems/reorganize-string/" target="_blank" rel="noopener">2. 重构字符串</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同。</span><br><span class="line">若可行，输出任意可行的结果。若不可行，返回空字符串。</span><br></pre></td></tr></table></figure>
 
-<p>思路： 记录 字母以及对应出现的频率， 根据频率降序排序。</p>
+<p>思路： <strong>记录 字母以及对应出现的频率， 根据频率降序排序。</strong></p>
 <p>设频率最高为x, 那么我们可以发现， 把这些字母先分为x组，循环给这些组分配字母， 第一轮循环分配字母频率最高的字母（由于在不同的组中，所以一定不会重复）， 第二轮分配字母频率第二高的字母…一直到分配完毕。</p>
 <p>将这些分组合并起来， 检查是否有相邻相同， 有，则返回<code>&quot;&quot;</code>， 否则返回拼接好的字符串。</p>
 <p>注意： 使用 StringBuilder数组时， 要先new好了，否则会造成空引用。</p>
@@ -936,7 +1017,126 @@
 
 
 
-<h2 id="记录-8"><a href="#记录-8" class="headerlink" title="记录"></a>记录</h2>
+<h2 id="记录-8"><a href="#记录-8" class="headerlink" title="记录"></a>记录</h2><h1 id="2020-09-30"><a href="#2020-09-30" class="headerlink" title="2020.09.30"></a>2020.09.30</h1><h2 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h2><h2 id="SQL练习-5"><a href="#SQL练习-5" class="headerlink" title="SQL练习"></a>SQL练习</h2><h2 id="记录-9"><a href="#记录-9" class="headerlink" title="记录"></a>记录</h2><h3 id="内容逻辑分区"><a href="#内容逻辑分区" class="headerlink" title="内容逻辑分区"></a>内容逻辑分区</h3><p><img src="https://s1.ax1x.com/2020/09/30/0nPkkQ.png" alt="0nPkkQ.png"></p>
+<ol>
+<li><p>YGC=Minor GC: 回收新生代， 使用 <strong>复制</strong>  收集算法（因为新生代 每次垃圾扫描时 存活特别少，适合copy）</p>
+<p>第一次回收; eden-&gt;s0</p>
+<p>第二次回收: eden+s0-&gt;s1</p>
+<p>第三次回收: eden+s1-&gt;s0</p>
+<p>过大对象直接进入 老年代</p>
+</li>
+<li><p>Major GC = Full GC:  同时清理 老年区和新生区， （老年区满） 使用： <strong>Market Sweeping 或者 Market Compact算法</strong></p>
+</li>
+</ol>
+<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>常见的垃圾回收器。</p>
+<p><img src="https://s1.ax1x.com/2020/09/30/0nkkkD.png" alt="0nkkkD.png"></p>
+<p>调优主要 在 serial  serial  OLD  ，   parallel scavenge  和  parallel old</p>
+<h3 id="垃圾定位"><a href="#垃圾定位" class="headerlink" title="垃圾定位"></a>垃圾定位</h3><p>使用 root searching 算法（根可达算法）</p>
+<p>要明确哪些是 roots</p>
+<p><img src="https://s1.ax1x.com/2020/09/30/0nUdDx.png" alt="0nUdDx.png"></p>
+<p>GC  algorithms</p>
+<ol>
+<li>Mark  Sweep(标记清除)</li>
+<li>Copying （复制） 缺点： 空间浪费</li>
+<li>Mark-Compact （标记压缩） 优点： 有利于大对象的分配， 缺点：效率低，速度慢</li>
+</ol>
+<p><a href="https://imgchr.com/i/0naDLq" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/30/0naDLq.png" alt="0naDLq.png"></a></p>
+<p>market  compact</p>
+<h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><p>CMS 回收器是里程碑，从这开始允许 <strong>工作线程和垃圾回收线程</strong>并行工作。</p>
+<p><img src="https://s1.ax1x.com/2020/09/30/0n0seI.png" alt="0n0seI.png"></p>
+<h3 id="GC-面试题题目"><a href="#GC-面试题题目" class="headerlink" title="GC 面试题题目"></a>GC 面试题题目</h3><p><img src="https://s1.ax1x.com/2020/09/30/0nRnBD.png" alt="0nRnBD.png"></p>
+<h1 id="2020-10-03"><a href="#2020-10-03" class="headerlink" title="2020.10.03"></a>2020.10.03</h1><h2 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h2><h3 id="1-只出现一次的数字-其余出现了2次"><a href="#1-只出现一次的数字-其余出现了2次" class="headerlink" title="1. 只出现一次的数字(其余出现了2次)"></a>1. 只出现一次的数字(其余出现了2次)</h3><p>使用异或操作 : java中的异或  <code>^</code></p>
+<h3 id="2-只出现一次的数字-II（其余出现了3次）"><a href="#2-只出现一次的数字-II（其余出现了3次）" class="headerlink" title="2. 只出现一次的数字 II（其余出现了3次）"></a>2. <a href="https://leetcode-cn.com/problems/single-number-ii/" target="_blank" rel="noopener">只出现一次的数字 II</a>（其余出现了3次）</h3><p>解法一： <strong>利用数字电路知识</strong></p>
+<p>使用状态机</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> Y = <span class="number">0</span>, X = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num : nums)&#123;</span><br><span class="line">            Y = Y ^ num &amp; ~X;</span><br><span class="line">            X = X ^ num &amp; ~Y;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjc2ybbsxoj30wk0j375j.jpg" alt="image.png"></p>
+<p><strong>Y 表示 出现一次的数字的运算结果，X表示出现2次的数字运算结果</strong>。</p>
+<p><a href="https://leetcode-cn.com/problems/single-number-ii/solution/luo-ji-dian-lu-jiao-du-xiang-xi-fen-xi-gai-ti-si-l/" target="_blank" rel="noopener">题解分析</a></p>
+<p>解法二： 统计每一位上的出现次数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] counts = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">32</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">32</span>; j++) &#123;</span><br><span class="line">                counts[j] += num &amp; <span class="number">1</span>;   <span class="comment">//从低到高 第 j位上 1出现的次数</span></span><br><span class="line">                num &gt;&gt;= <span class="number">1</span>;   <span class="comment">//num右移一位</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, m = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">            res &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            res |= counts[<span class="number">31</span> - i] % m;  <span class="comment">//只有 对应值为1（出现频率为1） 对应取余才！=0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-只出现一次的数字-III（两个出现了一次，其余二次）"><a href="#3-只出现一次的数字-III（两个出现了一次，其余二次）" class="headerlink" title="3. 只出现一次的数字 III（两个出现了一次，其余二次）"></a><a href="https://leetcode-cn.com/problems/single-number-iii/" target="_blank" rel="noopener">3. 只出现一次的数字 III</a>（两个出现了一次，其余二次）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] singleNumber(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span> bit=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num:nums) bit^=num;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> diff=(bit &amp; (-bit));</span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num:nums) </span><br><span class="line">            <span class="keyword">if</span>((num &amp; diff)!=<span class="number">0</span>)  <span class="comment">//只对不属于另外一个答案y的数字过滤， 因为 y 肯定不符合(num&amp;diff!=0) 的条件</span></span><br><span class="line">              x^=num;    </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;x,x^bit&#125;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过这个题目，深度理解 异或 的概念： 保留的就是<strong>不一样的部分</strong>， <strong>一样的都为0， 不一样的才为1</strong>。</p>
+<ul>
+<li><code>bit</code>通过第一遍 异或， 保留的是两个只出现一次的数字 <code>x,y</code>的异或值， 即： <code>x^y</code>.</li>
+<li><code>bit</code>中保留的就是 <code>x和y</code>不一样的位， 为了区分这些不一样的位 是由具体哪一个数字贡献的1，哪一个贡献的<code>0</code>， 我们使用<code>bit^(-bit)</code>得到的结果是 <code>diff</code>， <code>diff</code>只对应其中一个数字(<code>-bit</code>:使用 补码，对<code>bit</code><strong>所有位反转后 加一</strong> )</li>
+<li>再次遍历，并使用 <code>diff</code>条件过滤， 那么就会得到其中的一个结果<code>x</code></li>
+<li><code>x</code>与<code>diff</code>进行异或得到<code>y</code></li>
+</ul>
+<p><strong>自己冻结的异或规律</strong>：<code>x^y=z</code>那么  <code>x^z=y</code> 且<code>y^z=x</code>。</p>
+<h2 id="SQL练习-6"><a href="#SQL练习-6" class="headerlink" title="SQL练习"></a>SQL练习</h2><h3 id="1-两次left-join"><a href="#1-两次left-join" class="headerlink" title="1.两次left join"></a><a href="https://www.nowcoder.com/practice/5a7975fabe1146329cee4f670c27ad55?tpId=82&&tqId=29771&rp=1&ru=/ta/sql&qru=/ta/sql/question-ranking" target="_blank" rel="noopener">1.两次left join</a></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.last_name, e.first_name, d.dept_name</span><br><span class="line"><span class="keyword">from</span> employees <span class="keyword">as</span> e</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span> dept_emp <span class="keyword">as</span> de</span><br><span class="line"><span class="keyword">on</span> e.emp_no = de.emp_no</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span> departments <span class="keyword">as</span> d</span><br><span class="line"><span class="keyword">on</span> de.dept_no = d.dept_no</span><br></pre></td></tr></table></figure>
+
+<p>通过本题 记住 ： 可以有连续两次 left  join </p>
+<h3 id="2-记录各个部门工资条数目"><a href="#2-记录各个部门工资条数目" class="headerlink" title="2.记录各个部门工资条数目"></a><a href="https://www.nowcoder.com/practice/6a62b6c0a7324350a6d9959fa7c21db3?tpId=82&&tqId=29774&rp=1&ru=/ta/sql&qru=/ta/sql/question-ranking" target="_blank" rel="noopener">2.记录各个部门工资条数目</a></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> D.dept_no,D.dept_name, <span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="keyword">sum</span>   <span class="comment">-- 统计数目应该使用count(*)而不是 分组用的count(dept_no)</span></span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">dept_emp DE </span><br><span class="line"><span class="keyword">JOIN</span> salaries S </span><br><span class="line"><span class="keyword">ON</span> DE.emp_no = S.emp_no</span><br><span class="line"><span class="keyword">JOIN</span> departments D </span><br><span class="line"><span class="keyword">ON</span> DE.dept_no=D.dept_no</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">D.dept_no;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="记录-10"><a href="#记录-10" class="headerlink" title="记录"></a>记录</h2><h3 id="1-jvm中类的唯一性"><a href="#1-jvm中类的唯一性" class="headerlink" title="1.jvm中类的唯一性"></a>1.jvm中类的唯一性</h3><p>Java中<strong>任意一个类都是由这个类本身和加载这个类的类加载器来确定这个类在JVM中的唯一性</strong></p>
+<h3 id="2-双亲委派"><a href="#2-双亲委派" class="headerlink" title="2.双亲委派"></a>2.双亲委派</h3><p>如果一个<strong>类加载器需要加载类</strong>，那么首先它会把这个类请求<strong>委派给父类加载器</strong>去完成，<strong>每一层都是如此</strong>。<strong>一直递归到顶层</strong>，当父加载器<strong>无法完成</strong>这个请求时，子类才会尝试去加载。</p>
+<p>这里的<strong>双亲其实就指的是父类</strong>，没有mother。父类也不是我们平日所说的<strong>那种继承</strong>关系，只是调用逻辑是这样。</p>
+<h1 id="2020-10-04"><a href="#2020-10-04" class="headerlink" title="2020.10.04"></a>2020.10.04</h1><h2 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h2><h3 id="1-数字范围按位与"><a href="#1-数字范围按位与" class="headerlink" title="1. 数字范围按位与"></a><a href="https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/" target="_blank" rel="noopener">1. 数字范围按位与</a></h3><p>m-n范围的数字按位 与 操作， 因为只要出现的一个数字为0，那么对应位置上的 数字即为 0， 所以可以转变为求 m和n 的最长公共子前缀问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rangeBitwiseAnd</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(m&lt;n)&#123;</span><br><span class="line">            n=n&amp;(n-<span class="number">1</span>);   <span class="comment">//每次消去最右边的一个 1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;        <span class="comment">//当n&lt;=m 的时候，n 就是最长前缀了</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rangeBitwiseAnd</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> shift=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(m&lt;n)&#123;    <span class="comment">//采用移位的方式，  二者相等时， 即为最长前缀</span></span><br><span class="line">            m&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">            n&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">            shift++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m&lt;&lt;shift;   <span class="comment">//后面用 0 进行补充</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-子集"><a href="#2-子集" class="headerlink" title="2. 子集"></a><a href="https://leetcode-cn.com/problems/subsets/" target="_blank" rel="noopener">2. 子集</a></h3><p>使用位运算来解决子集的问题， </p>
+<p><img src="https://pic.leetcode-cn.com/1600562175-KhRyHn-image.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; subsets(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> size=<span class="number">1</span>&lt;&lt;nums.length;   <span class="comment">//2^(nums.length)种可能</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;         <span class="comment">//遍历所有的数</span></span><br><span class="line">           List&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;nums.length;j++)&#123;   <span class="comment">//对当前数字上的 所有位置都要检查</span></span><br><span class="line">               <span class="keyword">if</span>(((i&gt;&gt;j)&amp;<span class="number">1</span>) ==<span class="number">1</span>) </span><br><span class="line">                    tmp.add(nums[j]);</span><br><span class="line">           &#125;</span><br><span class="line">           res.add(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-数组中两个数的最大异或值"><a href="#3-数组中两个数的最大异或值" class="headerlink" title="3. 数组中两个数的最大异或值"></a><a href="https://leetcode-cn.com/problems/maximum-xor-of-two-numbers-in-an-array/" target="_blank" rel="noopener">3. 数组中两个数的最大异或值</a></h3><p>利用贪心的思想， 要想最大，肯定在高位尽可能多的有1， 可以先假设高位置上为1，然后去看有没有前缀能够异或成这种结果， 如果 有，则更新res为这个对应位置假设为1 的数，否则不变。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaximumXOR</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> mask=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">30</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            mask=mask |(<span class="number">1</span>&lt;&lt;i);</span><br><span class="line"></span><br><span class="line">           Set&lt;Integer&gt; set= <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> num:nums)</span><br><span class="line">              set.add(num &amp; mask);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> temp=res|(<span class="number">1</span>&lt;&lt;i);</span><br><span class="line">            <span class="keyword">for</span>(Integer prefix:set)&#123;</span><br><span class="line">                <span class="keyword">if</span>(set.contains(prefix^temp))&#123;</span><br><span class="line">                    res=temp;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;           </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="SQL练习-7"><a href="#SQL练习-7" class="headerlink" title="SQL练习"></a>SQL练习</h2><h3 id="1-员工当前的薪水情况"><a href="#1-员工当前的薪水情况" class="headerlink" title="1.员工当前的薪水情况"></a><a href="https://www.nowcoder.com/practice/8fe212a6c71b42de9c15c56ce354bebe?tpId=82&&tqId=29776&rp=1&ru=/ta/sql&qru=/ta/sql/question-ranking" target="_blank" rel="noopener">1.员工当前的薪水情况</a></h3><p>注意要 非 manager</p>
+<p>筛选数据的时候，应该<strong>先关注于表的连接</strong>， 然后再在连接后的表中进行数据过滤。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 错误写法：过滤又连接</span></span><br><span class="line"><span class="keyword">select</span> T.emp_no, DE.dept_no,S.salaries</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(</span><br><span class="line"><span class="keyword">select</span> E.emp_no  <span class="keyword">as</span> emp_no <span class="keyword">from</span> employees E</span><br><span class="line"><span class="keyword">where</span> E.emp_no <span class="keyword">NOT</span> <span class="keyword">IN</span></span><br><span class="line">(<span class="keyword">select</span>  emp_no <span class="keyword">from</span> dept_manager )</span><br><span class="line">) <span class="keyword">as</span> T </span><br><span class="line"><span class="keyword">join</span> dept_emp <span class="keyword">as</span> DE</span><br><span class="line"><span class="keyword">on</span> T.emp_no=DE.emp_no</span><br><span class="line"><span class="keyword">join</span> salaries <span class="keyword">as</span> S </span><br><span class="line"><span class="keyword">ON</span> DE.emp_no=S.emp_no</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">S.to_date=<span class="string">'9999-01-01'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 正确写法： 先连接，后过滤</span></span><br><span class="line"><span class="keyword">select</span> de.dept_no, de.emp_no, s.salary</span><br><span class="line"><span class="keyword">from</span> dept_emp de <span class="keyword">inner</span> <span class="keyword">join</span> employees e <span class="keyword">on</span> de.emp_no = e.emp_no</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> salaries s <span class="keyword">on</span> de.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">where</span> s.to_date=<span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> de.emp_no <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> emp_no <span class="keyword">from</span> dept_manager);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-获取当前员工比其经理薪资高的信息"><a href="#2-获取当前员工比其经理薪资高的信息" class="headerlink" title="2.获取当前员工比其经理薪资高的信息"></a><a href="https://www.nowcoder.com/practice/f858d74a030e48da8e0f69e21be63bef?tpId=82&&tqId=29777&rp=1&ru=/ta/sql&qru=/ta/sql/question-ranking" target="_blank" rel="noopener">2.获取当前员工比其经理薪资高的信息</a></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_emp`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_manager`</span> (</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`salaries`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`salary`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`from_date`</span>));</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键： 分别查出  manager和 Employee 的 <code>salary, emp_no,dept_no</code>形成两个表, 然后通过 dept_no连接起来，通过工资情况过滤。</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp.emp_no, manager.emp_no, emp.salary, manager.salary</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">(<span class="keyword">SELECT</span> de.emp_no, s.salary, de.dept_no <span class="keyword">FROM</span> dept_emp  de </span><br><span class="line"><span class="keyword">JOIN</span> salaries s <span class="keyword">ON</span> de.emp_no = s.emp_no <span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span>) </span><br><span class="line"><span class="keyword">AS</span> emp,</span><br><span class="line">(<span class="keyword">SELECT</span> dm.emp_no, s.salary, dm.dept_no <span class="keyword">FROM</span> dept_manager <span class="keyword">AS</span> dm </span><br><span class="line"><span class="keyword">JOIN</span> salaries <span class="keyword">AS</span> s <span class="keyword">ON</span> dm.emp_no = s.emp_no <span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span>)</span><br><span class="line"><span class="keyword">AS</span> manager</span><br><span class="line"><span class="keyword">WHERE</span> emp.dept_no = manager.dept_no <span class="keyword">AND</span> emp.salary &gt; manager.salary</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="记录-11"><a href="#记录-11" class="headerlink" title="记录"></a>记录</h2><h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjd0iw98vxj30rs0edjy7.jpg" alt="image.png"></p>
+<ul>
+<li>停止条件</li>
+<li>复杂度和 是否有序有关,  适合于大部分有序的情况。</li>
+</ul>
+<h3 id="小和问题"><a href="#小和问题" class="headerlink" title="小和问题"></a>小和问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Code_12_SmallSum</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">smallSum</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> mergeSort(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> mid = l + ((r - l) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> mergeSort(arr, l, mid) + mergeSort(arr, mid + <span class="number">1</span>, r) + merge(arr, l, mid, r);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> l, <span class="keyword">int</span> m, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span>[] help = <span class="keyword">new</span> <span class="keyword">int</span>[r - l + <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> p1 = l;</span><br><span class="line">	<span class="keyword">int</span> p2 = m + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p1 &lt;= m &amp;&amp; p2 &lt;= r) &#123;</span><br><span class="line">  -----------------------------------------------------------------------------------------------         </span><br><span class="line">		res += arr[p1] &lt; arr[p2] ? (r - p2 + <span class="number">1</span>) * arr[p1] : <span class="number">0</span>;</span><br><span class="line">  -----------------------------------------------------------------------------------------------           </span><br><span class="line">		help[i++] = arr[p1] &lt; arr[p2] ? arr[p1++] : arr[p2++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (p1 &lt;= m) &#123;</span><br><span class="line">		help[i++] = arr[p1++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (p2 &lt;= r) &#123;</span><br><span class="line">		help[i++] = arr[p2++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; help.length; i++) &#123;</span><br><span class="line">		arr[l + i] = help[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="逆序对问题"><a href="#逆序对问题" class="headerlink" title="逆序对问题"></a>逆序对问题</h3><h3 id="马士兵课程"><a href="#马士兵课程" class="headerlink" title="马士兵课程"></a>马士兵课程</h3><h4 id="java从编码到执行"><a href="#java从编码到执行" class="headerlink" title="java从编码到执行"></a>java从编码到执行</h4><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjdaqlz3a1j311y0n0hdt.jpg" alt="image.png"></p>
+<h4 id="jvm与Java无关"><a href="#jvm与Java无关" class="headerlink" title="jvm与Java无关"></a>jvm与Java无关</h4><p>jvm与 Java语言无关， 只要能编译成 class文件，就能够在jvm上执行。</p>
+<p>jvm是<strong>一种规范</strong>。</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjdaslroltj311t0ir1kx.jpg" alt="image.png"></p>
+<h4 id="jvm-jre-jdk"><a href="#jvm-jre-jdk" class="headerlink" title="jvm jre jdk"></a>jvm jre jdk</h4><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjdb2y7qiyj31230lb1kx.jpg" alt="image.png"></p>
+<h4 id="类加载器模型"><a href="#类加载器模型" class="headerlink" title="类加载器模型"></a>类加载器模型</h4><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjdikogbv5j313j0kcb29.jpg" alt="image.png"></p>
+<p>并不是 父子类的关系，而是<strong>逻辑上的调用</strong> 好比 父子。</p>
+<p><strong>双亲委派模型：</strong></p>
+<p>如果一个<strong>类加载器需要加载类</strong>，那么首先它会把这个类请求<strong>委派给父类加载器</strong>去完成，<strong>每一层都是如此</strong>。<strong>一直递归到顶层</strong>，当父加载器<strong>无法完成</strong>这个请求时，子类才会尝试去加载。</p>
+<p>这里的<strong>双亲其实就指的是父类</strong>，没有mother。父类也不是我们平日所说的<strong>那种继承</strong>关系，只是调用逻辑是这样。</p>
+<h4 id="双亲委派的优势"><a href="#双亲委派的优势" class="headerlink" title="双亲委派的优势"></a>双亲委派的优势</h4><ol>
+<li>java类随着它的类加载器一起具备了一种带有<strong>优先级的层次关系</strong>，通过这种层级关可以<strong>避免类的重复加载</strong>，当父亲已经加载了该类时，就没有必要子ClassLoader再加载一次。</li>
+<li>考虑到<strong>安全因素</strong>，java核心api中定义类型不会被随意替换，假设通过网络传递一个名为java.lang.Integer的类，通过双亲委托模式传递到启动类加载器，而启动类加载器在核心Java API发现这个名字的类，发现该类已被加载，并不会重新加载网络传递的过来的java.lang.Integer，而直接返回已加载过的Integer.class，这样便可以防止核心API库被随意篡改。</li>
+</ol>
+<h1 id="2020-10-05"><a href="#2020-10-05" class="headerlink" title="2020.10.05"></a>2020.10.05</h1><h2 id="题目-15"><a href="#题目-15" class="headerlink" title="题目"></a>题目</h2><h3 id="1-二叉树的右视图"><a href="#1-二叉树的右视图" class="headerlink" title="1. 二叉树的右视图"></a><a href="https://leetcode-cn.com/problems/binary-tree-right-side-view/" target="_blank" rel="noopener">1. 二叉树的右视图</a></h3><p>解法一： 使用层序遍历， 保留层中的最后一个元素</p>
+<p>解法二： 使用dfs, 先遍历右结点，再遍历左结点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">rightSideView</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        dfs(root, <span class="number">0</span>); <span class="comment">// 从根节点开始访问，根节点深度是0</span></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root, <span class="keyword">int</span> depth)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> <span class="comment">// 先访问 当前节点，再递归地访问 右子树 和 左子树。</span></span><br><span class="line">        <span class="keyword">if</span> (depth == res.size()) &#123;   </span><br><span class="line"> <span class="comment">// 如果当前节点所在深度还没有出现在res里，说明在该深度下当前节点是第一个被访问的节点，因此将当前节点加入res中。</span></span><br><span class="line">            res.add(root.val);</span><br><span class="line">        &#125;</span><br><span class="line">        depth++;   <span class="comment">//深度增加</span></span><br><span class="line">        dfs(root.right, depth);</span><br><span class="line">        dfs(root.left, depth);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -1194,6 +1394,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/05/dailyreview0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/05/dailyreview0/" class="post-title-link" itemprop="url">dailyreview0</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 09:30:24" itemprop="dateCreated datePublished" datetime="2020-09-05T09:30:24+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-05 09:31:45" itemprop="dateModified" datetime="2020-10-05T09:31:45+08:00">2020-10-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="2020-7-27记录"><a href="#2020-7-27记录" class="headerlink" title="2020.7.27记录"></a><strong>2020.7.27</strong>记录</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/05/dailyreview0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1340,167 +1612,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/java%E6%B3%9B%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
-      <meta itemprop="name" content="AnChris">
-      <meta itemprop="description" content="戒骄戒躁，努力向前">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/30/java%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">java泛型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-30 19:47:21" itemprop="dateCreated datePublished" datetime="2020-08-30T19:47:21+08:00">2020-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-31 11:13:13" itemprop="dateModified" datetime="2020-08-31T11:13:13+08:00">2020-08-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">java基础</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="泛型的概念"><a href="#泛型的概念" class="headerlink" title="泛型的概念"></a>泛型的概念</h1><ul>
-<li><p>泛型，即“<strong>参数化类型</strong>”，就是将类型由原来的<strong>具体的类型参数化</strong>，类似于<strong>方法中的变量参数</strong>，此时类型也定义成参数形式（可以称之为类型形参），然后在<strong>使用/调用时</strong>传入具体的类型（类型实参）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/30/java%E6%B3%9B%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/java%E6%B3%A8%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
-      <meta itemprop="name" content="AnChris">
-      <meta itemprop="description" content="戒骄戒躁，努力向前">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/30/java%E6%B3%A8%E8%A7%A3/" class="post-title-link" itemprop="url">java注解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-30 14:34:36 / 修改时间：16:57:35" itemprop="dateCreated datePublished" datetime="2020-08-30T14:34:36+08:00">2020-08-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">java基础</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="什么是注解"><a href="#什么是注解" class="headerlink" title="什么是注解"></a>什么是注解</h1><p>​    Annotation（注解）是 Java 提供的一种<strong>对元程序中元素关联信息和元数据</strong>（metadata）的途径和方法。Annatation(注解)是一个<strong>接口</strong>，程序可以通过<strong>反射</strong>来获取指定程序中元素的 <strong>Annotation对象</strong>，然后<strong>通过该 Annotation 对象来获取注解中的元数据信息</strong>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/30/java%E6%B3%A8%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1568,7 +1683,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
