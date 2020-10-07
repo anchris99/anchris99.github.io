@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=黑体:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic|宋体:300,300italic,400,400italic,700,700italic|Inconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="硬件层面存储器层次结构 如图所示，现代的计算机存储器是分层次的， 金字塔底下存取速度慢，容量大，成本低， 金字塔上面 存取速度快，容量小，成本高。 保证缓存一致性在高速缓存中，保存着从主存读取过来的数据，其中 L3缓存是 所有CPU共享， L1，L2缓存属于CPU本身，在CPU内部。 如下图所示， 由于L2和L1为CPU独有，那么如何保证每个CPU中L2和L1中缓存内容的一致性问题呢？  比较古老">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java内存模型">
+<meta property="og:url" content="http://yoursite.com/2020/10/06/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="硬件层面存储器层次结构 如图所示，现代的计算机存储器是分层次的， 金字塔底下存取速度慢，容量大，成本低， 金字塔上面 存取速度快，容量小，成本高。 保证缓存一致性在高速缓存中，保存着从主存读取过来的数据，其中 L3缓存是 所有CPU共享， L1，L2缓存属于CPU本身，在CPU内部。 如下图所示， 由于L2和L1为CPU独有，那么如何保证每个CPU中L2和L1中缓存内容的一致性问题呢？  比较古老">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/09/16/wg0DYt.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gjfsg3jkmoj30kd0itk62.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gjfspctwutj30sm0d4qjz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdw5id2sj31h10uf1kx.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gjgo16t0qoj30xk0hegne.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdykhth8j31jg0qdtw8.jpg">
+<meta property="article:published_time" content="2020-10-06T10:09:20.000Z">
+<meta property="article:modified_time" content="2020-10-07T10:13:27.739Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/09/16/wg0DYt.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/06/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java内存模型 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/06/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java内存模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-06 18:09:20" itemprop="dateCreated datePublished" datetime="2020-10-06T18:09:20+08:00">2020-10-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-07 18:13:27" itemprop="dateModified" datetime="2020-10-07T18:13:27+08:00">2020-10-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="硬件层面"><a href="#硬件层面" class="headerlink" title="硬件层面"></a>硬件层面</h1><h2 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h2><p><img src="https://s1.ax1x.com/2020/09/16/wg0DYt.png" alt=""></p>
+<p>如图所示，现代的计算机存储器是分层次的， <strong>金字塔底下存取速度慢，容量大，成本低， 金字塔上面 存取速度快，容量小，成本高。</strong></p>
+<h2 id="保证缓存一致性"><a href="#保证缓存一致性" class="headerlink" title="保证缓存一致性"></a>保证缓存一致性</h2><p>在高速缓存中，保存着从主存读取过来的数据，其中 L3缓存是 所有CPU共享， L1，L2缓存属于CPU本身，在CPU内部。</p>
+<p>如下图所示， 由于L2和L1为CPU独有，那么如何保证每个CPU中L2和L1中缓存内容的一致性问题呢？</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfsg3jkmoj30kd0itk62.jpg" alt="image.png"></p>
+<p>比较古老的CPU里面采用的锁总线的方式，当有一个CPU访问主存数据内容的时候，将　<strong>CPU到主存的总线锁住</strong>， 不允许其他CPU进行操作。 弊端就是 效率低下，并发度低。</p>
+<p>现代CPU以Intel为代表，使用的是<code>MESI</code><strong>（缓存一致性协议）</strong>来保证各个缓存之间数据的一致性 。</p>
+<p>MESI有四种标记状态：</p>
+<ul>
+<li><code>modified</code>  :如果自身对数据进行了修改，那么就标记为 modified</li>
+<li><code>exlusive</code>: 表明数据独享</li>
+<li><code>shared</code>： 数据共享</li>
+<li><code>invalid</code>： 如果其他线程对数据进行了操作，置为该标记表明数据失效。再需要使用时，需要去主存重新读取。</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfspctwutj30sm0d4qjz.jpg" alt="image.png"></p>
+<h3 id="缓存行和存在的问题及解决"><a href="#缓存行和存在的问题及解决" class="headerlink" title="缓存行和存在的问题及解决"></a>缓存行和存在的问题及解决</h3><ul>
+<li><p><code>cache line</code>: 读取缓存的时候，是整行读取的，成为cache line,（缓存行）</p>
+</li>
+<li><p><strong>伪共享</strong>： <strong>位于同一缓存行的数据，被两个不同的CPU使用，造成数据不必要的失效，重新读取</strong>，使得性能下降的现象。（一个CPU使用的只是  缓存行中的一个数据<code>x</code>，另一个CPU使用缓存行中的数据<code>y</code>， <code>x和y</code>在同一行中， 一个CPU仅仅操作了<code>x</code>，结果导致整个缓冲行失效，所以<code>y</code>必须重新读取（然而y的值并没有被改变，这就导致了不必要的操作）</p>
+</li>
+<li><p>解决方法： </p>
+<ul>
+<li><p>java8中增了一个注解：<code>@sun.misc.Contended</code>。加上这个注解的类会自动补齐缓存行。</p>
+</li>
+<li><p>使用数据进行填充。占满整个缓冲行 <strong>（64字节）</strong></p>
+</li>
+</ul>
+</li>
+<li><p><strong>缓存对齐可以提高效率，当然也牺牲掉了空间</strong></p>
+</li>
+</ul>
+<h1 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h1><p>为了<strong>提高指令的执行效率</strong>， Java 会将指令进行重新排序， 但有时候会造成错误。</p>
+<p>解决指令重排序可以使用 <code>volatile</code>进行禁止指令重排序。</p>
+<h2 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h2><h3 id="硬件内存屏障-X86"><a href="#硬件内存屏障-X86" class="headerlink" title="硬件内存屏障 X86"></a><strong>硬件内存屏障</strong> X86</h3><blockquote>
+<p> sfence:  store| 在sfence<strong>指令前的写</strong>操作当必须在<strong>sfence指令后的写</strong>操作<strong>前</strong>完成。<br> lfence：load | 在lfence<strong>指令前的读</strong>操作当必须在lfence<strong>指令后的读</strong>操作<strong>前</strong>完成。<br> mfence：modify/mix | 在mfence指令前的<strong>读写</strong>操作当必须在mfence指令后的读写操作前完成。</p>
+</blockquote>
+<blockquote>
+<p>原子指令，如x86上的”lock …” 指令是一个Full Barrier，执行时会锁住内存子系统来确保执行顺序，甚至跨多个CPU。Software Locks通常使用了<strong>内存屏障或原子指令</strong>来实现变量可见性和保持程序顺序</p>
+</blockquote>
+<h3 id="JVM级别规范"><a href="#JVM级别规范" class="headerlink" title="JVM级别规范"></a><strong>JVM级别</strong>规范</h3><blockquote>
+<p>LoadLoad屏障：<br>    对于这样的语句Load1; LoadLoad; Load2， </p>
+<pre><code>在Load2及后续读取操作要读取的数据被访问前，保证Load1要读取的数据被读取完毕。</code></pre><p>StoreStore屏障：</p>
+<pre><code>对于这样的语句Store1; StoreStore; Store2，
+
+在Store2及后续写入操作执行前，保证Store1的写入操作对其它处理器可见。</code></pre><p>LoadStore屏障：</p>
+<pre><code>对于这样的语句Load1; LoadStore; Store2，
+
+在Store2及后续写入操作被刷出前，保证Load1要读取的数据被读取完毕。</code></pre><p>StoreLoad屏障：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对于这样的语句Store1<span class="comment">; StoreLoad; Load2，</span></span><br><span class="line">在Load2及后续所有读取操作执行前，保证Store1的写入对所有处理器可见。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="volatile实现细节"><a href="#volatile实现细节" class="headerlink" title="volatile实现细节"></a>volatile实现细节</h1><ol>
+<li><p>字节码层面<br>ACC_VOLATILE</p>
+</li>
+<li><p>JVM层面<br>volatile内存区的读写 都加屏障</p>
+<blockquote>
+<p>StoreStoreBarrier</p>
+<p>volatile 写操作</p>
+<p>StoreLoadBarrier</p>
+</blockquote>
+<blockquote>
+<p>LoadLoadBarrier</p>
+<p>volatile 读操作</p>
+<p>LoadStoreBarrier</p>
+</blockquote>
+</li>
+<li><p>OS和硬件层面<br><a href="https://blog.csdn.net/qq_26222859/article/details/52235930" target="_blank" rel="noopener">https://blog.csdn.net/qq_26222859/article/details/52235930</a><br>hsdis - HotSpot Dis Assembler<br>windows lock 指令实现 | MESI实现</p>
+</li>
+</ol>
+<p>补充 <strong>volatile并不能保证原子性</strong>，原因如下图所示：</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdw5id2sj31h10uf1kx.jpg" alt=""></p>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><p>所有的变量都存储在主内存中，<strong>每个线程还有自己的工作内存</strong>，工作内存存储在高速缓存或者寄存器中，保存了该线</p>
+<p>程使用的变量的主内存副本拷贝。</p>
+<p>线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjgo16t0qoj30xk0hegne.jpg" alt="image.png"></p>
+<h2 id="保障可见性"><a href="#保障可见性" class="headerlink" title="保障可见性"></a>保障可见性</h2><p>由于每个线程都有自己的工作内存，这些不是共享的，为了保证数据更改时能及时更新数据，保证数据在线程之间的 内存可见性， 需要加入volatile关键字，（底层用 lock实现）</p>
+<h3 id="lock细节"><a href="#lock细节" class="headerlink" title="lock细节"></a>lock细节</h3><ol>
+<li>使用了volatile 在 底层 对应的是<strong><code>lock</code>指令</strong> 可以加入 CPU级别的内存屏障，屏障两侧的指令不可以重排序。</li>
+<li>lock指令的作用： <ul>
+<li>立即<strong>将数据同步回主内存</strong></li>
+<li><strong>触发MESI缓存一致性协议，相应线程对应的数据失效</strong>。</li>
+<li>相关线程在 <strong>unlock后再去读取最新的数据</strong>。（保证读取到的是<strong>更新后的值</strong>而非原来的旧值）</li>
+</ul>
+</li>
+</ol>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdykhth8j31jg0qdtw8.jpg" alt="B7C9D51C3AAC290058BB45A810766561.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/01/vmware-NAT%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="prev" title="vmware NAT模式配置">
+      <i class="fa fa-chevron-left"></i> vmware NAT模式配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/07/%E4%B8%BE%E4%BE%8B%E7%90%86%E8%A7%A3jvm%E6%8C%87%E4%BB%A4%E5%92%8CJava%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" rel="next" title="举例理解jvm指令和Java运行时数据区">
+      举例理解jvm指令和Java运行时数据区 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#硬件层面"><span class="nav-number">1.</span> <span class="nav-text">硬件层面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器层次结构"><span class="nav-number">1.1.</span> <span class="nav-text">存储器层次结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保证缓存一致性"><span class="nav-number">1.2.</span> <span class="nav-text">保证缓存一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存行和存在的问题及解决"><span class="nav-number">1.2.1.</span> <span class="nav-text">缓存行和存在的问题及解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令重排序"><span class="nav-number">2.</span> <span class="nav-text">指令重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#底层原理"><span class="nav-number">2.1.</span> <span class="nav-text">底层原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件内存屏障-X86"><span class="nav-number">2.1.1.</span> <span class="nav-text">硬件内存屏障 X86</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM级别规范"><span class="nav-number">2.1.2.</span> <span class="nav-text">JVM级别规范</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile实现细节"><span class="nav-number">3.</span> <span class="nav-text">volatile实现细节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java内存模型"><span class="nav-number">4.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#保障可见性"><span class="nav-number">4.1.</span> <span class="nav-text">保障可见性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lock细节"><span class="nav-number">4.1.1.</span> <span class="nav-text">lock细节</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description">戒骄戒躁，努力向前</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
