@@ -186,6 +186,163 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/14/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/14/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">前端基础笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-14 21:36:37 / 修改时间：21:38:04" itemprop="dateCreated datePublished" datetime="2020-10-14T21:36:37+08:00">2020-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-HTML"><a href="#1-HTML" class="headerlink" title="1.HTML"></a>1.HTML</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/14/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/07/java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/07/java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="post-title-link" itemprop="url">java垃圾回收</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-07 23:20:00 / 修改时间：23:25:09" itemprop="dateCreated datePublished" datetime="2020-10-07T23:20:00+08:00">2020-10-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="垃圾确定算法"><a href="#垃圾确定算法" class="headerlink" title="垃圾确定算法"></a>垃圾确定算法</h1><h2 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h2><h2 id="可达性分析"><a href="#可达性分析" class="headerlink" title="可达性分析"></a>可达性分析</h2><p>可以作 GC-ROOTS的数据</p>
+<ul>
+<li><p>虚拟机栈中<strong>局部变量表</strong>中引用的对象</p>
+</li>
+<li><p>本地方法栈中 <strong>JNI 中</strong>引用的对象</p>
+</li>
+<li><p>方法区中类<strong>静态属性</strong>引用的对象</p>
+</li>
+<li><p>方法区中的<strong>常量引用</strong>的对象</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/07/%E4%B8%BE%E4%BE%8B%E7%90%86%E8%A7%A3jvm%E6%8C%87%E4%BB%A4%E5%92%8CJava%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -211,7 +368,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-07 12:48:49 / 修改时间：13:23:13" itemprop="dateCreated datePublished" datetime="2020-10-07T12:48:49+08:00">2020-10-07</time>
+              <time title="创建时间：2020-10-07 12:48:49 / 修改时间：23:21:07" itemprop="dateCreated datePublished" datetime="2020-10-07T12:48:49+08:00">2020-10-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,71 +392,14 @@
 
       
           <h1 id="举例1"><a href="#举例1" class="headerlink" title="举例1"></a>举例1</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">8</span>;</span><br><span class="line">i=i++;</span><br><span class="line">System.out.println(i);</span><br><span class="line">结果输出为<span class="number">8</span>， 原因： 对应的字节码如下图所示</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjgjtpbd05j30e307ft91.jpg" alt="image.png"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">8</span>;</span><br><span class="line">i=++i;</span><br><span class="line">System.out.println(i);</span><br><span class="line">结果输出为<span class="number">9</span>， 原因： 对应的字节码如下图所示</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjgk1jt3enj30d406rjro.jpg" alt="image.png"></p>
-<h2 id="理解："><a href="#理解：" class="headerlink" title="理解："></a>理解：</h2><ol>
-<li><p>首先要知道 jvm stack 中的 栈帧中的 local variables表（局部变量表）和 Operand Stack（操作数栈） 的概念：</p>
-<ul>
-<li>每个线程对应一个 jvm stack。</li>
-<li>线程中的每个方法对应一个栈帧</li>
-<li>栈帧包括四部分： <code>local variables</code>（局部变量表） + <code>operand stack</code>)(操作数栈)+ <code>dynamic linking</code>(动态连接)+ <code>return address</code>（返回地址）。理解这种现象  主要先理解栈帧中的前两个部分。</li>
-</ul>
-</li>
-<li><p>对应的指令码的意思：</p>
-<ul>
-<li><code>bipush</code>指令对应 将数据压入<code>operand stack</code>，<code>istore</code>是从<code>operand stack</code>中取数据赋值到<code>local variables</code>， 而<code>iload</code>操作是 从 <code>local variables</code>取出数据  加载到操作数栈<code>operand stack</code>。</li>
-<li><code>iinc 1 by 1</code>是指 对 i加1操作： <strong>Increment local variable by constant</strong> 其在官方文档中描述如下：</li>
-</ul>
-<blockquote>
-<h4 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h4><p><strong>Increment local variable by constant</strong>       </p>
-<h4 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h4><p><em>iinc</em> = 132 (0x84)                  </p>
-<h4 id="Operand-Stack"><a href="#Operand-Stack" class="headerlink" title="Operand Stack"></a>Operand Stack</h4><p>No change</p>
-<h4 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h4><p>The <em>index</em> is an unsigned byte that must be an index into the <strong>local variable</strong> array of the current frame     The <em>const</em> is an                         immediate signed byte. The local variable at <em>index</em> must contain an <code>int</code>. The value <em>const</em> is first  sign-extended to an <code>int</code>, and then the local variable at <em>index</em>    is incremented by that amount.                  </p>
-</blockquote>
-<p>注意到 该操作是在 <code>local variables</code>表中进行的，<strong>并不涉及 操作数栈</strong>。</p>
-</li>
-<li><p>观察两个案例对应的 指令， 第一个是先 <code>load</code>再 进行<code>iinc</code>，然后又<code>istore</code>， 由于<code>iinc</code>是在<code>local variables</code>中进行的，所以<code>operand stack</code>中的 i值没有改变， 然后又赋值回了 <code>local variables</code>中， 变回了8</p>
-</li>
-<li><p>而第二个例子中， 第一个是先<code>iinc</code>再 进行<code>load</code>，然后   <code>store</code>，由于是先进行了<code>iinc</code>操作，所以加载到栈中的 数据已经是加一后 的值（9）， 再赋值回来，仍然是9。</p>
-</li>
-<li><p>还有一点： 在Java中看起来从一个局部变量到另外一个局部变量是一步操作完成的，其实在jvm指令码层面是两步， 比如：</p>
-</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">8</span>;</span><br><span class="line"><span class="keyword">int</span> j=i;</span><br></pre></td></tr></table></figure>
-
-<p>对应两个步骤：</p>
-<ul>
-<li>首先 从local variables中读取i的值放入 operand stack</li>
-<li>从 operand stack中 取值存入 local variables中的 变量</li>
-</ul>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>: bipush        <span class="number">8</span></span><br><span class="line"><span class="number">2</span>: istore_1</span><br><span class="line"><span class="number">3</span>: iload_1</span><br><span class="line"><span class="number">4</span>: istore_2</span><br></pre></td></tr></table></figure>
-
-
-
-<p>第一个例子 执行过程如下：</p>
-<p><img src="https://s1.ax1x.com/2020/10/07/0aydrF.png" alt="0aydrF.png"></p>
-<h1 id="举例2"><a href="#举例2" class="headerlink" title="举例2"></a>举例2</h1><p>new 之后发生了什么</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJVM02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestJVM02 testJVM02 = <span class="keyword">new</span> TestJVM02();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对应的字节码指令如下：</p>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjglj9r838j30ee02pq30.jpg" alt="image.png"></p>
-<blockquote>
-<p>new :创建一个新的对象 Create new object， 此时在 operand stack中存放的是 新对象的引用。 新对象此时是默认值（零值）</p>
-<p>dup： Duplicate the <strong>top value on the operand stack</strong> and <strong>push</strong> the  duplicated value onto the operand stack.      </p>
-<p>invokespecial：调用 特殊方法（这里是初始化方法）（会<strong>消耗掉栈顶</strong> duplicate后的元素）</p>
-<p>astore_1: 将 <strong>operand stack 栈顶元素</strong>存入 local variables局部变量表。         </p>
-</blockquote>
-<p>由上面的内容也进一步理解了 DCL模式时为什么要加 <code>volatile</code>， 若不加<code>volatile</code>则 可能会发生指令重排序， 那么 astore指令就可能在 <code>invokespecial</code>之前那执行，那么另外一个线程就有可能使用到对象 <strong>半初始化的数据</strong>（也就是说执行完了 new（此时值是默认值） 尚未执行初始化操作）。因此要用<strong>volatile修饰</strong>变量。   </p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/07/%E4%B8%BE%E4%BE%8B%E7%90%86%E8%A7%A3jvm%E6%8C%87%E4%BB%A4%E5%92%8CJava%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -349,7 +449,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-07 18:13:27" itemprop="dateModified" datetime="2020-10-07T18:13:27+08:00">2020-10-07</time>
+                <time title="修改时间：2020-10-07 23:20:52" itemprop="dateModified" datetime="2020-10-07T23:20:52+08:00">2020-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -374,90 +474,14 @@
       
           <h1 id="硬件层面"><a href="#硬件层面" class="headerlink" title="硬件层面"></a>硬件层面</h1><h2 id="存储器层次结构"><a href="#存储器层次结构" class="headerlink" title="存储器层次结构"></a>存储器层次结构</h2><p><img src="https://s1.ax1x.com/2020/09/16/wg0DYt.png" alt=""></p>
 <p>如图所示，现代的计算机存储器是分层次的， <strong>金字塔底下存取速度慢，容量大，成本低， 金字塔上面 存取速度快，容量小，成本高。</strong></p>
-<h2 id="保证缓存一致性"><a href="#保证缓存一致性" class="headerlink" title="保证缓存一致性"></a>保证缓存一致性</h2><p>在高速缓存中，保存着从主存读取过来的数据，其中 L3缓存是 所有CPU共享， L1，L2缓存属于CPU本身，在CPU内部。</p>
-<p>如下图所示， 由于L2和L1为CPU独有，那么如何保证每个CPU中L2和L1中缓存内容的一致性问题呢？</p>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfsg3jkmoj30kd0itk62.jpg" alt="image.png"></p>
-<p>比较古老的CPU里面采用的锁总线的方式，当有一个CPU访问主存数据内容的时候，将　<strong>CPU到主存的总线锁住</strong>， 不允许其他CPU进行操作。 弊端就是 效率低下，并发度低。</p>
-<p>现代CPU以Intel为代表，使用的是<code>MESI</code><strong>（缓存一致性协议）</strong>来保证各个缓存之间数据的一致性 。</p>
-<p>MESI有四种标记状态：</p>
-<ul>
-<li><code>modified</code>  :如果自身对数据进行了修改，那么就标记为 modified</li>
-<li><code>exlusive</code>: 表明数据独享</li>
-<li><code>shared</code>： 数据共享</li>
-<li><code>invalid</code>： 如果其他线程对数据进行了操作，置为该标记表明数据失效。再需要使用时，需要去主存重新读取。</li>
-</ul>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfspctwutj30sm0d4qjz.jpg" alt="image.png"></p>
-<h3 id="缓存行和存在的问题及解决"><a href="#缓存行和存在的问题及解决" class="headerlink" title="缓存行和存在的问题及解决"></a>缓存行和存在的问题及解决</h3><ul>
-<li><p><code>cache line</code>: 读取缓存的时候，是整行读取的，成为cache line,（缓存行）</p>
-</li>
-<li><p><strong>伪共享</strong>： <strong>位于同一缓存行的数据，被两个不同的CPU使用，造成数据不必要的失效，重新读取</strong>，使得性能下降的现象。（一个CPU使用的只是  缓存行中的一个数据<code>x</code>，另一个CPU使用缓存行中的数据<code>y</code>， <code>x和y</code>在同一行中， 一个CPU仅仅操作了<code>x</code>，结果导致整个缓冲行失效，所以<code>y</code>必须重新读取（然而y的值并没有被改变，这就导致了不必要的操作）</p>
-</li>
-<li><p>解决方法： </p>
-<ul>
-<li><p>java8中增了一个注解：<code>@sun.misc.Contended</code>。加上这个注解的类会自动补齐缓存行。</p>
-</li>
-<li><p>使用数据进行填充。占满整个缓冲行 <strong>（64字节）</strong></p>
-</li>
-</ul>
-</li>
-<li><p><strong>缓存对齐可以提高效率，当然也牺牲掉了空间</strong></p>
-</li>
-</ul>
-<h1 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h1><p>为了<strong>提高指令的执行效率</strong>， Java 会将指令进行重新排序， 但有时候会造成错误。</p>
-<p>解决指令重排序可以使用 <code>volatile</code>进行禁止指令重排序。</p>
-<h2 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h2><h3 id="硬件内存屏障-X86"><a href="#硬件内存屏障-X86" class="headerlink" title="硬件内存屏障 X86"></a><strong>硬件内存屏障</strong> X86</h3><blockquote>
-<p> sfence:  store| 在sfence<strong>指令前的写</strong>操作当必须在<strong>sfence指令后的写</strong>操作<strong>前</strong>完成。<br> lfence：load | 在lfence<strong>指令前的读</strong>操作当必须在lfence<strong>指令后的读</strong>操作<strong>前</strong>完成。<br> mfence：modify/mix | 在mfence指令前的<strong>读写</strong>操作当必须在mfence指令后的读写操作前完成。</p>
-</blockquote>
-<blockquote>
-<p>原子指令，如x86上的”lock …” 指令是一个Full Barrier，执行时会锁住内存子系统来确保执行顺序，甚至跨多个CPU。Software Locks通常使用了<strong>内存屏障或原子指令</strong>来实现变量可见性和保持程序顺序</p>
-</blockquote>
-<h3 id="JVM级别规范"><a href="#JVM级别规范" class="headerlink" title="JVM级别规范"></a><strong>JVM级别</strong>规范</h3><blockquote>
-<p>LoadLoad屏障：<br>    对于这样的语句Load1; LoadLoad; Load2， </p>
-<pre><code>在Load2及后续读取操作要读取的数据被访问前，保证Load1要读取的数据被读取完毕。</code></pre><p>StoreStore屏障：</p>
-<pre><code>对于这样的语句Store1; StoreStore; Store2，
-
-在Store2及后续写入操作执行前，保证Store1的写入操作对其它处理器可见。</code></pre><p>LoadStore屏障：</p>
-<pre><code>对于这样的语句Load1; LoadStore; Store2，
-
-在Store2及后续写入操作被刷出前，保证Load1要读取的数据被读取完毕。</code></pre><p>StoreLoad屏障：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">对于这样的语句Store1<span class="comment">; StoreLoad; Load2，</span></span><br><span class="line">在Load2及后续所有读取操作执行前，保证Store1的写入对所有处理器可见。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h1 id="volatile实现细节"><a href="#volatile实现细节" class="headerlink" title="volatile实现细节"></a>volatile实现细节</h1><ol>
-<li><p>字节码层面<br>ACC_VOLATILE</p>
-</li>
-<li><p>JVM层面<br>volatile内存区的读写 都加屏障</p>
-<blockquote>
-<p>StoreStoreBarrier</p>
-<p>volatile 写操作</p>
-<p>StoreLoadBarrier</p>
-</blockquote>
-<blockquote>
-<p>LoadLoadBarrier</p>
-<p>volatile 读操作</p>
-<p>LoadStoreBarrier</p>
-</blockquote>
-</li>
-<li><p>OS和硬件层面<br><a href="https://blog.csdn.net/qq_26222859/article/details/52235930" target="_blank" rel="noopener">https://blog.csdn.net/qq_26222859/article/details/52235930</a><br>hsdis - HotSpot Dis Assembler<br>windows lock 指令实现 | MESI实现</p>
-</li>
-</ol>
-<p>补充 <strong>volatile并不能保证原子性</strong>，原因如下图所示：</p>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdw5id2sj31h10uf1kx.jpg" alt=""></p>
-<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><p>所有的变量都存储在主内存中，<strong>每个线程还有自己的工作内存</strong>，工作内存存储在高速缓存或者寄存器中，保存了该线</p>
-<p>程使用的变量的主内存副本拷贝。</p>
-<p>线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成</p>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjgo16t0qoj30xk0hegne.jpg" alt="image.png"></p>
-<h2 id="保障可见性"><a href="#保障可见性" class="headerlink" title="保障可见性"></a>保障可见性</h2><p>由于每个线程都有自己的工作内存，这些不是共享的，为了保证数据更改时能及时更新数据，保证数据在线程之间的 内存可见性， 需要加入volatile关键字，（底层用 lock实现）</p>
-<h3 id="lock细节"><a href="#lock细节" class="headerlink" title="lock细节"></a>lock细节</h3><ol>
-<li>使用了volatile 在 底层 对应的是<strong><code>lock</code>指令</strong> 可以加入 CPU级别的内存屏障，屏障两侧的指令不可以重排序。</li>
-<li>lock指令的作用： <ul>
-<li>立即<strong>将数据同步回主内存</strong></li>
-<li><strong>触发MESI缓存一致性协议，相应线程对应的数据失效</strong>。</li>
-<li>相关线程在 <strong>unlock后再去读取最新的数据</strong>。（保证读取到的是<strong>更新后的值</strong>而非原来的旧值）</li>
-</ul>
-</li>
-</ol>
-<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gjfdykhth8j31jg0qdtw8.jpg" alt="B7C9D51C3AAC290058BB45A810766561.png"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/06/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -928,163 +952,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%86%E5%9B%BE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
-      <meta itemprop="name" content="AnChris">
-      <meta itemprop="description" content="戒骄戒躁，努力向前">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%86%E5%9B%BE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">视图存储过程触发器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-09-27 14:36:42 / 修改时间：19:13:59" itemprop="dateCreated datePublished" datetime="2020-09-27T14:36:42+08:00">2020-09-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h2 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h2><p>视图是<strong>虚拟的表</strong>。与包含数据的表不一样，视图只包含使用时动态检索数据的<strong>查询</strong>。视图就是查询，它包含了一系列的SQL语句。</p>
-<p>可以将类比 Java中面向对象特性中的 <strong>封装</strong>， 就是屏蔽了一些细节，只暴露出一个简单了对外调用的接口。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%86%E5%9B%BE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92explain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
-      <meta itemprop="name" content="AnChris">
-      <meta itemprop="description" content="戒骄戒躁，努力向前">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92explain/" class="post-title-link" itemprop="url">执行计划explain</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-24 18:09:45" itemprop="dateCreated datePublished" datetime="2020-09-24T18:09:45+08:00">2020-09-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-27 14:35:19" itemprop="dateModified" datetime="2020-09-27T14:35:19+08:00">2020-09-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="什么是explain"><a href="#什么是explain" class="headerlink" title="什么是explain"></a>什么是explain</h1><p> EXPLAIN 关键字可以<strong>模拟优化器执行 SQL 查询语句</strong>，根据返回信息得知 MySQL 是<strong>如何处理对应的SQL语句的</strong>。 进而可以对语句的性能进行分析优化。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/24/%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92explain/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1156,20 +1023,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
