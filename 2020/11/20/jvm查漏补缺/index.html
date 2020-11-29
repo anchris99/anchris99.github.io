@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=黑体:300,300italic,400,400italic,700,700italic|微软雅黑:300,300italic,400,400italic,700,700italic|宋体:300,300italic,400,400italic,700,700italic|Inconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="题目   Java中的&#x3D;&#x3D;类加载机制&#x3D;&#x3D;。 为什么要使用&#x3D;&#x3D;双亲委派模型&#x3D;&#x3D;。      内存泄漏，哪些情况导致内存泄漏（如哪些编码不规范导致的内存泄漏）  四种引用  JVM垃圾回收算法  GC ROOT根节点包括哪些      JVM怎么处理内存泄漏的情形    7.JVM内存模型，详细介绍      1.Java为什么可以跨平台        ​     1.Java为什么可以跨平台 因为J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm查漏补缺">
+<meta property="og:url" content="http://yoursite.com/2020/11/20/jvm%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="题目   Java中的&#x3D;&#x3D;类加载机制&#x3D;&#x3D;。 为什么要使用&#x3D;&#x3D;双亲委派模型&#x3D;&#x3D;。      内存泄漏，哪些情况导致内存泄漏（如哪些编码不规范导致的内存泄漏）  四种引用  JVM垃圾回收算法  GC ROOT根节点包括哪些      JVM怎么处理内存泄漏的情形    7.JVM内存模型，详细介绍      1.Java为什么可以跨平台        ​     1.Java为什么可以跨平台 因为J">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkz6opcg0oj30rr0eet9r.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gky04fayldj30um0fxwg4.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gky04uecnpj30uq0ge77h.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gky1xrkmvej30xf0j8jv2.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gky20m3hvkj30fz0i9jt7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gky90h1765j30vz0i9464.jpg">
+<meta property="og:image" content="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2016/8ca16868.png">
+<meta property="og:image" content="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2016/5aea17be.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkyumsb9wyj30rg06nqab.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkyr8dz7rqj30vk0madkx.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gl08gd7x5fj30ny0mv77k.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkzbi1ycrdj30sy08qgp7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkxpcfs0n4j30ri0ebtcs.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkxqomxq4sj30dx0ka74p.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkzd7j2mn2j30ic0hbwic.jpg">
+<meta property="article:published_time" content="2020-11-20T00:44:25.000Z">
+<meta property="article:modified_time" content="2020-11-28T01:07:24.606Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gkz6opcg0oj30rr0eet9r.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2020/11/20/jvm%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>jvm查漏补缺 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/20/jvm%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+      <meta itemprop="name" content="AnChris">
+      <meta itemprop="description" content="戒骄戒躁，努力向前">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jvm查漏补缺
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-20 08:44:25" itemprop="dateCreated datePublished" datetime="2020-11-20T08:44:25+08:00">2020-11-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-28 09:07:24" itemprop="dateModified" datetime="2020-11-28T09:07:24+08:00">2020-11-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkz6opcg0oj30rr0eet9r.jpg" alt="image.png"></p>
+<blockquote>
+<ul>
+<li>Java中的==类加载机制==。</li>
+<li>为什么要使用==双亲委派模型==。 </li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>内存泄漏，哪些情况导致内存泄漏（如哪些编码不规范导致的内存泄漏）</p>
+</li>
+<li><p>四种引用</p>
+</li>
+<li><p>JVM垃圾回收<a href="https://www.nowcoder.com/jump/super-jump/word?word=算法" target="_blank" rel="noopener">算法</a></p>
+</li>
+<li><p>GC ROOT根节点包括哪些</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>JVM怎么处理内存泄漏的情形  </p>
+</li>
+<li><p>7.JVM内存模型，详细介绍    </p>
+</li>
+<li><p>1.Java为什么可以跨平台    </p>
+</li>
+</ul>
+</blockquote>
+<p>​    </p>
+<h2 id="1-Java为什么可以跨平台"><a href="#1-Java为什么可以跨平台" class="headerlink" title="1.Java为什么可以跨平台"></a>1.Java为什么可以跨平台</h2><blockquote>
+<p>因为Java程序编译之后的代码不是能被硬件系统直接运行的代码，而是一种“<strong>中间码</strong>”——<strong>字节码</strong>。然后不同的硬件平台上都安装有不同的Java虚拟机(JVM)，由JVM来把字节码再“翻译”成所对应的硬件平台能够执行的代码（机器码）。每个系统平台都是有自己的虚拟机（JVM），所以JAVA语言能跨平台。</p>
+</blockquote>
+<h2 id="2-JMM"><a href="#2-JMM" class="headerlink" title="2.JMM"></a>2.JMM</h2><ul>
+<li>模型</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gky04fayldj30um0fxwg4.jpg" alt="image.png"></p>
+<ul>
+<li>内存间的交互</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gky04uecnpj30uq0ge77h.jpg" alt="image.png"></p>
+<ul>
+<li>三大特性</li>
+</ul>
+<p>原子性</p>
+<p>有序性</p>
+<p>可见性</p>
+<ul>
+<li>有序性的八大默认规则</li>
+</ul>
+<h2 id="3-内存泄漏的情况"><a href="#3-内存泄漏的情况" class="headerlink" title="3.内存泄漏的情况"></a>3.内存泄漏的情况</h2><p><a href="https://blog.csdn.net/mr_door_/article/details/107694863" target="_blank" rel="noopener">参考</a></p>
+<ul>
+<li>堆内存不足  : 大对象分配、 内存泄漏</li>
+<li>元空间（永久代溢出） : 生成了<strong>大量的代理类，导致方法区被撑爆</strong>，无法卸载;   应用长时间运行，没有重启</li>
+<li>方法栈溢出  ：   创建的了<strong>大量的线程导致的</strong></li>
+<li><strong>swap区溢出</strong> ： swap 分区大小分配不足； 其他进程消耗了所有的内存。</li>
+</ul>
+<h2 id="4-finalize"><a href="#4-finalize" class="headerlink" title="4.finalize"></a>4.finalize</h2><blockquote>
+<p>​    一旦GC准备好<strong>释放</strong>对象所占用的的存储空间，将先<strong>调用其finalize()方法</strong>，并在<strong>下一次GC回收动作发生时</strong>，才会真正回收对象占用的内存，所以<strong>一些清理工作，我们可以放到finalize()中</strong>。</p>
+<pre><code>该方法的一个重要的用途是：当在java中**调用非java代码**（如c和c++）时，在这些非java代码中可能会用到**相应的申请内存的操作**（如c的malloc()函数），而在这些非java代码中并没有有效的释放这些内存，就可以使用finalize()方法，并在里面**调用本地方法的free()等函数。**</code></pre></blockquote>
+<h2 id="5-运行时数据区（不同版本）"><a href="#5-运行时数据区（不同版本）" class="headerlink" title="5.运行时数据区（不同版本）"></a>5.运行时数据区（不同版本）</h2><p>1.6版本</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gky1xrkmvej30xf0j8jv2.jpg" alt="image.png"></p>
+<p>1.8版本</p>
+<p>1.8jvm中去掉了 <code>永久代</code>, 取而代之的是  元空间<code>meta space</code>， </p>
+<p>元空间的<strong>本质</strong>和永久代类似，都是对JVM规范中==方法区==的实现。不过元空间与永久代之间最大的区别在于：元空间并==不在虚拟机==中，而是使用==本地内存==。因此，默认情况下，元空间的大小仅受本地内存限制，</p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gky20m3hvkj30fz0i9jt7.jpg" alt="image.png"></p>
+<h4 id="为什么改变"><a href="#为什么改变" class="headerlink" title="为什么改变"></a>为什么改变</h4><ol>
+<li>方法区存什么</li>
+</ol>
+<blockquote>
+<p>　线程共享。主要用于存储  <strong>类的信息、==常量池==、方法数据、方法代码</strong>等。方法区<strong>逻辑上属于堆的一部</strong>分，但是为了与堆进行区分，通常又叫<strong>“非堆”</strong></p>
+</blockquote>
+<ol start="2">
+<li>永久代是什么</li>
+</ol>
+<p>注意！ 永久代 只是  hotspot <strong>特有</strong>的对方法区的一种实现，其他虚拟机是不存在的。 方法区和“PermGen space”有着本质的区别。前者是 JVM 的==规范==，而后者则是 JVM 规范的一种==实现==。</p>
+<ol start="3">
+<li>永久代有什么问题</li>
+</ol>
+<p>JDK1.7 就开始“去永久代”的工作了。 1.7把<strong>字符串常量池</strong>从永久代中剥离出来，存放在<strong>堆空间</strong>中。</p>
+<blockquote>
+<p>　　1、字符串存在永久代中，容易出现<strong>性能问题和内存溢出</strong>。</p>
+<p>　　2、类及方法的信息等(方法区的内容）  比<strong>较难确定其大小</strong>，因此对于永久代的<strong>大小指定比较困难</strong>，太小容易出现永久代溢出，太大则容易导致<strong>老年代溢出。</strong></p>
+<p>　　3、永久代会为 GC 带来<strong>不必要的复杂度</strong>，并且<strong>回收效率偏低</strong>。</p>
+</blockquote>
+<ul>
+<li><p>参考</p>
+<p><a href="https://blog.csdn.net/bruce128/article/details/79357870" target="_blank" rel="noopener">JDK1.8 JVM运行时数据区域划分</a></p>
+</li>
+</ul>
+<h4 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h4><p>栈帧的内容：</p>
+<blockquote>
+<p>局部变量表、操作数栈、动态链接、出口信息</p>
+</blockquote>
+<h2 id="6-GC-ROOT根结点"><a href="#6-GC-ROOT根结点" class="headerlink" title="6.GC ROOT根结点"></a>6.GC ROOT根结点</h2><ul>
+<li>虚拟机栈中 ==局部变量表==引用的对象</li>
+<li>本地方法栈中 ==JNI==引用的对象</li>
+<li>方法区 中类==静态属性==引用的对象</li>
+<li>方法区中 ==常量==引用的对象</li>
+</ul>
+<h2 id="7-引用类型"><a href="#7-引用类型" class="headerlink" title="7.引用类型"></a>7.引用类型</h2><ul>
+<li>强引用Strong Reference</li>
+</ul>
+<blockquote>
+<p>只要有强引用存在，被引用的对象就不会被垃圾回收。</p>
+</blockquote>
+<ul>
+<li>软引用Soft Reference</li>
+</ul>
+<blockquote>
+<p>只有在==内存不足==的情况下，被引用的对象才会被回收。</p>
+</blockquote>
+<ul>
+<li>弱引用weak Reference</li>
+</ul>
+<blockquote>
+<p>weekReference引用的对象只要垃圾回收执行，就会被回收</p>
+</blockquote>
+<ul>
+<li>虚引用PhantomReference</li>
+</ul>
+<blockquote>
+<p>PhantomReference的作用是==跟踪垃圾回收器收集对象的活动==，在GC的过程中，如果发现有PhantomReference，GC则会将引用放到ReferenceQueue中， 当程序员调用ReferenceQueue.poll()方法，将引用出ReferenceQueue移除之后，Reference对象会变成<code>Inactive</code> 状态，意味着==被引用的对象可以被回收了==。</p>
+</blockquote>
+<p>特点1：无法通过虚引用来<strong>获取对一个对象的真实引用。</strong></p>
+<p>特点2： 虚引用必须与ReferenceQueue一起使用，当GC准备回收一个对象，如果发现它还有虚引用，就会在回收之前，把这个虚引用加<strong>入到与之关联的ReferenceQueue中</strong>。</p>
+<ul>
+<li><a href="https://www.cnblogs.com/flydean/p/java-reference-referencetype.html" target="_blank" rel="noopener">参考链接</a></li>
+<li><a href="https://www.cnblogs.com/CodeBear/p/12447554.html" target="_blank" rel="noopener">代码实操</a></li>
+</ul>
+<h2 id="8-垃圾回收算法（重）"><a href="#8-垃圾回收算法（重）" class="headerlink" title="8.垃圾回收算法（重）"></a>8.垃圾回收算法（重）</h2><ul>
+<li>标记清除</li>
+<li>标记整理</li>
+<li>复制</li>
+<li>分代收集（新生代：复制，  老年代、永久代（常量池、方法、即时编译程序码）：标记-整理）</li>
+</ul>
+<h4 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h4><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gky90h1765j30vz0i9464.jpg" alt="image.png"></p>
+<h4 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h4><ul>
+<li>工作区域：老年代</li>
+<li>特点：并发，最低停顿时间</li>
+<li>算法： 基于标记-清理算法</li>
+<li>缺点： 吞吐量低、内存碎片 、无法处理浮动垃圾， 若 gc时预留空间不够，则可能会 调用serialold工作。</li>
+</ul>
+<p><a href="https://cloud.tencent.com/developer/article/1624694" target="_blank" rel="noopener">面试官面试</a></p>
+<p><strong>问题及解决方案</strong></p>
+<blockquote>
+<ol>
+<li><p><strong>垃圾碎片的问题</strong>，我们都知道CMS是使用的是<strong>标记-清除</strong>算法的，所以不可避免的就是会出现垃圾碎片的问题。</p>
+</li>
+<li><p><strong>一般CMS的GC耗时80%都在remark阶段，remark阶段停顿时间会很长</strong>，<strong>导致吞吐量降低</strong>，在CMS的这四个主要的阶段中，最费时间的就是==重新标记==阶段。</p>
+</li>
+<li><p><strong>concurrent mode failure</strong>，并发清除阶段会继续产生垃圾（浮动垃圾），需要预留空间，不能等到空间用满了再收集， 若预留空间不够，触发该错误， 调用 serial OLD 收集器。</p>
+</li>
+<li><p><strong>promotion failed</strong>，这个问题是指，在进行Minor GC时，Survivor空间不足，对象只能放入老年代，而此时老年代也放不下造成的，多数是由于老年代有足够的空闲空间，但是由于<strong>碎片较多</strong>，新生代要转移到老年带的对象比较大,找不到一段连续区域存放这个对象导致的。</p>
+</li>
+</ol>
+<h4 id="既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？"><a href="#既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？" class="headerlink" title="既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？"></a><strong>既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？</strong></h4><ul>
+<li><p><strong>垃圾碎片的问题</strong>：针对这个问题，这时候我们需要用到这个参数：<code>-XX:+UseCMSCompactAtFullCollection</code>， <code>- XX:CMSFullGCsBeforeCompaction=n</code>   ：</p>
+<p>开启压缩、 并且在上一次CMS并发GC执行过后，到底还要再执行多少次<code>full GC</code>才会做压缩。默认是0，也就是在默认配置下每次CMS GC顶不住了而要转入full GC的时<strong>候都会做压缩</strong>。</p>
+</li>
+<li><p><strong>concurrent mode failure</strong></p>
+<p>解决这个问题其实很简单，只需要设置两个参数即可</p>
+<p><code>-XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=60</code>：是指设定CMS在对内存占用率达到60%的时候开始GC。</p>
+<p>为什么设置这两个参数呢？由于在垃圾收集阶段用户线程还需要运行，那也就还需要<strong>预留有足够的内存空间给用户线程使用</strong>，因此CMS收集器不能像其他收集器那样等到老年代几乎完全被填满了再进行收集。</p>
+</li>
+<li><p><strong>remark阶段停顿时间会很长的问题</strong>：加入<code>-XX:+CMSScavengeBeforeRemark</code>。在执行==remark操作之前先做一次<code>Young GC</code>，==目的在于减少年轻代对老年代的无效引用，<strong>降低remark时的开销。</strong></p>
+</li>
+</ul>
+</blockquote>
+<h4 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h4><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><blockquote>
+<p> G1是一种服务器端的垃圾收集器，应用在==多处理器和大容量==内存环境中，在实现==高吞吐量==的同时，尽可能的满足垃圾收集==暂停时间==的要求。</p>
+<p> 相对于CMS的优点：</p>
+<ul>
+<li>G1基于复制算法，有整理内存，不会产生很多内存碎片。 </li>
+<li>G1的Stop The World(STW)更可控，G1在停顿时间上添加了预测机制，用户可以指定期望停顿时间。</li>
+<li>并发并行， 缩短stw的时间</li>
+</ul>
+</blockquote>
+<h4 id="G1堆内存布局"><a href="#G1堆内存布局" class="headerlink" title="G1堆内存布局"></a>G1堆内存布局</h4><p>G1之前 垃圾收集器 各代的存储地址（逻辑地址，下同）是==连续的==</p>
+<p>G1的各代存储地址是==不连续==的，每一代都使用了<strong>n个不连续的大小相同的Region</strong>，每个Region占有一块连续的虚拟内存地址。</p>
+<p><img src="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2016/8ca16868.png" alt=""></p>
+<blockquote>
+<p>有一些Region标明了H，它代表Humongous，这表示这些Region存储的是巨大对象（humongous object，H-obj），即大小大于等于region<strong>一半</strong>的对象。</p>
+<p>H-obj有如下几个特征：</p>
+<ul>
+<li>H-obj直接分配到了<strong>old gen</strong>，防止了反复拷贝移动。 </li>
+<li>H-obj在global concurrent marking阶段的cleanup 和 Mixed GC阶段回收。 </li>
+<li><ul>
+<li>在分配H-obj之前先检查是否超过 initiating heap occupancy percent和the marking threshold, 如果超过的话，就启动global concurrent marking，为的是<strong>提早回收</strong>，防止 evacuation failures 和 full GC。</li>
+</ul>
+</li>
+</ul>
+<p>为了减少<strong>连续H-objs分配对GC</strong>的影响，需要把大对象变为普通的对象，建议增大<strong>Region size</strong>。</p>
+</blockquote>
+<h4 id="RSET、CET"><a href="#RSET、CET" class="headerlink" title="RSET、CET"></a>RSET、CET</h4><blockquote>
+<ul>
+<li><p>RSET 全称是Remembered Set，是辅助GC过程的一种结构，典型的空间换时间工具，和Card Table有些类似。</p>
+</li>
+<li><p>Collection Set（CSet），它记录了==GC要收集的Region集合==，集合里的Region可以是任意年代的。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>在GC的时候，对于old-&gt;young和old-&gt;old的跨代对象引用，只要扫描对应的<strong>CSet中的RSet</strong>即可。 </p>
+<p>逻辑上说==每个Region都有一个RSet==，RSet记录了==其他Region中的对象引用本Region中对象==的关系，属于points-into结构（谁引用了我的对象）。而Card Table则是一种points-out（我引用了谁的对象）的结构，每个Card 覆盖一定范围的Heap（一般为512Bytes）。</p>
+<p>G1的RSet是在Card Table的基础上实现的：每个Region会记录下别的Region有指向自己的指针。 这个RSet其实是一个<strong>Hash Table</strong>，Key是别的Region的起始地址，Value是一个集合，里面的元素是Card Table的Index。</p>
+</blockquote>
+<p><img src="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2016/5aea17be.jpg" alt=""></p>
+<h4 id="GC过程"><a href="#GC过程" class="headerlink" title="GC过程"></a>GC过程</h4><h5 id="G1提供的GC模式"><a href="#G1提供的GC模式" class="headerlink" title="G1提供的GC模式"></a>G1提供的GC模式</h5><blockquote>
+<p>G1提供了两种GC模式，Young GC和Mixed GC，两种都是完全==Stop The World==的。 </p>
+<ul>
+<li>Young GC：选定所有年轻代里的Region。通过控制==年轻代的region个数==，即年轻代内存大小，来控制young GC的时间开销</li>
+<li>Mixed GC：选定==所有年轻代==里的Region，外加根据global concurrent marking统计得出收集收益高的若干老年代Region。在用户指定的开销目标范围内尽可能选择<strong>收益高</strong>的老年代Region。</li>
+</ul>
+</blockquote>
+<h5 id="9-4-2-global-concurrent-marking（并发标记）"><a href="#9-4-2-global-concurrent-marking（并发标记）" class="headerlink" title="9.4.2 global concurrent marking（并发标记）"></a>9.4.2 global concurrent marking（并发标记）</h5><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkyumsb9wyj30rg06nqab.jpg" alt="image.png"></p>
+<ol>
+<li>初始标记</li>
+<li>并发标记</li>
+<li>最终标记</li>
+<li>筛选回收：选择一些收益较高的老年代</li>
+</ol>
+<blockquote>
+<p> 注意！ 全局并发标记与CMS的过程类似，但是！！！对于 G1来说，该过程仅仅是为 ==Mixed GC提供标记服务==，不是一个完全的GC过程，也不是必须要发生的。　</p>
+</blockquote>
+<h4 id="Mixed-GC发生时机"><a href="#Mixed-GC发生时机" class="headerlink" title="Mixed GC发生时机"></a>Mixed GC发生时机</h4><blockquote>
+<p>由一些参数控制着的，另外也控制着哪些老年代Region会被选入CSet。 </p>
+<p><code>G1HeapWastePercent</code>：在global concurrent marking结束之后，我们可以知道==old gen regions中有多少空间要被回收==，在每次YGC之后和再次发生Mixed GC之前，会检查垃圾占比是否达到此参数，只有达到了，下次才会发生Mixed GC。 * </p>
+<p><code>G1OldCSetRegionThresholdPercent</code>：一次Mixed GC中能被选入CSet的最多old generation region数量。</p>
+<hr>
+<p><code>G1MixedGCLiveThresholdPercent</code>：old generation region中的存活对象的占比，只有在此参数之下，才会被选入CSet。 * <code>G1MixedGCCountTarget</code>：一次global concurrent marking之后，最多执行Mixed GC的次数。  </p>
+</blockquote>
+<h4 id="问题：G1会不会进行Full-GC"><a href="#问题：G1会不会进行Full-GC" class="headerlink" title="问题：G1会不会进行Full GC?"></a>问题：G1会不会进行Full GC?</h4><p>会发生老年代的回收，但是不等同于 full gc，而是 mixed gc，因为只选择部分收益较高的老年代进行回收。</p>
+<p>如果mixed GC实在无法跟上程序分配内存的速度，导致<strong>老年代填满</strong>无法继续进行Mixed GC，就会使用serial old GC（full GC）来收集整个GC heap。</p>
+<p>解决：</p>
+<ul>
+<li>加大内存；</li>
+<li>提高CPU性能，加快GC回收速度，而对象增加速度赶不上回收速度，则Full GC可以避免；</li>
+<li>降低进行Mixed GC触发的阈值，让Mixed GC提早发生（默认45%）</li>
+</ul>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://tech.meituan.com/2016/09/23/g1.html" target="_blank" rel="noopener">美团 Java Hotspot G1 GC的一些关键技术</a></p>
+<h2 id="9-三色标记算法及CMS和G1的细节"><a href="#9-三色标记算法及CMS和G1的细节" class="headerlink" title="9.三色标记算法及CMS和G1的细节"></a>9.三色标记算法及CMS和G1的细节</h2><h4 id="1-什么是三色标记"><a href="#1-什么是三色标记" class="headerlink" title="1.什么是三色标记"></a>1.什么是三色标记</h4><p><a href="https://www.javatt.com/p/47358" target="_blank" rel="noopener">标记算法具体过程</a></p>
+<blockquote>
+<p>三色标记是在cms和g1中使用的垃圾追踪算法</p>
+<ul>
+<li><p>黑色</p>
+<p>从GCRoots开始,已<strong>扫描过它全部引用的对象</strong>,标记为黑色</p>
+</li>
+<li><p>灰色</p>
+<p>扫描过<strong>对象本身</strong>,还<strong>没完全扫描过它全部引用的对象</strong>,标记为灰色</p>
+</li>
+<li><p>白色</p>
+<p><strong>还没扫描过的对象</strong>,标记为白色</p>
+</li>
+</ul>
+<p>所以,从GCRoots开始,顺着一直向下扫描,用可达性分析算法,<strong>最后所有的白色对象,都是垃圾对象,可以回收</strong></p>
+</blockquote>
+<h4 id="2-漏标问题"><a href="#2-漏标问题" class="headerlink" title="2.漏标问题"></a>2.漏标问题</h4><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkyr8dz7rqj30vk0madkx.jpg" alt="image.png"></p>
+<blockquote>
+<p>​    灰色对象因为<strong>取消了对白色对象的引用</strong>,所以后面gc开始扫描所有灰色对象的引用时候,<strong>也不会再扫描到白色对象</strong> 最后结果就是,白色对象直到本次标记扫描结束,也是白色,根据三色标记规则,认为它是垃圾,被清理掉 但是实际情况,它明显是被引用的对象,是绝对不能当做垃圾来清除的,因为漏标,最后被当垃圾清理掉了</p>
+</blockquote>
+<h4 id="3-漏标的两个充要条件"><a href="#3-漏标的两个充要条件" class="headerlink" title="3.漏标的两个充要条件"></a>3.漏标的两个充要条件</h4><ul>
+<li>有至少一个黑色对象在自己被<strong>标记之后</strong>指向了这个<strong>白色对象</strong></li>
+<li>所有的灰色对象在自己引用<strong>扫描完成之前</strong>删除了对白色对象的引用</li>
+</ul>
+<h4 id="4-应对策略"><a href="#4-应对策略" class="headerlink" title="4.应对策略"></a>4.应对策略</h4><p>对应的实现机制： <code>dirty card</code></p>
+<p>​    JVM将内存分成一个个固定大小的<code>card</code>，然后有一个专门的数据结构(即这里的<code>Card Table</code>)维护每个<code>Card</code>的状态，card Table 底层是<code>bit map</code>。当一个<code>Card</code>上的对象的引用发生变化的时候，就将这个<code>Card</code>对应的<code>Card Table</code>上的状态置为dirty。之后在预清理和remark阶段会处理这些<code>dirty card</code>。</p>
+<p>​    由于使用了dirty card 记录哪些对象发生了变化，所以可以提高效率，避免漏标问题。</p>
+<blockquote>
+<p>CMS采用的是==增量更新==</p>
+<p>增量更新破坏的是第一个条件,我们在这个黑色对象增加了对白色对象的引用之后,<strong>将它的这个引用,记录下来</strong>,在最后标记的时候,<strong>再以这个黑色对象为根,对它的引用进行重新扫描.</strong></p>
+<p>可以简单理解为,当一个黑色对象增加了对白色对象的引用,那么这个<strong>黑色对象就被变灰</strong>。</p>
+<p>缺点: 会重新扫描这个<strong>黑色对象的所有引用</strong>,比较浪费时间</p>
+</blockquote>
+<blockquote>
+<p>G1采用的是<code>原始快照</code></p>
+<p>​    灰色对象<strong>取消对白色对象</strong>的引用之前,将这个<strong>引用记录下来</strong>,在最后标记的时候,再以这个引用指向的<strong>白色对象为根,</strong>对它的<strong>引用进行扫描</strong>.</p>
+<p>​    可以简单理解为,当一个灰色对象取消了对白色对象的引用,那么这个<strong>白色对象变灰</strong>。</p>
+<ul>
+<li><p>缺点：这个白色对象有可能并没有黑色对象去引用它,但是它还是被变灰了,就会导致它和它的引用,本来应该被垃圾回收掉,但是此次GC存活了下来,就是所谓的<code>浮动垃圾</code>.</p>
+</li>
+<li><p>优点：其实这样是比较可以忍受的,只是让它<strong>多存活了一次GC</strong>而已,浪费一点点空间,但是会比增量更新<strong>更省时间.</strong></p>
+</li>
+</ul>
+</blockquote>
+<h4 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://blog.csdn.net/qq_32310175/article/details/107724213" target="_blank" rel="noopener">csdn-三色标记的漏标问题及两种解决方案</a></p>
+<p><a href="https://juejin.cn/post/6844903922872614925" target="_blank" rel="noopener">掘金-CMS和G1的一些细节</a></p>
+<h2 id="10-full-gc和-mirror-gc触发条件-重"><a href="#10-full-gc和-mirror-gc触发条件-重" class="headerlink" title="10.==full gc和 mirror gc触发条件(重)=="></a>10.==full gc和 mirror gc触发条件(重)==</h2><p>Minor GC触发条件：当==<strong>Eden区满时</strong>==，触发Minor GC。</p>
+<p>Full GC触发条件：</p>
+<p>（1）调用System.gc时，系统建议执行Full GC，但是不必然执行</p>
+<p>（2）老年代空间不足</p>
+<blockquote>
+<p>大对象直接进入老年代， 尽量不要创建过大的对象及数组。</p>
+</blockquote>
+<p>（3）方法区空间不足</p>
+<blockquote>
+<p>1.8之前 方法区 是使用 永久代实现的，里面存放了类的信息、静态变量、常量池等。</p>
+<p>当系统要加载的类过多、反射类过多（因为反射类要求==立即对类进行初始化操作==，而方法区保存 类的信息），就会使方法区满。</p>
+</blockquote>
+<p>（4）空间分配担保失效（Minor GC时）</p>
+<blockquote>
+<p> 由Eden区、From Space区向To Space区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小</p>
+</blockquote>
+<p>  (5) Concurent Mode Failure </p>
+<blockquote>
+<p>CMS GC时 有<strong>对象放入老年代</strong>，若浮动垃圾大于预留空间，则会触发full gc，</p>
+</blockquote>
+<h2 id="11-内存分配策略（重）"><a href="#11-内存分配策略（重）" class="headerlink" title="11. ==内存分配策略（重）=="></a>11. ==内存分配策略（重）==</h2><ul>
+<li>优先在 eden分配</li>
+<li>大对象进入老年代</li>
+<li>长期存活对象进入老年代</li>
+<li>动态对象年龄判定： <code>若 survivor中相同年龄的所有对象 大小总和大于survivor空间一半，则年龄大于等于该年龄的对象进入老年代</code></li>
+<li>空间分配担保</li>
+</ul>
+<blockquote>
+<p>minor gc发生前： 检查 OLD区中连续空间大小， 若比yong区所有对象大小之和大，则安全</p>
+<p>否则，检查是否允许担保失败：</p>
+<ul>
+<li>不允许： 进行full gc</li>
+<li>允许：<ul>
+<li>老年代可用<strong>连续空间是否大于 历次晋升到OLD区</strong>中 对象的平均大小</li>
+<li>是： minor gc</li>
+<li>否： full gc</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="12-jvm一次完整的gc"><a href="#12-jvm一次完整的gc" class="headerlink" title="12.jvm一次完整的gc"></a>12.jvm一次完整的gc</h2><blockquote>
+<p>当GC线程启动时，会通过==可达性分析法==把Eden区和From Space区的存活对象复制到To Space区，然后把Eden Space和From Space区的对象<strong>释放掉</strong>。</p>
+<p>每次扫描过后， survivor中存活对象的年龄就加一，当年龄到了阈值后，把依然存活的对象<strong>复制到老年代</strong>，然后释放To Space区的对象。</p>
+<p>当老年代空间满足触发条件的时候，进行 full gc，对 新生代和老年代都进行gc</p>
+</blockquote>
+<p>对象如何进入老年代： 大对象、survivor区对象年龄到达阈值、minor gc survivor空间不够。</p>
+<h2 id="13-jvm常用参数"><a href="#13-jvm常用参数" class="headerlink" title="13.jvm常用参数"></a>13.jvm常用参数</h2><p>根据jvm参数开头可以区分参数类型，共三类：“-”、“-X”、“-XX”，</p>
+<ul>
+<li><p>标准参数（-）：所有的JVM实现都<strong>必须实现</strong>这些参数的功能，而且向后兼容； </p>
+</li>
+<li><p>非标准参数（-X）：<strong>默认jvm实现这些参数的功能</strong>，但是并不保证所有jvm实现都满足，且不保证向后兼容； </p>
+</li>
+<li><p>非Stable参数（-XX）：此类参数各个jvm实现会有所不同，将来可能会<strong>随时取消</strong>，需要慎重使用；</p>
+</li>
+</ul>
+<blockquote>
+<p>java -version： 查看版本</p>
+<p>■ -Xms20m ：设置jvm初始化堆大小为20m，一般与-Xmx相同避免垃圾回收完成后jvm重新分。</p>
+<p>■ -Xmx20m：设置jvm最大可用内存大小为20m。</p>
+<p>■ -Xmn10m：设置新生代大小为20m。 </p>
+<p>■ -XX:+PrintGCDetails：打印GC详情；</p>
+<p>■ -XX:+PrintGCTimeStamps：打印时间戳；</p>
+<p>■ -XX:+UseCMSCompactAtFullCollection 开启压缩</p>
+<p>■ -XX:CMSFullGCsBeforeCompaction=n  经过多少次 full gc进行内存整理</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gl08gd7x5fj30ny0mv77k.jpg" alt="image.png"></p>
+<h2 id="14-垃圾收集器的比较"><a href="#14-垃圾收集器的比较" class="headerlink" title="14.垃圾收集器的比较"></a>14.垃圾收集器的比较</h2><table>
+<thead>
+<tr>
+<th align="left">serial</th>
+<th align="left">单线程；简单高效；stop the Word；适用于内存较小的情景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">parallel scavenge</td>
+<td align="left">关注：CPU==吞吐量==达到可控的标准。高吞吐量适合高效利用CPU</td>
+</tr>
+<tr>
+<td align="left">parNew</td>
+<td align="left">和serial基本一样，只是多线程收集； 只有它能与CMS配合工作；适用于多CPU的情况</td>
+</tr>
+<tr>
+<td align="left">serial old</td>
+<td align="left">serial的老年版本，单线程； CMS(浮动垃圾过多) 和 g1（mixed GC无法跟上程序分配内存的速度）后备选择</td>
+</tr>
+<tr>
+<td align="left">cms</td>
+<td align="left">关注于==最短停顿时间==（吞吐量低、内存碎片、浮动垃圾）</td>
+</tr>
+<tr>
+<td align="left">parallel old</td>
+<td align="left">parallel 的老年代版本， 注重吞吐量，CPU敏感</td>
+</tr>
+<tr>
+<td align="left">g1</td>
+<td align="left">独立的region，并发并行、分代收集、==空间整合、 停顿时间可控==</td>
+</tr>
+</tbody></table>
+<h2 id="15-双亲委派模型"><a href="#15-双亲委派模型" class="headerlink" title="15.双亲委派模型"></a>15.双亲委派模型</h2><p>类加载机制定义：</p>
+<blockquote>
+<p>虚拟机把类描述的数据从class文件加载到内存，并对数据进行校验解析初始化，最终形成可以被Java虚拟机直接使用的Java类型。</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkzbi1ycrdj30sy08qgp7.jpg" alt="image.png"></p>
+<p>优点: 使得类加载具有了一种优先关系，用户无法破坏基础类，保证安全。</p>
+<h2 id="16-打破双亲委派"><a href="#16-打破双亲委派" class="headerlink" title="16.打破双亲委派"></a>16.打破双亲委派</h2><ol>
+<li>模型自身有缺陷。</li>
+</ol>
+<p>无法解决： 基础类调用用户代码的情况。</p>
+<p>所有涉及SPI（Server provider interface）的服务都打破了这个规则。</p>
+<blockquote>
+<p>使用 ==线程上下文加载器==（Thread Context ClassLoader) 。可以通过 Thread 的setContextClassLoader()进行设置，若未设置，则从父类继承， 若均未设置，则这个加载器默认application classLoader</p>
+</blockquote>
+<ol start="2">
+<li>最求动态性</li>
+</ol>
+<p>追求热替换、热部署，不得不打破。</p>
+<h2 id="17-jvm提供的工具"><a href="#17-jvm提供的工具" class="headerlink" title="17 jvm提供的工具"></a>17 jvm提供的工具</h2><ul>
+<li>jps</li>
+</ul>
+<blockquote>
+<p>当前虚拟机中正在运行的java程序，以及对应的进程号，</p>
+</blockquote>
+<ul>
+<li>jmap</li>
+</ul>
+<blockquote>
+<p>jmap使用主要是打印某一时刻，某个进行的==jvm堆信息==</p>
+<p>jmap -heap 2865</p>
+</blockquote>
+<ul>
+<li>jstat</li>
+</ul>
+<blockquote>
+<p>例如: 统计 （进程号2865）的gc信息，并且每隔3秒统计一次，可以执行以下命令</p>
+<p><code>jstat -gcutil 2865 3000</code></p>
+</blockquote>
+<ul>
+<li>jconsole</li>
+</ul>
+<blockquote>
+<p> 可视化监控jvm，基本上看到啥就是啥，但是生产比较少会用到</p>
+</blockquote>
+<ul>
+<li>jstack</li>
+</ul>
+<blockquote>
+<p>jstack主要的用途是<strong>打印出Thread dump</strong>，使用步骤如下。</p>
+</blockquote>
+<h2 id="18-创建对象过程-重"><a href="#18-创建对象过程-重" class="headerlink" title="18 创建对象过程(重)"></a>18 创建对象过程(重)</h2><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkxpcfs0n4j30ri0ebtcs.jpg" alt="image.png"></p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkxqomxq4sj30dx0ka74p.jpg" alt="image.png"></p>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gkzd7j2mn2j30ic0hbwic.jpg" alt="image.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/24/javaweb-%E4%BA%8C/" rel="prev" title="javaweb(二)">
+      <i class="fa fa-chevron-left"></i> javaweb(二)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/21/equals%E4%B8%8Ehashcode/" rel="next" title="equals与hashcode">
+      equals与hashcode <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Java为什么可以跨平台"><span class="nav-number">1.1.</span> <span class="nav-text">1.Java为什么可以跨平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JMM"><span class="nav-number">1.2.</span> <span class="nav-text">2.JMM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-内存泄漏的情况"><span class="nav-number">1.3.</span> <span class="nav-text">3.内存泄漏的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-finalize"><span class="nav-number">1.4.</span> <span class="nav-text">4.finalize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-运行时数据区（不同版本）"><span class="nav-number">1.5.</span> <span class="nav-text">5.运行时数据区（不同版本）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么改变"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">为什么改变</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栈帧"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">栈帧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-GC-ROOT根结点"><span class="nav-number">1.6.</span> <span class="nav-text">6.GC ROOT根结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-引用类型"><span class="nav-number">1.7.</span> <span class="nav-text">7.引用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-垃圾回收算法（重）"><span class="nav-number">1.8.</span> <span class="nav-text">8.垃圾回收算法（重）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收器"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">垃圾回收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">CMS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？"><span class="nav-number">1.8.0.3.</span> <span class="nav-text">既然你知道有这么多的缺点，那么你知道怎么解决这些问题吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#G1"><span class="nav-number">1.8.0.4.</span> <span class="nav-text">G1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概述"><span class="nav-number">1.8.0.5.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#G1堆内存布局"><span class="nav-number">1.8.0.6.</span> <span class="nav-text">G1堆内存布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RSET、CET"><span class="nav-number">1.8.0.7.</span> <span class="nav-text">RSET、CET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GC过程"><span class="nav-number">1.8.0.8.</span> <span class="nav-text">GC过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#G1提供的GC模式"><span class="nav-number">1.8.0.8.1.</span> <span class="nav-text">G1提供的GC模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-4-2-global-concurrent-marking（并发标记）"><span class="nav-number">1.8.0.8.2.</span> <span class="nav-text">9.4.2 global concurrent marking（并发标记）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mixed-GC发生时机"><span class="nav-number">1.8.0.9.</span> <span class="nav-text">Mixed GC发生时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题：G1会不会进行Full-GC"><span class="nav-number">1.8.0.10.</span> <span class="nav-text">问题：G1会不会进行Full GC?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">1.8.0.11.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-三色标记算法及CMS和G1的细节"><span class="nav-number">1.9.</span> <span class="nav-text">9.三色标记算法及CMS和G1的细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-什么是三色标记"><span class="nav-number">1.9.0.1.</span> <span class="nav-text">1.什么是三色标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-漏标问题"><span class="nav-number">1.9.0.2.</span> <span class="nav-text">2.漏标问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-漏标的两个充要条件"><span class="nav-number">1.9.0.3.</span> <span class="nav-text">3.漏标的两个充要条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-应对策略"><span class="nav-number">1.9.0.4.</span> <span class="nav-text">4.应对策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接-1"><span class="nav-number">1.9.0.5.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-full-gc和-mirror-gc触发条件-重"><span class="nav-number">1.10.</span> <span class="nav-text">10.&#x3D;&#x3D;full gc和 mirror gc触发条件(重)&#x3D;&#x3D;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-内存分配策略（重）"><span class="nav-number">1.11.</span> <span class="nav-text">11. &#x3D;&#x3D;内存分配策略（重）&#x3D;&#x3D;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-jvm一次完整的gc"><span class="nav-number">1.12.</span> <span class="nav-text">12.jvm一次完整的gc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-jvm常用参数"><span class="nav-number">1.13.</span> <span class="nav-text">13.jvm常用参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-垃圾收集器的比较"><span class="nav-number">1.14.</span> <span class="nav-text">14.垃圾收集器的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-双亲委派模型"><span class="nav-number">1.15.</span> <span class="nav-text">15.双亲委派模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-打破双亲委派"><span class="nav-number">1.16.</span> <span class="nav-text">16.打破双亲委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-jvm提供的工具"><span class="nav-number">1.17.</span> <span class="nav-text">17 jvm提供的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-创建对象过程-重"><span class="nav-number">1.18.</span> <span class="nav-text">18 创建对象过程(重)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description">戒骄戒躁，努力向前</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

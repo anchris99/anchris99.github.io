@@ -28,7 +28,7 @@
 <meta property="og:description" content="线程执行顺序相关JOIN使用现在有 T1、T2、T3 三个线程，你怎样保证 T2 在 T1 执行完后执行，T3 在 T2 执行完后执行？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-11T07:03:32.000Z">
-<meta property="article:modified_time" content="2020-11-25T00:21:39.092Z">
+<meta property="article:modified_time" content="2020-11-28T14:54:16.736Z">
 <meta property="article:author" content="AnChris">
 <meta property="article:tag" content="java并发">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-25 08:21:39" itemprop="dateModified" datetime="2020-11-25T08:21:39+08:00">2020-11-25</time>
+                <time title="修改时间：2020-11-28 22:54:16" itemprop="dateModified" datetime="2020-11-28T22:54:16+08:00">2020-11-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,19 +290,19 @@
 <p>原子操作(atomic operation)是<strong>不需要<code>synchronized</code></strong>，所谓原子操作是指不会被线程调度机制打断的操作；这种操作一旦开始，就一直运行到结束，中间<strong>不会有任何 context switch</strong>；</p>
 <h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><h2 id="volatile作用"><a href="#volatile作用" class="headerlink" title="volatile作用"></a>volatile作用</h2><p>volatile 可以 保证<strong>有序性、可见性</strong>。</p>
 <p>volatile 的底层实现原理是<strong>内存屏障</strong>，Memory Barrier（Memory Fence） 对 volatile 变量的<strong>写指令后</strong>会加入<strong>写屏障</strong>，对 volatile 变量的<strong>读指令前</strong>会加入<strong>读屏障</strong>。</p>
-<ul>
-<li><strong>保证可见性</strong>：</li>
-</ul>
-<p>写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都<strong>同步到主存当中</strong></p>
+<p><strong>保证可见性</strong>：</p>
+<blockquote>
+<p> 写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都<strong>同步到主存当中</strong></p>
 <p>读屏障（lfence）保证在该屏障之后，<strong>对共享变量的读取，加载的是主存中最新数据</strong>。</p>
-<ul>
-<li><strong>保证有序性：</strong></li>
-</ul>
+</blockquote>
+<p><strong>保证有序性：</strong></p>
+<blockquote>
 <p>写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后。</p>
 <p>读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前。</p>
-<p><strong>volatile解决的是可见性和有序性的问题，不能保证原子性</strong>。只能保证<strong>单个线程</strong>中的指令不会重排序，不能保证多个线程之间的</p>
-<p>顺序。synchronized三种性质都可以保证。（被synchronized完全保护的内容不会有有序性问题，但是并不能阻止指令重排序，只</p>
-<p>是不会因为指令重排序产生问题）</p>
+</blockquote>
+<blockquote>
+<p><strong>volatile解决的是可见性和有序性的问题，不能保证原子性</strong>。只能保证<strong>单个线程</strong>中的指令不会重排序，不能保证多个线程之间的顺序。synchronized三种性质都可以保证。（被synchronized完全保护的内容不会有有序性问题，但是并不能阻止指令重排序，只是不会因为指令重排序产生问题,因为 synchronized作用的范围内，只有一个线程可以对临界资源进行操作，所以不会有顺序问题）。</p>
+</blockquote>
 <h2 id="volatile和synchronized的区别"><a href="#volatile和synchronized的区别" class="headerlink" title="volatile和synchronized的区别"></a>volatile和synchronized的区别</h2><ol>
 <li>volatile本质是在<strong>告诉jvm</strong>当前变量在寄存器（工作内存）中的值是不确定的，需要<strong>从主存中读取</strong>； synchronized则是<strong>锁定当前变量，只有当前线程可以访问该变量</strong>，其他线程被阻塞住。</li>
 <li>volatile仅能使用在<strong>变量级别</strong>；synchronized则可以使用在变量、方法、和类级别的</li>
@@ -321,11 +321,9 @@
 <p><strong>3.wait()</strong> 和<strong>notify()</strong>方法</p>
 <p>​    两个方法搭配使用，wait()使线程进入<strong>阻塞状态</strong>，调用notify()时，线程进入可执行状态。wait()内可加或不加参数，加参数时是以毫秒为单位，当到了指定时间或调用notify()方法时，进入可执行状态。（属于Object类，而不属于Thread类，wait()会先释放锁住的对象，然后再执行等待的动作。由于wait()所等待的对象必须先锁住，因此，它只能用在同步化程序段或者同步化方法内，否则，会抛出异常IllegalMonitorStateException.）</p>
 <p><strong>4.join()</strong> 方法</p>
-<p>​    叫线程加入。是当前线程A调用另一个线程B的join()方法，当前线程转A入<strong>阻塞状态</strong>，直到<strong>线程B运行结束</strong>，线程A才由阻塞状态转为可执行状态。</p>
+<p>​    线程加入。是当前线程A调用另一个线程B的join()方法，当前线程转A入<strong>阻塞状态</strong>，直到<strong>线程B运行结束</strong>，线程A才由阻塞状态转为可执行状态。</p>
 <p> wait() 和 notify()是其中<strong>功能最强大、使用最灵活</strong>的方法，但这也导致了它们效率较低、较容易出错的特性，因此，在实际应用中应灵活运用各种方法。</p>
-<ol start="5">
-<li><strong>await和  signal</strong> </li>
-</ol>
+<p>5.<strong>await和signal</strong> </p>
 <p>属于 <strong>Condition</strong>类，await后线程变为 <strong>阻塞状态</strong>， 调用signal 后变为Runnable。</p>
 <h1 id="CycliBarriar-和-CountdownLatch"><a href="#CycliBarriar-和-CountdownLatch" class="headerlink" title="CycliBarriar 和 CountdownLatch"></a>CycliBarriar 和 CountdownLatch</h1><h2 id="CountdownLatch"><a href="#CountdownLatch" class="headerlink" title="CountdownLatch"></a>CountdownLatch</h2><p>用来控制<strong>一个线程等待多个线程</strong>。</p>
 <p>维护了一个计数器 cnt，每次调用 <strong>countDown() 方法会让计数器的值减 1</strong>，减到 0 的时候，那些<strong>因为调用 await() 方法而在等待</strong>的线程就会被<strong>唤醒</strong>。</p>
@@ -335,8 +333,7 @@
 
 <h2 id="CyclicBarrier"><a href="#CyclicBarrier" class="headerlink" title="CyclicBarrier"></a><strong>CyclicBarrier</strong></h2><p>用来控制<strong>多个线程互相等待</strong>，只有当多个线程都到达时，这些线程才会继续执行。</p>
 <p>和 CountdownLatch 相似，都是通过<strong>维护计数器</strong>来实现的。线程执行 <strong>await() 方法之后计数器会减 1</strong>，并进行等待，直到<strong>计数器为 0</strong>，所有调用 await() 方法而在等待的线程才能继续执行。</p>
-<p><strong>CyclicBarrier 和 CountdownLatch 的一个区别</strong>是，CyclicBarrier 的计数器通过调用 <strong>reset() 方法可以循环使用</strong>，所以</p>
-<p>它才叫做循环屏障。</p>
+<p><strong>CyclicBarrier 和 CountdownLatch 的一个区别</strong>是，CyclicBarrier 的计数器通过调用 <strong>reset() 方法可以循环使用</strong>，所以它才叫做循环屏障。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CyclicBarrierExample</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalThread = <span class="number">3</span>;</span><br><span class="line">        CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(totalThread,<span class="keyword">new</span> Run());</span><br><span class="line">        ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalThread; i++) &#123;</span><br><span class="line">            executorService.execute(() -&gt; &#123; System.out.print(<span class="string">"before.."</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                    cyclicBarrier.await();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException | BrokenBarrierException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.print(<span class="string">"after.."</span>); &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Run</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"runnable"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//before..before..before..runnable</span></span><br><span class="line"><span class="comment">//after..after..after..</span></span><br></pre></td></tr></table></figure>
 
 <p>上面的例子中，在计数器减为0之后，执行输出了’runnable’字样，这是为什么呢？</p>
@@ -344,10 +341,14 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">CyclicBarrier</span><span class="params">(<span class="keyword">int</span> parties, Runnable barrierAction)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (parties &lt;= <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">        <span class="keyword">this</span>.parties = parties;</span><br><span class="line">        <span class="keyword">this</span>.count = parties;</span><br><span class="line">        <span class="keyword">this</span>.barrierCommand = barrierAction;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">CyclicBarrier</span><span class="params">(<span class="keyword">int</span> parties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(parties, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>当调用<code>await</code>多次后计数器减为0，这时就会执行 <code>barrierAction</code>中的操作。</p>
-<h1 id="线程为什么调用start-而不是直接调用run"><a href="#线程为什么调用start-而不是直接调用run" class="headerlink" title="线程为什么调用start()而不是直接调用run()"></a>线程为什么调用start()而不是直接调用run()</h1><p>run()方法只是一个类中的<strong>普通方法</strong>，直接执行和普通的方法没有设么两样。</p>
+<h1 id="线程为什么调用start-而不是直接调用run"><a href="#线程为什么调用start-而不是直接调用run" class="headerlink" title="线程为什么调用start()而不是直接调用run()"></a>线程为什么调用start()而不是直接调用run()</h1><blockquote>
+<p>run()方法只是一个类中的<strong>普通方法</strong>，直接执行和普通的方法没有设么两样。</p>
 <p>start()方法则不同，它首先做了<strong>创建线程等一系列工作，然后调用行的run()方法</strong></p>
 <p><strong>直接调用run方法 ，它并不会开启新的线程，而是在调用run的当前的线程当中执行操作。</strong></p>
-<h1 id="什么是不可变对象，它对写并发应用有什么帮助？"><a href="#什么是不可变对象，它对写并发应用有什么帮助？" class="headerlink" title="什么是不可变对象，它对写并发应用有什么帮助？"></a>什么是不可变对象，它对写并发应用有什么帮助？</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>不可变类是其<strong>实例不能被修改的类</strong>。每个实例中包含的所有信息都必须在创建该实例的时候就提供，并且在对象的整个生命周期内<strong>固定不变</strong>。</p>
+</blockquote>
+<h1 id="什么是不可变对象，它对写并发应用有什么帮助？"><a href="#什么是不可变对象，它对写并发应用有什么帮助？" class="headerlink" title="什么是不可变对象，它对写并发应用有什么帮助？"></a>什么是不可变对象，它对写并发应用有什么帮助？</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>不可变类是其<strong>实例不能被修改的类</strong>。每个实例中包含的所有信息都必须在创建该实例的时候就提供，并且在对象的整个生命周期内<strong>固定不变</strong>。</p>
+</blockquote>
 <h2 id="不可变的好处"><a href="#不可变的好处" class="headerlink" title="不可变的好处"></a>不可变的好处</h2><p><strong>不可变（Immutable）的对象一定是线程安全的，不需要再采取任何的线程安全保障措施</strong>。</p>
 <p>只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。多线程环境下，应当<strong>尽量使对象成为不可变</strong>，来满足线程安全。</p>
 <h2 id="不可变的类型："><a href="#不可变的类型：" class="headerlink" title="不可变的类型："></a>不可变的类型：</h2><ul>
@@ -357,14 +358,16 @@
 </li>
 <li><p>枚举类型</p>
 </li>
-<li><p>所有基本类型的包装类都是不可变类，如 *<em>Long 和 Double 等 *</em>，以及 BigInteger 和 BigDecimal 等大数据类型。但</p>
+<li><p>所有基本类型的包装类都是不可变类，如 <code>Long</code> 和<code>Double</code>等，以及 <code>BigInteger</code> 和 <code>BigDecimal</code> 等<strong>大数据类型</strong>。但原子类AtomicInteger 和 AtomicLong 则是<strong>可变</strong>的。</p>
+</li>
+<li><p>对于集合类型，可以使用 <code>Collections.unmodififiableXXX()</code> 方法来获取一个不可变的集合。</p>
 </li>
 </ul>
-<p>原子类 AtomicInteger 和 AtomicLong 则是<strong>可变</strong>的。</p>
-<ul>
-<li>对于集合类型，可以使用 <code>Collections.unmodififiableXXX()</code> 方法来获取一个不可变的集合。</li>
-</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImmutableExample</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(); </span><br><span class="line">Map&lt;String, Integer&gt; unmodifiableMap = Collections.unmodifiableMap(map); </span><br><span class="line">unmodifiableMap.put(<span class="string">"a"</span>, <span class="number">1</span>); &#125;   <span class="comment">//此时会发生异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>unmodifiableMap&lt;&gt;()</code>的好处就是 安全： 可以在内部使用 可变的<code>HashMap</code>，而暴露给外部的接口是 不可变的 <code>unmodifiableMap</code>， 这样外部就只读不能写。</p>
+<p>其部分源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function">Map&lt;K,V&gt; <span class="title">unmodifiableMap</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> UnmodifiableMap&lt;&gt;(m);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -465,7 +468,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
