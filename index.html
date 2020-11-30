@@ -409,7 +409,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 09:54:31" itemprop="dateModified" datetime="2020-11-28T09:54:31+08:00">2020-11-28</time>
+                <time title="修改时间：2020-11-30 08:13:36" itemprop="dateModified" datetime="2020-11-30T08:13:36+08:00">2020-11-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -435,42 +435,14 @@
           <h1 id="equals和-区别"><a href="#equals和-区别" class="headerlink" title="equals和==区别"></a>equals和==区别</h1><blockquote>
 <p>equals属于 超类 Object的方法，默认情况下也就是从超类Object继承而来的<code>equals</code>方法与<code>==</code>是完全等价的，比较的都是对象的<strong>内存地址</strong>，但我们可以<strong>重写equals方法</strong>，使其按照我们的需求的方式进行比较，如<strong>String类重写了equals方法，使其比较的是字符的序列，而不再是内存地址。</strong></p>
 </blockquote>
-<ul>
-<li>object中的equals方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>重写 equals例子：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> batch;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span><span class="params">(<span class="keyword">int</span> batch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.batch = batch;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Car car = (Car) o;</span><br><span class="line">        <span class="keyword">return</span> batch == car.batch;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(batch);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Car c1 = <span class="keyword">new</span> Car(<span class="number">1</span>);</span><br><span class="line">        Car c2 = <span class="keyword">new</span> Car(<span class="number">1</span>);</span><br><span class="line">        System.out.println(c1.equals(c2));</span><br><span class="line">        System.out.println(c1 == c2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，比较 equals的流程：</p>
-<ol>
-<li>检查是否是自身 equals   :<code>if (this == o) return true;</code></li>
-<li>检查 是否为空， 是否是同一类</li>
-<li>强制转换</li>
-<li>比较内容</li>
-</ol>
-<h1 id="equals重写规则"><a href="#equals重写规则" class="headerlink" title="equals重写规则"></a>equals重写规则</h1><ul>
-<li><strong>自反性</strong>。对于任何非null的引用值x，x.equals(x)应返回true。</li>
-<li><strong>对称性</strong>。对于任何非null的引用值x与y，当且仅当：y.equals(x)返回true时，x.equals(y)才返回true。</li>
-<li><strong>传递性</strong>。对于任何非null的引用值x、y与z，如果y.equals(x)返回true，y.equals(z)返回true，那么x.equals(z)也应返回true。</li>
-<li><strong>一致性</strong>。对于任何非null的引用值x与y，假设对象上equals比较中的信息没有被修改，则多次调用x.equals(y)始终返回true或者始终返回false。</li>
-<li>对于任何<strong>非空引用值x，x.equal(null)应返回false</strong>。</li>
-</ul>
-<p>一般同一个类的两个对象很容易满足这些特点，有难度的是，根据实际需求取修改  是否equals</p>
-<p>比如 BigCar 继承了 Car，我们的需求是： 只要 car 和 bigcar的成产批次相同，就 认为二者 equals</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BigCar</span> <span class="keyword">extends</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BigCar</span><span class="params">(<span class="keyword">int</span> batch, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(batch);</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> BigCar) &#123;</span><br><span class="line">            BigCar bc = (BigCar) obj;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.equals(bc) &amp;&amp; count == bc.count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.equals(obj);  <span class="comment">//这里要重写，调用父类的equals</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Car c = <span class="keyword">new</span> Car(<span class="number">1</span>);</span><br><span class="line">        BigCar bc = <span class="keyword">new</span> BigCar(<span class="number">1</span>, <span class="number">20</span>);</span><br><span class="line">        System.out.println(c.equals(bc));</span><br><span class="line">        System.out.println(bc.equals(c));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>bc is  instance of  c自然是没什么问题</p>
-<p>但是 c is instacne of bc就通不过 了，所以修改之前直接返回  false  就是错误的了， 我们将其修改为 <code>return super.equals(obj);</code> 调用父类的 equals方法。</p>
-<h1 id="equals和hashcode关系"><a href="#equals和hashcode关系" class="headerlink" title="equals和hashcode关系"></a>equals和hashcode关系</h1><blockquote>
-<p> 两个对象 equals，则其hashcode必相同。</p>
-<p>两个对象hashcode相同，不一定equals</p>
-</blockquote>
-<p>HashSet和HashMap 的  数组下标  都是 传入的元素<strong>hashCode方法的返回值</strong>再和<strong>特定的值异或</strong>决定的。 所以 重写equals必须重写hashcode，否则就会造成使用 的错误。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/21/equals%E4%B8%8Ehashcode/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
