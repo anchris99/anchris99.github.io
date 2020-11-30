@@ -27,13 +27,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="概念MVCC (Multiversion Concurrency Control) 中文全程叫多版本并发控制， 是数据库存储引擎实现中常用的处理读写冲突的手段，目的在于提高数据库高并发场景下的吞吐性能。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gl6zmguw9oj31py1drk0v.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gl6zt5ry04j30sg09ftaf.jpg">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-118bd607f107b4e7e333aa91a81161c3_1440w.jpg">
 <meta property="article:published_time" content="2020-09-29T09:28:57.000Z">
-<meta property="article:modified_time" content="2020-09-29T14:58:00.617Z">
+<meta property="article:modified_time" content="2020-11-30T02:40:44.816Z">
 <meta property="article:author" content="AnChris">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-118bd607f107b4e7e333aa91a81161c3_1440w.jpg">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1gl6zmguw9oj31py1drk0v.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/29/MVCC/">
 
@@ -213,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-29 17:28:57 / 修改时间：22:58:00" itemprop="dateCreated datePublished" datetime="2020-09-29T17:28:57+08:00">2020-09-29</time>
+              <time title="创建时间：2020-09-29 17:28:57" itemprop="dateCreated datePublished" datetime="2020-09-29T17:28:57+08:00">2020-09-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-30 10:40:44" itemprop="dateModified" datetime="2020-11-30T10:40:44+08:00">2020-11-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -254,7 +262,7 @@
 <hr>
 <p>MVCC 在每行记录后面都保存着<strong>两个隐藏的列</strong>，用来存储两个版本号：</p>
 <p><strong>创建版本号</strong>：指示创建一个数据行的快照时的系统版本号；</p>
-<p><strong>删除版本号：</strong>如果该快照的删除版本号大于当前事务版本号表示该快照有效，否则表示该快照已经被删除了</p>
+<p><strong>删除版本号：</strong>如果该<strong>快照的删除版本号大于当前事务版本号</strong>表示该快照有效，<strong>否则表示该快照已经被删除了</strong>。</p>
 <hr>
 <p>版本号： 标志当前版本的<strong>连续递增</strong>的号码， <strong>每开启一个事务，系统版本号都会递增</strong>。</p>
 <h2 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h2><ol>
@@ -266,6 +274,7 @@
 <h2 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h2><p>InnoDB为<strong>删除的每一行</strong>保存<strong>当前系统版本号</strong>作为<strong>行删除标识</strong>。</p>
 <h2 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h2><p>InnoDB为<strong>插入一行新记录</strong>，保存当<strong>前系统版本号作为行版本号</strong>，同时保存当前系统版本号到原来的行作为<strong>行删除标识</strong>。</p>
 <p>可以理解为 新 插入一条数据，同时作废（删除） 之前旧的数据。</p>
+<h1 id="过程图解"><a href="#过程图解" class="headerlink" title="过程图解"></a>过程图解</h1><p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gl6zmguw9oj31py1drk0v.jpg" alt="MVCC原理详解.png"></p>
 <h1 id="MVCC优缺点"><a href="#MVCC优缺点" class="headerlink" title="MVCC优缺点"></a>MVCC优缺点</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>由于MVCC的 存在，使得很多操作不用加锁就可以正确的完成，简单高效， 极大的提高了<strong>并发的效率</strong>。</p>
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>由于要为每行记录都增加 创建和删除版本号， 所以增加了存储空间</p>
 <p>要进行版本号的比较，需要做额外的 <strong>维护工作</strong>和  <strong>查询比较</strong>工作。</p>
@@ -311,12 +320,38 @@
 <td>由record lock+gap lock组成， 既锁定索引本身也锁定索引的间隙</td>
 </tr>
 </tbody></table>
-<h1 id="解决幻读"><a href="#解决幻读" class="headerlink" title="解决幻读"></a>解决幻读</h1><p>MVCC并没有从根本上解决 幻读的问题， MVCC+next_key_locks 二者一起可解决 幻读的问题。</p>
+<h1 id="undolog"><a href="#undolog" class="headerlink" title="undolog"></a>undolog</h1><p>MVCC读取的是快照中的内容，那么快照是以什么方式组织起来的呢？</p>
+<p>答案是 undolog。</p>
+<blockquote>
+<p>该日志通过回<strong>滚指针</strong>把一个数据行（Record）的<strong>所有快照连接起来</strong>。是一个链表结构。</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1gl6zt5ry04j30sg09ftaf.jpg" alt="image.png"></p>
+<blockquote>
+<p>undo log是<strong>逻辑日志</strong>。<strong>可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录。</strong></p>
+<p>当执行<strong>rollback</strong>时，就可以从undo log中的<strong>逻辑记录读取到相应的内容并进行回滚</strong>。</p>
+</blockquote>
+<blockquote>
+<p>MVCC也是通过undo log来实现的：当读取的<strong>某一行被其他事务锁定时</strong>，它可以从<strong>undo log中分析出该行记录以前的数据是什么</strong>，从而提供该行版本信息，让用户实现<strong>非锁定一致性读取</strong>。</p>
+</blockquote>
+<h1 id="解决幻读"><a href="#解决幻读" class="headerlink" title="解决幻读"></a>解决幻读</h1><p><strong>MVCC并没有从根本上解决 幻读的问题</strong>， MVCC+next_key_locks 二者一起可解决 幻读的问题。</p>
 <p><img src="https://pic4.zhimg.com/80/v2-118bd607f107b4e7e333aa91a81161c3_1440w.jpg" alt=""></p>
 <p>幻读： <strong>T1 读取某个范围的数据，T2 在这个范围内插入新的数据，T1 再次读取这个范围的数据，此时读取的结果和和第一次</strong></p>
 <p><strong>读取的结果不同。</strong></p>
-<p>由于有<strong>next_key_locks</strong>的存在，T1读取某个范围的时候，T2不能对其进行修改，所以解决了幻读这个问题。</p>
+<p>由于有<strong>next_key_locks</strong>的存在，<strong>T1读取某个范围的时候</strong>，T2不能对其进行修改，所以解决了幻读这个问题。</p>
 <p>实际上就是 <strong>MVCC+当前读，</strong> 这样就不会产生读取的时候被插入新数据的情况了。</p>
+<h2 id="NextKeyLocks"><a href="#NextKeyLocks" class="headerlink" title="NextKeyLocks"></a>NextKeyLocks</h2><h3 id="Record-Locks"><a href="#Record-Locks" class="headerlink" title="Record Locks"></a><strong>Record Locks</strong></h3><p><strong>锁定</strong>一个<strong>记录上的索引</strong>，而<strong>不是记录本身</strong>。</p>
+<p>如果表没有设置索引，InnoDB 会自动在主键上<strong>创建隐藏的聚簇索引</strong>，因此 Record Locks 依然可以使用。</p>
+<h3 id="Gap-Locks"><a href="#Gap-Locks" class="headerlink" title="Gap Locks"></a><strong>Gap Locks</strong></h3><p>锁定<strong>索引之间</strong>的<strong>间隙</strong>，但是<strong>不包含索引本身</strong>。例如当一个事务执行以下语句，其它事务就不能在 t.c 中插入 15。 </p>
+<p>SELECT c FROM t WHERE c BETWEEN 10 and 20 FOR UPDATE;</p>
+<h3 id="Next-Key-Locks"><a href="#Next-Key-Locks" class="headerlink" title="Next-Key Locks"></a><strong>Next-Key Locks</strong></h3><p>它是 <strong><code>Record Locks</code> 和 <code>Gap Locks</code></strong> 的结合，<strong>不仅锁定一个记录上的索引，也锁定索引之间的间隙</strong>。例如一个索引包含</p>
+<p>以下值：10, 11, 13, and 20，那么就需要锁定以下区间：</p>
+<blockquote>
+<p>(-∞, 10] </p>
+<p>(10, 11] </p>
+<p>(11, 13] </p>
+<p>(13, 20] </p>
+<p>(20, +∞)</p>
+</blockquote>
 
     </div>
 
@@ -400,7 +435,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT"><span class="nav-number">2.1.</span> <span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INSERT"><span class="nav-number">2.2.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DELETE"><span class="nav-number">2.3.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPDATE"><span class="nav-number">2.4.</span> <span class="nav-text">UPDATE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVCC优缺点"><span class="nav-number">3.</span> <span class="nav-text">MVCC优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乐观锁悲观锁"><span class="nav-number">4.</span> <span class="nav-text">乐观锁悲观锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#当前读快照读"><span class="nav-number">5.</span> <span class="nav-text">当前读快照读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决幻读"><span class="nav-number">6.</span> <span class="nav-text">解决幻读</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT"><span class="nav-number">2.1.</span> <span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INSERT"><span class="nav-number">2.2.</span> <span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DELETE"><span class="nav-number">2.3.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPDATE"><span class="nav-number">2.4.</span> <span class="nav-text">UPDATE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过程图解"><span class="nav-number">3.</span> <span class="nav-text">过程图解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVCC优缺点"><span class="nav-number">4.</span> <span class="nav-text">MVCC优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">4.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乐观锁悲观锁"><span class="nav-number">5.</span> <span class="nav-text">乐观锁悲观锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#当前读快照读"><span class="nav-number">6.</span> <span class="nav-text">当前读快照读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undolog"><span class="nav-number">7.</span> <span class="nav-text">undolog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决幻读"><span class="nav-number">8.</span> <span class="nav-text">解决幻读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NextKeyLocks"><span class="nav-number">8.1.</span> <span class="nav-text">NextKeyLocks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Record-Locks"><span class="nav-number">8.1.1.</span> <span class="nav-text">Record Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gap-Locks"><span class="nav-number">8.1.2.</span> <span class="nav-text">Gap Locks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Key-Locks"><span class="nav-number">8.1.3.</span> <span class="nav-text">Next-Key Locks</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
