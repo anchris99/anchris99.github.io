@@ -4036,7 +4036,7 @@ as - if - serial</code></pre><p>4：hotspot实现</p>
       </tags>
   </entry>
   <entry>
-    <title>视图存储过程触发器</title>
+    <title>视图存储过程触发器游标</title>
     <url>/2020/09/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%86%E5%9B%BE%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h2 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h2><p>视图是<strong>虚拟的表</strong>。与包含数据的表不一样，视图只包含使用时动态检索数据的<strong>查询</strong>。视图就是查询，它包含了一系列的SQL语句。</p>
 <p>可以将类比 Java中面向对象特性中的 <strong>封装</strong>， 就是屏蔽了一些细节，只暴露出一个简单了对外调用的接口。</p>
@@ -4142,6 +4142,20 @@ as - if - serial</code></pre><p>4：hotspot实现</p>
 <h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><p><code>CREATE TRIGGER+名称</code>: 创建 触发器。</p>
 <p><code>AFTER INSERT</code>： 在插入之后触发</p>
 <p><code>BEFORE INSERT</code>: 在删除之前触发</p>
+<h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><h2 id="什么是游标"><a href="#什么是游标" class="headerlink" title="什么是游标"></a>什么是游标</h2><blockquote>
+<p>游标是 存储在数据库上的数据库查询，它不是一个select语句，而是select语句查询出来的<strong>结果集</strong>。</p>
+<p>存储了游标后，应用程序可以根据需要<strong>滚动或者浏览</strong>其中的数据。</p>
+</blockquote>
+<blockquote>
+<p>主要用于<strong>交互式</strong>应用。</p>
+</blockquote>
+<h2 id="游标操作"><a href="#游标操作" class="headerlink" title="游标操作"></a>游标操作</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> curTest()</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">DECLARE</span> UserCursor <span class="keyword">CURSOR</span>  <span class="comment">-- 创建游标</span></span><br><span class="line">	<span class="keyword">FOR</span></span><br><span class="line">	<span class="keyword">SELECT</span> user.name <span class="keyword">FROM</span> <span class="string">`user`</span>;  </span><br><span class="line">	OPEN UserCursor;    <span class="comment">-- 开启游标</span></span><br><span class="line">	CLOSE UserCursor;   <span class="comment">-- 关闭游标</span></span><br><span class="line"><span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用游标数据"><a href="#使用游标数据" class="headerlink" title="使用游标数据"></a>使用游标数据</h2><p>可以使用 <code>FETCH</code>检索数据（指定列，可以自动指向下一行），并且可以指向 数据检索出来存储到哪里</p>
+<p>实例：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DELIMITER ;;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> curTest()</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">DECLARE</span> done <span class="built_in">BOOLEAN</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">DECLARE</span> <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">10</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">DECLARE</span> UserCursor <span class="keyword">CURSOR</span>   <span class="comment">--声明一个游标</span></span><br><span class="line">	<span class="keyword">FOR</span></span><br><span class="line">	<span class="keyword">SELECT</span> user.name <span class="keyword">FROM</span> <span class="string">`user`</span>;</span><br><span class="line">	<span class="comment">-- CONTINUE HANDLER使 达到结束状态的时候，done设置为 1</span></span><br><span class="line">	<span class="keyword">DECLARE</span> CONTINUE <span class="keyword">HANDLER</span> <span class="keyword">FOR</span> <span class="keyword">SQLSTATE</span> <span class="string">'02000'</span> <span class="keyword">SET</span> done=<span class="number">1</span>;  </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> userCur(</span><br><span class="line">	<span class="keyword">id</span> <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">10</span>));</span><br><span class="line">	</span><br><span class="line">	OPEN UserCursor;   <span class="comment">-- 开启游标</span></span><br><span class="line">	</span><br><span class="line">	REPEAT  <span class="comment">-- 重复检索数据，并将结果存储到 name中</span></span><br><span class="line">	FETCH UserCursor INTO name;</span><br><span class="line">	<span class="keyword">INSERT</span> <span class="keyword">INTO</span> userCur(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="keyword">name</span>);</span><br><span class="line">	UNTIL done <span class="keyword">END</span> <span class="keyword">REPEAT</span>;</span><br><span class="line">	</span><br><span class="line">	CLOSE UserCursor;   <span class="comment">-- 关闭cursor ，释放资源</span></span><br><span class="line"><span class="keyword">END</span></span><br><span class="line">;;</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p><img src="$%7Bpic%7D/image-20201201102736722.png" alt="image-20201201102736722"></p>
 ]]></content>
       <categories>
         <category>数据库</category>
