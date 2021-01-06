@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="testPic">
-<meta property="og:url" content="http://yoursite.com/2020/12/01/testPic/index.html">
+  <meta name="description" content="直观的说，bloom算法类似一个hash set，用来判断某个元素（key）是否在某个集合中。和一般的hash set不同的是，这个算法无需存储key的值，对于每个key，只需要k个比特位，每个存储一个标志，用来判断key是否在集合中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bloom filter">
+<meta property="og:url" content="http://yoursite.com/2020/12/06/bloom-filter/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="直观的说，bloom算法类似一个hash set，用来判断某个元素（key）是否在某个集合中。和一般的hash set不同的是，这个算法无需存储key的值，对于每个key，只需要k个比特位，每个存储一个标志，用来判断key是否在集合中。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/12/01/testPic/testPic/image-20201201105412320.png">
-<meta property="article:published_time" content="2020-12-01T02:52:48.000Z">
-<meta property="article:modified_time" content="2020-12-01T02:54:14.870Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1glebsfnmyjj30lr07w75b.jpg">
+<meta property="article:published_time" content="2020-12-06T10:38:15.000Z">
+<meta property="article:modified_time" content="2020-12-07T00:16:59.083Z">
 <meta property="article:author" content="AnChris">
 <meta property="article:tag" content="slow is fast">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/12/01/testPic/testPic/image-20201201105412320.png">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/007lz91Lly1glebsfnmyjj30lr07w75b.jpg">
 
-<link rel="canonical" href="http://yoursite.com/2020/12/01/testPic/">
+<link rel="canonical" href="http://yoursite.com/2020/12/06/bloom-filter/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>testPic | Hexo</title>
+  <title>bloom filter | Hexo</title>
   
 
 
@@ -189,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/testPic/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/06/bloom-filter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://s1.ax1x.com/2020/08/26/dR1rh6.png">
@@ -202,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          testPic
+          bloom filter
         </h1>
 
         <div class="post-meta">
@@ -211,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-01 10:52:48 / 修改时间：10:54:14" itemprop="dateCreated datePublished" datetime="2020-12-01T10:52:48+08:00">2020-12-01</time>
+              <time title="创建时间：2020-12-06 18:38:15" itemprop="dateCreated datePublished" datetime="2020-12-06T18:38:15+08:00">2020-12-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-07 08:16:59" itemprop="dateModified" datetime="2020-12-07T08:16:59+08:00">2020-12-07</time>
+              </span>
 
           
 
@@ -227,7 +235,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="testPic/image-20201201105412320.png" alt="image-20201201105412320"></p>
+        <p>直观的说，bloom算法类似一个hash set，用来判断某个元素（key）是否在某个集合中。<br>和一般的hash set不同的是，这个算法无需存储key的值，对于每个key，只需要k个比特位，每个存储一个标志，用来判断key是否在集合中。</p>
+<a id="more"></a>
+
+<p>算法：</p>
+<ol>
+<li>首先需要k个hash函数，每个函数可以把key散列成为1个整数</li>
+<li>初始化时，需要一个长度为n比特的数组，每个比特位初始化为0</li>
+<li>某个key加入集合时，用k个hash函数计算出k个散列值，并把数组中对应的比特位置为1</li>
+<li>判断某个key是否在集合时，用k个hash函数计算出k个散列值，并查询数组中对应的比特位，如果所有的比特位都是1，认为在集合中。</li>
+</ol>
+<blockquote>
+<p> 优点：不需要存储key，节省空间</p>
+</blockquote>
+<blockquote>
+<p>缺点：</p>
+<ol>
+<li>算法判断key在集合中时，有一定的概率key其实不在集合中</li>
+<li>无法删除</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>典型的应用场景：<br>某些存储系统的设计中，会存在空查询缺陷：当查询一个不存在的key时，需要访问慢设备，导致效率低下。<br>比如一个前端页面的缓存系统，可能这样设计：先查询某个页面在本地是否存在，如果存在就直接返回，如果不存在，就从后端获取。但是当频繁从缓存系统查询一个页面时，缓存系统将会频繁请求后端，把压力导入后端。</p>
+</blockquote>
+<blockquote>
+<p>这时只要增加一个bloom算法的服务，后端插入一个key时，在这个服务中设置一次<br>需要查询后端时，先判断key在后端是否存在，这样就能避免后端的压力。</p>
+</blockquote>
+<p><img src="http://ww1.sinaimg.cn/large/007lz91Lly1glebsfnmyjj30lr07w75b.jpg" alt="image.png"></p>
+<p><strong>布隆过滤器［1］</strong>（Bloom Filter）是由布隆（Burton Howard Bloom）在1970年提出的。它实际上是由一个很长的二进制向量和一系列随机映射函数组成，布隆过滤器可以用于检索一个元素是否在一个集合中。它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率（假正例False positives，即Bloom Filter报告某一元素存在于某集合中，但是实际上该元素并不在集合中）和删除困难，但是没有识别错误的情形（即假反例False negatives，如果某个元素确实没有在该集合中，那么Bloom Filter 是不会报告该元素存在于集合中的，所以不会漏报）。</p>
+<p>在日常生活中，包括在设计计算机软件时，我们经常要判断一个元素是否在一个集合中。比如在字处理软件中，需要检查一个英语单词是否拼写正确（也就是要判断 它是否在已知的字典中）；在 FBI，一个嫌疑人的名字是否已经在嫌疑名单上；在网络爬虫里，一个网址是否被访问过等等。最直接的方法就是将集合中全部的元素存在计算机中，遇到一个新 元素时，将它和集合中的元素直接比较即可。一般来讲，计算机中的集合是用哈希表（hash table）来存储的。它的好处是快速准确，缺点是费存储空间。当集合比较小时，这个问题不显著，但是当集合巨大时，哈希表存储效率低的问题就显现出来 了。比如说，一个象 Yahoo,Hotmail 和 Gmai 那样的公众电子邮件（email）提供商，总是需要过滤来自发送垃圾邮件的人（spamer）的垃圾邮件。一个办法就是记录下那些发垃圾邮件的 email 地址。由于那些发送者不停地在注册新的地址，全世界少说也有几十亿个发垃圾邮件的地址，将他们都存起来则需要大量的网络服务器。如果用哈希表，每存储一亿 个 email 地址， 就需要 1.6GB 的内存（用哈希表实现的具体办法是将每一个 email 地址对应成一个八字节的信息指纹（详见：<a href="http://googlechinablog.com/2006/08/blog-post.html" target="_blank" rel="noopener">googlechinablog.com/2006/08/blog-post.html）</a>， 然后将这些信息指纹存入哈希表，由于哈希表的存储效率一般只有 50%，因此一个 email 地址需要占用十六个字节。一亿个地址大约要 1.6GB， 即十六亿字节的内存）。因此存贮几十亿个邮件地址可能需要上百 GB 的内存。除非是超级计算机，一般服务器是无法存储的［2］。（该段引用谷歌数学之美：<a href="http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html）" target="_blank" rel="noopener">http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html）</a></p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>如果想判断一个元素是不是在一个集合里，一般想到的是将所有元素保存起来，然后通过比较确定。链表，树等等数据结构都是这种思路. 但是随着集合中元素的增加，我们需要的存储空间越来越大，检索速度也越来越慢。不过世界上还有一种叫作散列表（又叫哈希表，Hash table）的数据结构。它可以通过一个<strong>Hash函数将一个元素映射成一个位阵列（Bit Array）中的一个点</strong>。这样一来，我们只要看看这个点是不是 1 就知道可以集合中有没有它了。这就是布隆过滤器的基本思想。</p>
+<p>Hash面临的问题就是<strong>冲突</strong>。假设 Hash 函数是良好的，如果我们的位阵列长度为 m 个点，那么如果我们想将冲突率降低到例如 1%, 这个散列表就只能容纳 m/100 个元素。显然这就不叫空间有效了（Space-efficient）。解决方法也简单，就是使用多个 Hash，如果它们有一个说元素不在集合中，那肯定就不在。如果它们都说在，虽然也有一定可能性它们在说谎，不过直觉上判断这种事情的概率是比较低的。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>相比于其它的数据结构，布隆过滤器在<strong>空间和时间方面都有巨大的优势。布</strong>隆过滤器存储空间和插入/查询时间都是常数。另外, Hash 函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
+<p>布隆过滤器可以表示全集，其它任何数据结构都不能；</p>
+<p>k 和 m 相同，使用同一组 Hash 函数的两个布隆过滤器的交并差运算可以使用位操作进行。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>但是布隆过滤器的缺点和优点一样明显。<strong>误算率</strong>（False Positive）是其中之一。随着存入的<strong>元素数量增加，误算率随之增加</strong>。但是如果元素数量太少，则使用散列表足矣。</p>
+<p>另外，一般情况下<strong>不能从布隆过滤器中删除元素</strong>. 我们很容易想到把<strong>位列阵变成整数数组</strong>，每插入一个元素相应的计数器加1, 这样删除元素时将计数器减掉就可以了。然而要保证安全的删除元素并非如此简单。首先我们必须保证删除的元素的确在布隆过滤器里面. 这一点单凭这个过滤器是无法保证的。另外计数器回绕也会造成问题。</p>
 
     </div>
 
@@ -243,10 +286,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/29/AQS%E7%AC%94%E8%AE%B0/" rel="prev" title="AQS笔记">
-      <i class="fa fa-chevron-left"></i> AQS笔记
+    <a href="/2020/12/02/mysql%E4%B8%AD%E7%9A%84%E7%AE%97%E6%B3%95/" rel="prev" title="mysql中的算法">
+      <i class="fa fa-chevron-left"></i> mysql中的算法
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/07/NIO/" rel="next" title="NIO">
+      NIO <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -305,6 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">3.</span> <span class="nav-text">缺点</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -320,7 +367,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -360,7 +407,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
