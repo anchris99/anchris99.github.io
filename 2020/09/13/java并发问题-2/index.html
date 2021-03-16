@@ -60,9 +60,11 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags">标签</a></li>
+				<li><a href="/tags/index.html">标签</a></li>
 	        
 				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">archives</a></li>
 	        
 			</ul>
 		</nav>
@@ -122,6 +124,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -142,11 +146,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags">标签</a></li>
+					<li style="width: 25%"><a href="/tags/index.html">标签</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+					<li style="width: 25%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">archives</a></li>
 		        
 				</ul>
 			</nav>
@@ -404,27 +410,6 @@
       
 
       
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
     </div>
     <div class="article-info article-info-index">
       
@@ -494,6 +479,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Synchronized相关问题"><span class="toc-number">1.</span> <span class="toc-text">Synchronized相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题一-Synchronized原理"><span class="toc-number">1.1.</span> <span class="toc-text">问题一:Synchronized原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题二-获取对象的锁这个“锁”到底是什么？"><span class="toc-number">1.2.</span> <span class="toc-text">问题二:获取对象的锁这个“锁”到底是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题三-Synchronized为什么是可重入锁"><span class="toc-number">1.3.</span> <span class="toc-text">问题三:Synchronized为什么是可重入锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题四-JVM对Java的原生锁做了哪些优化"><span class="toc-number">1.4.</span> <span class="toc-text">问题四:JVM对Java的原生锁做了哪些优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题五-Synchronized为什么是非公平锁？"><span class="toc-number">1.5.</span> <span class="toc-text">问题五:Synchronized为什么是非公平锁？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题六-什么是锁消除和锁粗化？"><span class="toc-number">1.6.</span> <span class="toc-text">问题六:什么是锁消除和锁粗化？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题七：为什么Synchronized是一个悲观锁？"><span class="toc-number">1.7.</span> <span class="toc-text">问题七：为什么Synchronized是一个悲观锁？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题八-乐观锁一定就是好的吗？"><span class="toc-number">1.8.</span> <span class="toc-text">问题八: 乐观锁一定就是好的吗？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ReentrantLock及其他显式锁相关问题"><span class="toc-number">2.</span> <span class="toc-text">ReentrantLock及其他显式锁相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题一-Synchronized和ReentrantLock实现原理的不同"><span class="toc-number">2.1.</span> <span class="toc-text">问题一:Synchronized和ReentrantLock实现原理的不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题二-AQS框架"><span class="toc-number">2.2.</span> <span class="toc-text">问题二:AQS框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题三-SynchronizedReentrantLock的异同"><span class="toc-number">2.3.</span> <span class="toc-text">问题三:SynchronizedReentrantLock的异同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问-题-四-ReentrantLock如何实现可重入性"><span class="toc-number">2.4.</span> <span class="toc-text">问 题 四: ReentrantLock如何实现可重入性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问-题-五-JUC-中-的其他并-发-工-具-？"><span class="toc-number">2.5.</span> <span class="toc-text">问 题 五 :  JUC 中 的其他并 发 工 具 ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问-题-六-ReadWriteLock-和-StampedLock"><span class="toc-number">2.6.</span> <span class="toc-text">问 题 六 :ReadWriteLock 和 StampedLock</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读写锁"><span class="toc-number">2.6.1.</span> <span class="toc-text">读写锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#StampedLock"><span class="toc-number">2.6.2.</span> <span class="toc-text">StampedLock</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题七-Java的线程如何彼此同步"><span class="toc-number">2.7.</span> <span class="toc-text">问题七: Java的线程如何彼此同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题八-对比CyclicBarrier和CountDownLatch"><span class="toc-number">2.8.</span> <span class="toc-text">问题八:对比CyclicBarrier和CountDownLatch</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java线程池相关问题"><span class="toc-number">3.</span> <span class="toc-text">Java线程池相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题一：Java中的线程池是如何实现的"><span class="toc-number">3.1.</span> <span class="toc-text">问题一：Java中的线程池是如何实现的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题二：创建线程池的几个核心构造参数"><span class="toc-number">3.2.</span> <span class="toc-text">问题二：创建线程池的几个核心构造参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题三：线程池中的线程创建"><span class="toc-number">3.3.</span> <span class="toc-text">问题三：线程池中的线程创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题四：Java实现好的线程池"><span class="toc-number">3.4.</span> <span class="toc-text">问题四：Java实现好的线程池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题六：Java线程池中如何提交线程"><span class="toc-number">3.5.</span> <span class="toc-text">问题六：Java线程池中如何提交线程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java内存模型"><span class="toc-number">4.</span> <span class="toc-text">Java内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题一：Java的内存模型，各个线程怎么看到对方的变量的"><span class="toc-number">4.1.</span> <span class="toc-text">问题一：Java的内存模型，各个线程怎么看到对方的变量的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题二：volatile-特点，为什么能保证可见性"><span class="toc-number">4.2.</span> <span class="toc-text">问题二：volatile 特点，为什么能保证可见性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题三：-volatile变量的运算就是并发安全的吗"><span class="toc-number">4.3.</span> <span class="toc-text">问题三： volatile变量的运算就是并发安全的吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题四：volatile对比Synchronized的异同。"><span class="toc-number">4.4.</span> <span class="toc-text">问题四：volatile对比Synchronized的异同。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题五：ThreadLocal怎么解决并发安全的？"><span class="toc-number">4.5.</span> <span class="toc-text">问题五：ThreadLocal怎么解决并发安全的？</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -609,6 +607,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
@@ -629,6 +631,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
@@ -637,15 +643,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -653,11 +651,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -666,6 +664,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">

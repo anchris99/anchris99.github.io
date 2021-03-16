@@ -75,9 +75,11 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags">标签</a></li>
+				<li><a href="/tags/index.html">标签</a></li>
 	        
 				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">archives</a></li>
 	        
 			</ul>
 		</nav>
@@ -137,6 +139,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -157,11 +161,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags">标签</a></li>
+					<li style="width: 25%"><a href="/tags/index.html">标签</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+					<li style="width: 25%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">archives</a></li>
 		        
 				</ul>
 			</nav>
@@ -337,27 +343,6 @@ as - if - serial</code></pre><p>4：hotspot实现</p>
       
 
       
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
     </div>
     <div class="article-info article-info-index">
       
@@ -427,6 +412,19 @@ as - if - serial</code></pre><p>4：hotspot实现</p>
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CAS底层"><span class="toc-number">1.</span> <span class="toc-text">CAS底层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object大小"><span class="toc-number">2.</span> <span class="toc-text">Object大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sychronized加锁的含义："><span class="toc-number">3.</span> <span class="toc-text">sychronized加锁的含义：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锁的升级过程"><span class="toc-number">4.</span> <span class="toc-text">锁的升级过程:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#markword的详细信息："><span class="toc-number">5.</span> <span class="toc-text">markword的详细信息：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronized最底层"><span class="toc-number">6.</span> <span class="toc-text">synchronized最底层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高速缓存和-cache-line"><span class="toc-number">7.</span> <span class="toc-text">高速缓存和 cache line</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cache-line的概念"><span class="toc-number">7.1.</span> <span class="toc-text">cache line的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算机的组成"><span class="toc-number">7.2.</span> <span class="toc-text">计算机的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU的核心组成"><span class="toc-number">7.3.</span> <span class="toc-text">CPU的核心组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超线程："><span class="toc-number">7.4.</span> <span class="toc-text">超线程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存一致性协议："><span class="toc-number">7.5.</span> <span class="toc-text">缓存一致性协议：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伪共享"><span class="toc-number">7.6.</span> <span class="toc-text">伪共享:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-8-中的解决方案"><span class="toc-number">7.6.1.</span> <span class="toc-text">Java 8 中的解决方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#java7以下"><span class="toc-number">7.6.2.</span> <span class="toc-text">java7以下</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DCL单例需不需要加volatile"><span class="toc-number">8.</span> <span class="toc-text">DCL单例需不需要加volatile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要double-check-："><span class="toc-number">8.1.</span> <span class="toc-text">为什么要double check ：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile如何解决指令重排序"><span class="toc-number">9.</span> <span class="toc-text">volatile如何解决指令重排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java的四种引用类型"><span class="toc-number">10.</span> <span class="toc-text">Java的四种引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#虚引用："><span class="toc-number">10.1.</span> <span class="toc-text">虚引用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弱引用"><span class="toc-number">10.2.</span> <span class="toc-text">弱引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ThreadLocal使用弱引用的例子："><span class="toc-number">10.2.1.</span> <span class="toc-text">ThreadLocal使用弱引用的例子：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强引用"><span class="toc-number">10.3.</span> <span class="toc-text">强引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软引用"><span class="toc-number">10.4.</span> <span class="toc-text">软引用</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -542,6 +540,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
@@ -562,6 +564,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
@@ -570,15 +576,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,11 +584,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,6 +597,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">

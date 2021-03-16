@@ -65,9 +65,11 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags">标签</a></li>
+				<li><a href="/tags/index.html">标签</a></li>
 	        
 				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">archives</a></li>
 	        
 			</ul>
 		</nav>
@@ -127,6 +129,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -147,11 +151,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/tags">标签</a></li>
+					<li style="width: 25%"><a href="/tags/index.html">标签</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+					<li style="width: 25%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">archives</a></li>
 		        
 				</ul>
 			</nav>
@@ -227,27 +233,6 @@
       
 
       
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
     </div>
     <div class="article-info article-info-index">
       
@@ -317,6 +302,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是死锁"><span class="toc-number">1.</span> <span class="toc-text">什么是死锁</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#死锁产生的必要条件"><span class="toc-number">2.</span> <span class="toc-text">死锁产生的必要条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#死锁处理策略"><span class="toc-number">3.</span> <span class="toc-text">死锁处理策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁预防"><span class="toc-number">3.1.</span> <span class="toc-text">死锁预防</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#破坏互斥条件"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">破坏互斥条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#破坏不剥夺条件"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">破坏不剥夺条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#破坏请求和保持条件"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">破坏请求和保持条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#破坏循环等待条件"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">破坏循环等待条件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁避免"><span class="toc-number">3.2.</span> <span class="toc-text">死锁避免</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#系统安全状态"><span class="toc-number">3.2.0.1.</span> <span class="toc-text">系统安全状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#银行家算法"><span class="toc-number">3.2.0.2.</span> <span class="toc-text">银行家算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#死锁检测与解除"><span class="toc-number">3.3.</span> <span class="toc-text">死锁检测与解除</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#死锁的解除"><span class="toc-number">3.3.0.1.</span> <span class="toc-text">死锁的解除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较"><span class="toc-number">3.4.</span> <span class="toc-text">比较</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -432,6 +430,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
               </li>
              
@@ -452,6 +454,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
@@ -460,15 +466,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,11 +474,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,6 +487,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
