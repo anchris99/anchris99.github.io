@@ -185,9 +185,13 @@
         
       </header>
     
+	
+	
     <div class="article-entry" itemprop="articleBody">
-      
-        <p>注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。</p>
+				
+
+		 
+		 <p>注：本文内容转于《并发问题专题》，原文链接已不可知，若有侵权，请联系删除。</p>
 <h1 id="Synchronized相关问题"><a href="#Synchronized相关问题" class="headerlink" title="Synchronized相关问题"></a>Synchronized相关问题</h1><h2 id="问题一-Synchronized原理"><a href="#问题一-Synchronized原理" class="headerlink" title="问题一:Synchronized原理"></a>问题一:Synchronized原理</h2>  <a id="more"></a> 
 <p>  答：<br>    Synchronized是由<strong>JVM实现</strong>的一种实现互斥同步的一种方式，被Synchronized修饰过的程序块，在编译前后被编译器生成了<code>monitorenter</code>和<code>monitorexit</code>两个字节码指令。这两个指令是什么意思呢？-在虚拟机执行到<code>monitorenter</code>指令时，首先要<strong>尝试获取对象的锁</strong>：如果这个对象<strong>没有锁定</strong>，或者当前线程<strong>已经拥有了这个对象的锁</strong>，把锁的<strong>计数器+1</strong>；-当执行monitorexit指令时<strong>锁计数器-1</strong>；当计数器为0时，锁就被<strong>释放</strong>了。Java中Synchronize通过在<strong>对象头设置标记</strong>，达到了<strong>获取锁和释放锁</strong>的目的。</p>
 <h2 id="问题二-获取对象的锁这个“锁”到底是什么？"><a href="#问题二-获取对象的锁这个“锁”到底是什么？" class="headerlink" title="问题二:获取对象的锁这个“锁”到底是什么？"></a>问题二:获取对象的锁这个“锁”到底是什么？</h2><p>“锁”的<strong>本质是一种资源</strong>，是<code>monitorenter</code>和<code>monitorexit</code>字节码指令的一个Reference类型的参数，即<strong>要锁定和解锁的对象。</strong>1.如果Synchronized明确指定了锁对象，比如Synchronized（变量名）、Synchronized(this)等，说明加解锁<strong>对象为该对象。</strong>2.如果没有明确指定：若Synchronized修饰的方法为<strong>非静态</strong>方法，表示<strong>此方法对应的对象</strong>为<strong>锁对象</strong>；若Synchronized修饰的方法为<strong>静态</strong>方法，则表示<strong>此方法对应的类</strong>对象为锁对象。注意，当一个对象被锁住时，对象里所有用Synchronized修饰的方法都将产生堵塞，而对象里<strong>非Synchronized修饰的方法可正常被调用</strong>，不受锁影响。</p>
@@ -407,9 +411,8 @@
 <h2 id="问题四：volatile对比Synchronized的异同。"><a href="#问题四：volatile对比Synchronized的异同。" class="headerlink" title="问题四：volatile对比Synchronized的异同。"></a>问题四：volatile对比Synchronized的异同。</h2><p>   Synchronized既能保证可见性，又能保证原子性，而volatile只能保证可见性，无法保证原子性。ThreadLocal和Synchonized都用于解决多线程并发访问，防止任务在共享资源上产生冲突。但是ThreadLocal与Synchronized有本质的区别。Synchronized用于实现同步机制，是利用锁的机制使变量或代码块在某一时该只能被一个线程访问，是一种“以时间换空间”的方式。而ThreadLocal为每一个线程都提供了变量的副本，使得每个线程在某一时间访问到的并不是同一个对象，根除了对变量的共享，是一种“以空间换时间”的方式。</p>
 <h2 id="问题五：ThreadLocal怎么解决并发安全的？"><a href="#问题五：ThreadLocal怎么解决并发安全的？" class="headerlink" title="问题五：ThreadLocal怎么解决并发安全的？"></a>问题五：ThreadLocal怎么解决并发安全的？</h2><p>   ThreadLocal这是Java提供的一种保存线程私有信息的机制，因为其在整个线程生命周期内有效，所以可以方便地在一个线程关联的不同业务模块之间传递信息，比如事务ID、Cookie等上下文相关信息。ThreadLocal为每一个线程维护变量的副本，把共享数据的可见范围限制在同一个线程之内，其实现原理是，在ThreadLocal类中有一个Map，用于存储每一个线程的变量的副本。问题六：很多人都说要慎用ThreadLocal，谈谈你的理解，使用ThreadLocal需要注意些什么？使用ThreadLocal要注意remove！ThreadLocal的实现是基于一个所谓的ThreadLocalMap，在ThreadLocalMap中，它的key是一个弱引用。通常弱引用都会和引用队列配合清理机制使用，但是ThreadLocal是个例外，它并没有这么做。这意味着，废弃项目的回收依赖于显式地触发，否则就要等待线程结束，进而回收相应ThreadLocalMap！这就是很多OOM的来源，所以通常都会建议，应用一定要自己负责remove，并且不要和线程池配合，因为worker线程往往是不会退出的。</p>
 
-      
-
-      
+		 
+		
     </div>
     <div class="article-info article-info-index">
       
@@ -599,19 +602,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -631,11 +634,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,15 +650,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -667,19 +670,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>

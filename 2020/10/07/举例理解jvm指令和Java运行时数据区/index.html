@@ -190,9 +190,13 @@
         
       </header>
     
+	
+	
     <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="举例1"><a href="#举例1" class="headerlink" title="举例1"></a>举例1</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">8</span>;</span><br><span class="line">i=i++;</span><br><span class="line">System.out.println(i);</span><br><span class="line">结果输出为<span class="number">8</span>， 原因： 对应的字节码如下图所示</span><br></pre></td></tr></table></figure>
+				
+
+		 
+		 <h1 id="举例1"><a href="#举例1" class="headerlink" title="举例1"></a>举例1</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">8</span>;</span><br><span class="line">i=i++;</span><br><span class="line">System.out.println(i);</span><br><span class="line">结果输出为<span class="number">8</span>， 原因： 对应的字节码如下图所示</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
@@ -258,9 +262,8 @@
 </blockquote>
 <p>由上面的内容也进一步理解了 DCL模式时为什么要加 <code>volatile</code>， 若不加<code>volatile</code>则 可能会发生指令重排序， 那么 astore指令就可能在 <code>invokespecial</code>之前那执行，那么另外一个线程就有可能使用到对象 <strong>半初始化的数据</strong>（也就是说执行完了 new（此时值是默认值） 尚未执行初始化操作）。因此要用<strong>volatile修饰</strong>变量。   </p>
 
-      
-
-      
+		 
+		
     </div>
     <div class="article-info article-info-index">
       
@@ -450,19 +453,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -482,11 +485,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -498,15 +501,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,19 +521,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>

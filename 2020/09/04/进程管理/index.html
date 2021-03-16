@@ -187,9 +187,13 @@
         
       </header>
     
+	
+	
     <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="大内核和微内核"><a href="#大内核和微内核" class="headerlink" title="大内核和微内核"></a>大内核和微内核</h1><p><strong>大内核</strong>系统： 将操作系统的主要功能模块都作为一个紧密联系的整体运行在核心态。由于各管理模块之间共享信息，能有效利用相互之间的有效特性，所以具有无可比拟的<strong>性能优势</strong>。</p>
+				
+
+		 
+		 <h1 id="大内核和微内核"><a href="#大内核和微内核" class="headerlink" title="大内核和微内核"></a>大内核和微内核</h1><p><strong>大内核</strong>系统： 将操作系统的主要功能模块都作为一个紧密联系的整体运行在核心态。由于各管理模块之间共享信息，能有效利用相互之间的有效特性，所以具有无可比拟的<strong>性能优势</strong>。</p>
 <a id="more"></a>
 
 <p>微内核：它将内核中<strong>最基本的功能</strong>（如进程管理等）保留在内核，将不需要在核心态执行的功能移到<strong>用户态</strong>执行，从而降低了内核的设计复杂性。</p>
@@ -370,9 +374,8 @@
 <li>僵尸进程已经不再运行，但是仍然占用系统资源，积累过多会造成内存泄漏。<h2 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h2>1) 父进程通过<strong>wait和waitpid等函数等待子进程结束</strong>，这会导致父进程<strong>挂起</strong>。<br>2) 如果父进程很忙，那么可以在子进程结束时发送<strong>SIGCHLD</strong>信号，父进程会<strong>收到该信号</strong>，<strong>调用wait回收</strong>。<br>3)kill发送SIGTERM或者SIGKILL信号，使产生的僵死进程就变成了孤儿进程，这些孤儿进程会被init进程接管</li>
 </ul>
 
-      
-
-      
+		 
+		
     </div>
     <div class="article-info article-info-index">
       
@@ -562,19 +565,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,11 +597,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,15 +613,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,19 +633,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>

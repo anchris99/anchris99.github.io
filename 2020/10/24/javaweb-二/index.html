@@ -208,9 +208,13 @@
         
       </header>
     
+	
+	
     <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="15jsp"><a href="#15jsp" class="headerlink" title="15jsp"></a>15jsp</h2><h3 id="什么是jsp"><a href="#什么是jsp" class="headerlink" title="什么是jsp"></a>什么是jsp</h3><blockquote>
+				
+
+		 
+		 <h2 id="15jsp"><a href="#15jsp" class="headerlink" title="15jsp"></a>15jsp</h2><h3 id="什么是jsp"><a href="#什么是jsp" class="headerlink" title="什么是jsp"></a>什么是jsp</h3><blockquote>
 <ul>
 <li><p><strong>JSP</strong>（全称<strong>J</strong>ava<strong>S</strong>erver <strong>P</strong>ages）是一种<strong>动态网页技术</strong>标准。JSP部署于网络服务器上，可以响应客户端发送的请求，并<strong>根据请求内容动态地生成<a href="https://baike.baidu.com/item/HTML" target="_blank" rel="noopener">HTML</a>、<a href="https://baike.baidu.com/item/XML" target="_blank" rel="noopener">XML</a>或其他格式文档的<a href="https://baike.baidu.com/item/Web" target="_blank" rel="noopener">Web</a>网页</strong>，然后返回给请求者。</p>
 </li>
@@ -435,9 +439,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">message.setSubject(<span class="string">"图片发送"</span>);</span><br><span class="line">           MimeBodyPart image = <span class="keyword">new</span> MimeBodyPart();</span><br><span class="line">           DataHandler dh = <span class="keyword">new</span> DataHandler(<span class="keyword">new</span> FileDataSource(<span class="string">"D:\\2e9.jpg"</span>));</span><br><span class="line">           <span class="comment">//对图片进行 处理后放入 mimeBodyPart 的image中</span></span><br><span class="line">           image.setDataHandler(dh); </span><br><span class="line">           image.setContentID(<span class="string">"1.jpg"</span>);<span class="comment">//起一个名字，方便后面调用</span></span><br><span class="line">           </span><br><span class="line">           MimeBodyPart text = <span class="keyword">new</span> MimeBodyPart();</span><br><span class="line">           <span class="comment">//引用图片， 使用cid 调用前面起的别名</span></span><br><span class="line">           Object o = <span class="string">"这是封带着图片的邮件&lt;img src='cid:1.jpg'&gt;"</span>;  </span><br><span class="line">           text.setContent(o,<span class="string">"text/html;charset=UTF-8"</span>);</span><br><span class="line">           </span><br><span class="line">           <span class="comment">//需要将HTML语句同 图片文件 结合</span></span><br><span class="line">           MimeMultipart mm = <span class="keyword">new</span> MimeMultipart();</span><br><span class="line">           mm.addBodyPart(text);</span><br><span class="line">           mm.addBodyPart(image);</span><br><span class="line">           mm.setSubType(<span class="string">"related"</span>);</span><br><span class="line"></span><br><span class="line">           <span class="comment">//放入消息中</span></span><br><span class="line">           message.setContent(mm);</span><br><span class="line">           message.saveChanges();</span><br><span class="line"></span><br><span class="line">           <span class="comment">//通过传输对象 进行传输发送</span></span><br><span class="line">           ts.sendMessage(message,message.getAllRecipients());</span><br><span class="line">           ts.close();</span><br></pre></td></tr></table></figure>
 
 
-      
-
-      
+		 
+		
     </div>
     <div class="article-info article-info-index">
       
@@ -627,19 +630,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">java并发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javaweb  - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,11 +662,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
+                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">javaweb   - 前端</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaEE</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -675,15 +678,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">javaweb - 前端</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">javaee</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javascript 相关</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -695,19 +698,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">数据结构与算法</a>
               </li>
             
             <div class="clearfix"></div>
