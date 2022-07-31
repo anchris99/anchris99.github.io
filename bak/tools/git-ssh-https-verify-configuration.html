@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Git作为当前最受欢迎的版本控制软件，使用是很频繁的。但每次使用git push等操作时都要输入密码，实在是挺麻烦的。本文对使用ssh与https两种通讯协议讨论一下免密码配置。注：这个过程在所有操作系统上都是相似的：）">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Git之SSH与HTTPS免密码配置">
+<meta property="og:url" content="https://anchris99.github.io/bak/tools/git-ssh-https-verify-configuration.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="Git作为当前最受欢迎的版本控制软件，使用是很频繁的。但每次使用git push等操作时都要输入密码，实在是挺麻烦的。本文对使用ssh与https两种通讯协议讨论一下免密码配置。注：这个过程在所有操作系统上都是相似的：）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-12-21T07:31:55.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/tools/git-ssh-https-verify-configuration">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/tools/git-ssh-https-verify-configuration.html","path":"bak/tools/git-ssh-https-verify-configuration.html","title":"Git之SSH与HTTPS免密码配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git之SSH与HTTPS免密码配置 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">SSH通信协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub%E7%89%88"><span class="nav-number">1.1.</span> <span class="nav-text">GitHub版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">Git服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">HTTPS通信协议</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Git之SSH与HTTPS免密码配置
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>GIT-SSH-HTTPS-VERIFY-CONFIGURATION</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>Git作为当前最受欢迎的版本控制软件，使用是很频繁的。但每次使用git push等操作时都要输入密码，实在是挺麻烦的。本文对使用ssh与https两种通讯协议讨论一下免密码配置。<br>注：这个过程在所有操作系统上都是相似的：）</p>
+<span id="more"></span>
+<h2 id="SSH通信协议"><a href="#SSH通信协议" class="headerlink" title="SSH通信协议"></a>SSH通信协议</h2><h3 id="GitHub版"><a href="#GitHub版" class="headerlink" title="GitHub版"></a>GitHub版</h3><p>许多Git服务器都使用SSH公钥进行认证，当然也包括github。<br>首先你需要确认一下自己是否已经拥有密钥了，默认情况下，用户的 SSH 密钥存储在其 <code>~/.ssh</code> 目录下。进入该目录并列出其中内容，你变可以下快速确认自己是否已经拥有密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">authorized_keys2  id_rsa       known_hosts</span><br><span class="line">config            id_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>我们需要寻找一对 <code>id_rsa</code> 或 <code>id_dsa</code> 命名的文件，其中一个带 <code>.pub</code> 扩展名。 ‘.pub’文件是你的公钥，另一个则是私钥。如果没有找不到这样的文件（或者根本就没有<code>.ssh</code>目录），我们可以通过 <code>ssh-keygen</code> 程序来创建它们。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#邮箱可以随便填</span></span><br><span class="line">$ ssh-keygen -t rsa -C <span class="string">&quot;xx@xx.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>首先 <code>ssh-keygen</code> 会确认密钥的存储位置和文件名（默认是 <code>.ssh/id_rsa</code>）,然后他会要求你输入两次密钥口令，留空即可。所以一般选用默认，全部回车即可。</p>
+<p>接下来我们登陆到GitHub上，右上角小头像-&gt;Setting-&gt;SSH and GPG keys中，点击new SSH key。<br><code>Title：</code>可以随便填写，但最好起的名字能让自己知道这个公钥是哪个设备的。<br><code>Key：</code>将上面生成的<code>.pub</code>文件中的所有内容复制到这里。<br>点击下面的Add SSH key即可。<br>然后你就会发现可以免密码访问了</p>
+<h3 id="Git服务器"><a href="#Git服务器" class="headerlink" title="Git服务器"></a>Git服务器</h3><p>如果服务端是自己搭建的git服务器，生成密钥公钥对的步骤是一样的。<br>然后将生成的 <code>.pub</code> 文件内容，导入到git服务器 <code>/home/git/.ssh/authorized_keys</code> 文件内，一行一个。<br>然后你就会发现git push 不再需要密码了<br>搭建git服务器和相关免登陆的详细步骤可参考我的另一篇 <a href="#">Post not found: tools/set-up-git-server-on-vps</a></p>
+<h2 id="HTTPS通信协议"><a href="#HTTPS通信协议" class="headerlink" title="HTTPS通信协议"></a>HTTPS通信协议</h2><p>上面讲了SSH方式的免密码，接下来讲一下越来越常用的HTTPS方式的免密码<br>新建文件并保存密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> ~/.git-credentials</span><br><span class="line">$ vim ~/.git-credentials</span><br></pre></td></tr></table></figure>
+<p>添加内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://&#123;username&#125;:&#123;passwd&#125;@github.com</span><br></pre></td></tr></table></figure>
+<p>添加git配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global credential.helper store</span><br></pre></td></tr></table></figure>
+<p>查看～&#x2F;.gitconfig文件变化</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[credential]</span><br><span class="line">    helper = store</span><br></pre></td></tr></table></figure>
+<p>然后再尝试一下git push不再在需要密码了</p>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>GIT-SSH-HTTPS-VERIFY-CONFIGURATION</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

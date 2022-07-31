@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="通过attach进入容器12# 进入容器（Docker自带的命令）$ sudo docker attach [name] 通过这命令进入容器后，执行ctrl+d退出容器后发现容器也停止了。所以可以通过  先按，ctrl+p 再按，ctrl+q  退出 制作进入容器的命令既然attach退出很麻烦，一不小心容器就down掉了 通过 docker exec 进入容器是安全的，但是命令过长 所以我们可以">
+<meta property="og:type" content="website">
+<meta property="og:title" content="进入docker容器命令制作">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/%E8%BF%9B%E5%85%A5docker%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4%E5%88%B6%E4%BD%9C.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="通过attach进入容器12# 进入容器（Docker自带的命令）$ sudo docker attach [name] 通过这命令进入容器后，执行ctrl+d退出容器后发现容器也停止了。所以可以通过  先按，ctrl+p 再按，ctrl+q  退出 制作进入容器的命令既然attach退出很麻烦，一不小心容器就down掉了 通过 docker exec 进入容器是安全的，但是命令过长 所以我们可以">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-06-01T09:25:11.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/%E8%BF%9B%E5%85%A5docker%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4%E5%88%B6%E4%BD%9C">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/%E8%BF%9B%E5%85%A5docker%E5%AE%B9%E5%99%A8%E5%91%BD%E4%BB%A4%E5%88%B6%E4%BD%9C.html","path":"bak/linux/进入docker容器命令制作.html","title":"进入docker容器命令制作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>进入docker容器命令制作 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87attach%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">通过attach进入容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">制作进入容器的命令</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">进入docker容器命令制作
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>进入DOCKER容器命令制作</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="通过attach进入容器"><a href="#通过attach进入容器" class="headerlink" title="通过attach进入容器"></a>通过attach进入容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入容器（Docker自带的命令）</span></span><br><span class="line">$ sudo docker attach [name]</span><br></pre></td></tr></table></figure>
+<p>通过这命令进入容器后，执行ctrl+d退出容器后发现容器也停止了。<br>所以可以通过</p>
+<ul>
+<li>先按，ctrl+p</li>
+<li>再按，ctrl+q</li>
+</ul>
+<p>退出</p>
+<h2 id="制作进入容器的命令"><a href="#制作进入容器的命令" class="headerlink" title="制作进入容器的命令"></a>制作进入容器的命令</h2><p>既然attach退出很麻烦，一不小心容器就down掉了</p>
+<p>通过 <code>docker exec</code> 进入容器是安全的，但是命令过长</p>
+<p>所以我们可以通过下面操作，简化命令</p>
+<p>1.创建文件 <code>/usr/bin/ctn</code>,内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it $1 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>2.检查环境变量有没有配置目录 <code>/usr/bin</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$PATH</span><br><span class="line">bash: /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>配置环境变量的方式自行百度</p>
+<p>3.完成上面两步即可通过命令 <code>ctn</code> 进入容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ctn [name]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：如果是使用非root账号创建的命令，而docker命令是root权限，可能会存在权限问题<br>可以设置 <code>chmod 777 /usr/bin/ctn</code> 设置权限<br>使用 <code>sudo ctn [name]</code> 即可进入容器</p>
+</blockquote>
+<p>4.自动补全docker名<br>使用上面命令时，docker的名字都是手动输入，很麻烦，而且容易出错。</p>
+<p>我们可以借助complete命令，来补全docker信息。</p>
+<p>在~&#x2F;.bashrc(作用于当前用户，如果所有用户，修改&#x2F;etc&#x2F;bashrc)文件中添加一行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ctn auto complete</span></span><br><span class="line">complete -W <span class="string">&quot;<span class="subst">$(docker ps --format <span class="string">&quot;&#123;&#123;.Names&#125;&#125;&quot;</span>)</span>&quot;</span> ctn</span><br></pre></td></tr></table></figure>
+<p>再执行 <code>source .bashrc</code> 使之生效。</p>
+<p>这样我们输入 <code>ctn</code> 后，按 <code>Tab</code> 就会提示或自动补全了。</p>
+<blockquote>
+<p><code>注意：</code> 由于提示的docker名是 <code>.bashrc</code> 生效时的列表，所以如果之后docker列表有变动，需重新执行 <code>source .bashrc</code> 使之更新提示列表</p>
+</blockquote>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>进入DOCKER容器命令制作</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

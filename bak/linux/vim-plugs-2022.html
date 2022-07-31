@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言从第一次接触 vim 已逾期 10 年, 期间大部分都是一些简单操作,最近一两年开始深度使用 vim, 目前使用 neovim 版本.本文将记录一些笔者觉得好用的一些 Plugin, 本文也将持续更新.  注意: 笔者使用的插件管理器是 vim-plug,所以以下示例都是基于 vim-plug 来写的.  Goto&#x2F;Openvim-open-urlvim-open-url可以用浏览器">
+<meta property="og:type" content="website">
+<meta property="og:title" content="2022年我在使用这些vim插件">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/vim-plugs-2022.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="前言从第一次接触 vim 已逾期 10 年, 期间大部分都是一些简单操作,最近一两年开始深度使用 vim, 目前使用 neovim 版本.本文将记录一些笔者觉得好用的一些 Plugin, 本文也将持续更新.  注意: 笔者使用的插件管理器是 vim-plug,所以以下示例都是基于 vim-plug 来写的.  Goto&#x2F;Openvim-open-urlvim-open-url可以用浏览器">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-27T07:07:39.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="vim">
+<meta property="article:tag" content="neovim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/vim-plugs-2022">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/vim-plugs-2022.html","path":"bak/linux/vim-plugs-2022.html","title":"2022年我在使用这些vim插件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2022年我在使用这些vim插件 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goto-x2F-Open"><span class="nav-number">2.</span> <span class="nav-text">Goto&#x2F;Open</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-open-url"><span class="nav-number">2.1.</span> <span class="nav-text">vim-open-url</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto-Complete"><span class="nav-number">3.</span> <span class="nav-text">Auto Complete</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#neoclide-x2F-coc-nvim"><span class="nav-number">3.1.</span> <span class="nav-text">neoclide&#x2F;coc.nvim</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">2022年我在使用这些vim插件
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>VIM-PLUGS-2022</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>从第一次接触 <code>vim</code> 已逾期 10 年, 期间大部分都是一些简单操作,<br>最近一两年开始深度使用 <code>vim</code>, 目前使用 <code>neovim</code> 版本.<br>本文将记录一些笔者觉得好用的一些 <code>Plugin</code>, 本文也将持续更新.</p>
+<blockquote>
+<p>注意: 笔者使用的插件管理器是 <a target="_blank" rel="noopener" href="https://github.com/junegunn/vim-plug">vim-plug</a>,<br>所以以下示例都是基于 <code>vim-plug</code> 来写的.</p>
+</blockquote>
+<h2 id="Goto-x2F-Open"><a href="#Goto-x2F-Open" class="headerlink" title="Goto&#x2F;Open"></a>Goto&#x2F;Open</h2><h3 id="vim-open-url"><a href="#vim-open-url" class="headerlink" title="vim-open-url"></a>vim-open-url</h3><p><a target="_blank" rel="noopener" href="https://github.com/dhruvasagar/vim-open-url">vim-open-url</a><br>可以用浏览器打开光标下的 url. </p>
+<ul>
+<li><code>gB</code> 用默认浏览器打开光标下的 url</li>
+<li><code>g&lt;CR&gt;</code> 使用默认搜索引擎搜索光标下的单词</li>
+<li><code>gG</code> 使用 Google 搜索光标下的单词</li>
+<li><code>gW</code> 使用 Wikipedia 搜索光标下的单词</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plug <span class="string">&#x27;dhruvasagar/vim-open-url&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Auto-Complete"><a href="#Auto-Complete" class="headerlink" title="Auto Complete"></a>Auto Complete</h2><h3 id="neoclide-x2F-coc-nvim"><a href="#neoclide-x2F-coc-nvim" class="headerlink" title="neoclide&#x2F;coc.nvim"></a>neoclide&#x2F;coc.nvim</h3>
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>VIM-PLUGS-2022</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

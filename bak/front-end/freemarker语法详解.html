@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="FreeMarker是一款 模板引擎 :即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。FreeMarker模板文件主要有4部分组成  文本，直接输出的部分 注释，即&lt;#–…–&gt;格式不会输出 插值（Interpolation）：即${..}或者#{..}格式的部分,将使用数据模型中的部分替代输出 FTL指令：FreeMarker">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FreeMarker语法详解">
+<meta property="og:url" content="https://anchris99.github.io/bak/front-end/freemarker%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="FreeMarker是一款 模板引擎 :即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。FreeMarker模板文件主要有4部分组成  文本，直接输出的部分 注释，即&lt;#–…–&gt;格式不会输出 插值（Interpolation）：即${..}或者#{..}格式的部分,将使用数据模型中的部分替代输出 FTL指令：FreeMarker">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-10-05T03:58:50.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="freemarker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/front-end/freemarker%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/front-end/freemarker%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3.html","path":"bak/front-end/freemarker语法详解.html","title":"FreeMarker语法详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FreeMarker语法详解 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">一些规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FTL%E6%8C%87%E4%BB%A4%E8%A7%84%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">FTL指令规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E8%A7%84%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">插值规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-elseif-elseif"><span class="nav-number">1.3.</span> <span class="nav-text">if,elseif,elseif</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch-case"><span class="nav-number">1.4.</span> <span class="nav-text">switch,case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.5.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#include"><span class="nav-number">1.6.</span> <span class="nav-text">include</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import"><span class="nav-number">1.7.</span> <span class="nav-text">import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compress"><span class="nav-number">1.8.</span> <span class="nav-text">compress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#escape-noescape"><span class="nav-number">1.9.</span> <span class="nav-text">escape, noescape</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assign"><span class="nav-number">1.10.</span> <span class="nav-text">assign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#global"><span class="nav-number">1.11.</span> <span class="nav-text">global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setting"><span class="nav-number">1.12.</span> <span class="nav-text">setting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macro-nested-return"><span class="nav-number">1.13.</span> <span class="nav-text">macro, nested, return</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#t-lt-rt"><span class="nav-number">1.14.</span> <span class="nav-text">t, lt, rt</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">FreeMarker语法详解
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/front-end/">FRONT-END</a></li>
+            <li>FREEMARKER语法详解</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>FreeMarker是一款 <strong>模板引擎</strong> :即一种基于模板和要改变的数据，并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。<br>FreeMarker模板文件主要有4部分组成</p>
+<ol>
+<li><strong>文本</strong>，直接输出的部分</li>
+<li><strong>注释</strong>，即&lt;#–…–&gt;格式不会输出</li>
+<li><strong>插值</strong>（Interpolation）：即${..}或者#{..}格式的部分,将使用数据模型中的部分替代输出</li>
+<li><strong>FTL指令</strong>：FreeMarker指令，和HTML标记类似，名字前加#予以区分，不会输出。</li>
+</ol>
+<span id="more"></span>
+<h2 id="一些规则"><a href="#一些规则" class="headerlink" title="一些规则"></a>一些规则</h2><h3 id="FTL指令规则"><a href="#FTL指令规则" class="headerlink" title="FTL指令规则"></a>FTL指令规则</h3><p>FreeMarker有三种FTL标签，这和HTML的标签是完全类似的<br>     开始标签：&lt;#directivename parameters&gt;<br>     结束标签：&lt;&#x2F;#directivename&gt;<br>     空标签： &lt;#directivename parameters &#x2F;&gt;<br>     实际上，使用标签时前面的#符号也可能变成@，如果该指令是一个用户指令而不是系统内建指令时，应将#符号改为@符号</p>
+<h3 id="插值规则"><a href="#插值规则" class="headerlink" title="插值规则"></a>插值规则</h3><p>FreeMarker的插值有如下两种类型<br>    1、通用插值：${expr}<br>    2、数字格式化插值：#{expr}或者#{expr;format}<br>通用插值，有可以分为四种情况<br>    a、插值结果为字符串值：直接输出表达式结果<br>    b、插值结果为数字值：根据默认格式(#setting 指令设置)将表达式结果转换成文本输出。可以使用内建的字符串函数格式单个插值，例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#setting number_format = <span class="string">&quot;currency&quot;</span> /&gt;</span></span><br><span class="line">&lt;<span class="meta">#assign str = 42 /&gt;</span></span><br><span class="line">$&#123;str&#125;</span><br><span class="line">$&#123;str?<span class="built_in">string</span>&#125;</span><br><span class="line">$&#123;str?<span class="built_in">string</span>.number&#125;</span><br><span class="line">$&#123;str?<span class="built_in">string</span>.currency&#125;</span><br><span class="line">$&#123;str?<span class="built_in">string</span>.percent&#125;</span><br><span class="line">$&#123;str?<span class="built_in">string</span>.computer&#125;</span><br><span class="line"></span><br><span class="line">日期处理</span><br><span class="line">$&#123;openingTime?<span class="built_in">string</span>.<span class="type">short</span>&#125;</span><br><span class="line">$&#123;openingTime?<span class="built_in">string</span>.medium&#125;</span><br><span class="line">$&#123;openingTime?<span class="built_in">string</span>.<span class="type">long</span>&#125;</span><br><span class="line">$&#123;openingTime?<span class="built_in">string</span>.full&#125;</span><br><span class="line">$&#123;nextDiscountDay?<span class="built_in">string</span>.<span class="type">short</span>&#125;</span><br><span class="line">$&#123;nextDiscountDay?<span class="built_in">string</span>.medium&#125;</span><br><span class="line">$&#123;nextDiscountDay?<span class="built_in">string</span>.<span class="type">long</span>&#125;</span><br><span class="line">$&#123;nextDiscountDay?<span class="built_in">string</span>.full&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>.<span class="type">short</span>&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>.medium&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>.<span class="type">long</span>&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>.full&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss zzzz&quot;</span>)&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>(<span class="string">&quot;EEE, MMM d, &#x27;&#x27;yy&quot;</span>)&#125;</span><br><span class="line">$&#123;lastUpdated?<span class="built_in">string</span>(<span class="string">&quot;EEEE, MMMM dd, yyyy, hh:mm:ss a &#x27;(&#x27;zzz&#x27;)&#x27;&quot;</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="if-elseif-elseif"><a href="#if-elseif-elseif" class="headerlink" title="if,elseif,elseif"></a>if,elseif,elseif</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#<span class="keyword">if</span> condition&gt;</span></span><br><span class="line">……</span><br><span class="line">&lt;<span class="meta">#elseif condition2&gt;</span></span><br><span class="line">……</span><br><span class="line">&lt;<span class="meta">#<span class="keyword">else</span>&gt;</span></span><br><span class="line">……</span><br><span class="line">&lt;/<span class="meta">#<span class="keyword">if</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="switch-case"><a href="#switch-case" class="headerlink" title="switch,case"></a>switch,case</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#switch value&gt;  </span></span><br><span class="line">  &lt;<span class="meta">#case refValue1&gt;  </span></span><br><span class="line">         ...  </span><br><span class="line">         &lt;<span class="meta">#break&gt;  </span></span><br><span class="line">  &lt;<span class="meta">#case refValue2&gt;  </span></span><br><span class="line">         ...  </span><br><span class="line">         &lt;<span class="meta">#break&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">  &lt;<span class="meta">#case refValueN&gt;  </span></span><br><span class="line">         ...  </span><br><span class="line">         &lt;<span class="meta">#break&gt;  </span></span><br><span class="line">  &lt;<span class="meta">#default&gt;</span></span><br><span class="line">         ...  </span><br><span class="line">&lt;/<span class="meta">#switch&gt;  </span></span><br><span class="line">&lt;<span class="meta">#t&gt; 去掉左右空白和回车换行  </span></span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#lt&gt;去掉左边空白和回车换行  </span></span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#rt&gt;去掉右边空白和回车换行  </span></span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#nt&gt;取消上面的效果  </span></span><br></pre></td></tr></table></figure>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#list sequence as item&gt;  </span></span><br><span class="line">...  </span><br><span class="line">&lt;<span class="meta">#<span class="keyword">if</span> item = <span class="string">&quot;spring&quot;</span>&gt;</span></span><br><span class="line">  &lt;<span class="meta">#break&gt;</span></span><br><span class="line">&lt;/<span class="meta">#<span class="keyword">if</span>&gt;  </span></span><br><span class="line">...  </span><br><span class="line">&lt;/<span class="meta">#list&gt;  </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>iterm_index:当前值得下标，从0开始<br>item_has_next:判断list是否还有值</p>
+</blockquote>
+<h3 id="include"><a href="#include" class="headerlink" title="include"></a>include</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#<span class="keyword">include</span> filename [options]&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>options 包含两个属性<br>encoding&#x3D;”GBK”<br>parse&#x3D;”true” 是否作为ftl语法解析，默认是true<br>示例：&lt;#include “&#x2F;common&#x2F;copyright.ftl” encoding&#x3D;”GBK” parse&#x3D;”true”&gt;</p>
+</blockquote>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#import path as hash&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>类似于java里的import,它导入文件，然后就可以在当前文件里使用被导入文件里的宏组件</p>
+</blockquote>
+<h3 id="compress"><a href="#compress" class="headerlink" title="compress"></a>compress</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#compress&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">&lt;/<span class="meta">#compress&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="escape-noescape"><a href="#escape-noescape" class="headerlink" title="escape, noescape"></a>escape, noescape</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#escape identifier as expression&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">  &lt;<span class="meta">#noescape&gt;...<span class="string">&lt;/#noescape&gt;</span>  </span></span><br><span class="line">  ...  </span><br><span class="line">&lt;/<span class="meta">#escape&gt;  </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主要使用在相似的字符串变量输出，比如某一个模块的所有字符串输出都必须是html安全的，这个时候就可以使用该表达式<br>示例：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#escape x as x?html&gt;  </span></span><br><span class="line">  First name: $&#123;firstName&#125;  </span><br><span class="line">  &lt;<span class="meta">#noescape&gt;Last name: $&#123;lastName&#125;<span class="string">&lt;/#noescape&gt;</span>  </span></span><br><span class="line">  Maiden name: $&#123;maidenName&#125;  </span><br><span class="line">&lt;/<span class="meta">#escape&gt;  </span></span><br></pre></td></tr></table></figure>
+<p>相同表达式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">First name: $&#123;firstName?html&#125;  </span><br><span class="line">Last name: $&#123;lastName &#125;  </span><br><span class="line">Maiden name: $&#123;maidenName?html&#125;  </span><br></pre></td></tr></table></figure>
+<h3 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#assign name=value&gt;  </span></span><br><span class="line"></span><br><span class="line">&lt;#-- 或则 --&gt;  </span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#assign name1=value1 name2=value2 ... nameN=valueN&gt;  </span></span><br><span class="line"></span><br><span class="line">&lt;#-- 或则 --&gt;  </span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#assign same as above... in namespacehash&gt;  </span></span><br><span class="line"></span><br><span class="line">&lt;#-- 或则 --&gt;  </span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#assign name&gt;  </span></span><br><span class="line">  capture this  </span><br><span class="line">&lt;/<span class="meta">#assign&gt;  </span></span><br><span class="line"></span><br><span class="line">&lt;#-- 或则 --&gt;  </span><br><span class="line"></span><br><span class="line">&lt;<span class="meta">#assign name in namespacehash&gt;  </span></span><br><span class="line">  capture this  </span><br><span class="line">&lt;/<span class="meta">#assign&gt;  </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>生成变量,并且给变量赋值</p>
+</blockquote>
+<h3 id="global"><a href="#global" class="headerlink" title="global"></a>global</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#global name=value&gt;  </span></span><br><span class="line">&lt;#--或则--&gt;  </span><br><span class="line">&lt;<span class="meta">#global name1=value1 name2=value2 ... nameN=valueN&gt;  </span></span><br><span class="line">&lt;#--或则--&gt;  </span><br><span class="line">&lt;<span class="meta">#global name&gt;  </span></span><br><span class="line">  capture this  </span><br><span class="line">&lt;/<span class="meta">#global&gt;  </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>全局赋值语法，利用这个语法给变量赋值，那么这个变量在所有的namespace [A1] 中是可见的, 如果这个变量被当前的assign 语法覆盖 如&lt;#global x&#x3D;2&gt; &lt;#assign x&#x3D;1&gt; 在当前页面里x&#x3D;2 将被隐藏，或者通过${.global.x} 来访问</p>
+</blockquote>
+<h3 id="setting"><a href="#setting" class="headerlink" title="setting"></a>setting</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#setting name=value&gt;  </span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>用来设置整个系统的一个环境<br>locale<br>number_format<br>boolean_format<br>date_format , time_format , datetime_format<br>time_zone<br>classic_compatible</p>
+</blockquote>
+<h3 id="macro-nested-return"><a href="#macro-nested-return" class="headerlink" title="macro, nested, return"></a>macro, nested, return</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#macro name param1 param2 ... paramN&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">  &lt;<span class="meta">#nested loopvar1, loopvar2, ..., loopvarN&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">  &lt;<span class="meta">#return&gt;  </span></span><br><span class="line">  ...  </span><br><span class="line">&lt;/<span class="meta">#macro&gt;  </span></span><br></pre></td></tr></table></figure>
+<h3 id="t-lt-rt"><a href="#t-lt-rt" class="headerlink" title="t, lt, rt"></a>t, lt, rt</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="meta">#t&gt; 去掉左右空白和回车换行  </span></span><br><span class="line">&lt;<span class="meta">#lt&gt;去掉左边空白和回车换行  </span></span><br><span class="line">&lt;<span class="meta">#rt&gt;去掉右边空白和回车换行  </span></span><br><span class="line">&lt;<span class="meta">#nt&gt;取消上面的效果  </span></span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/front-end/">FRONT-END</a></li>
+            <li>FREEMARKER语法详解</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

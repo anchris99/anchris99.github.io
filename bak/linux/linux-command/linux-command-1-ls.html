@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ls命令是linux下最常用的命令。ls命令就是list的缩写，缺省下ls用来打印出当前目录的清单，如果ls指定其他目录，那么就会显示指定目录里的文件及文件夹清单。 通过ls命令不仅可以查看linux文件夹包含的文件，而且可以查看文件权限(包括目录、文件夹、文件权限)、查看目录信息等等。ls命令在日常的linux操作中用的很多!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="每天一个linux命令（1）: ls">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/linux-command/linux-command-1-ls.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="ls命令是linux下最常用的命令。ls命令就是list的缩写，缺省下ls用来打印出当前目录的清单，如果ls指定其他目录，那么就会显示指定目录里的文件及文件夹清单。 通过ls命令不仅可以查看linux文件夹包含的文件，而且可以查看文件权限(包括目录、文件夹、文件权限)、查看目录信息等等。ls命令在日常的linux操作中用的很多!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-12-01T01:38:59.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="linux命令">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/linux-command/linux-command-1-ls">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/linux-command/linux-command-1-ls.html","path":"bak/linux/linux-command/linux-command-1-ls.html","title":"每天一个linux命令（1）: ls"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>每天一个linux命令（1）: ls | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">命令格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">命令功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">常用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%8C%83%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">常用范例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">每天一个linux命令（1）: ls
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-1-LS</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>　　ls命令是linux下最常用的命令。ls命令就是list的缩写，缺省下ls用来打印出当前目录的清单，如果ls指定其他目录，那么就会显示指定目录里的文件及文件夹清单。 通过ls命令不仅可以查看linux文件夹包含的文件，而且可以查看文件权限(包括目录、文件夹、文件权限)、查看目录信息等等。ls命令在日常的linux操作中用的很多!</p>
+<span id="more"></span>
+<h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span> [选项] [目录名]</span></span><br></pre></td></tr></table></figure>
+<h3 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h3><p>列出目标目录中所有的子目录和文件。</p>
+<h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-a,–all</td>
+<td align="left">列出目录下的所有文件，包括以 . 开头的隐含文件</td>
+</tr>
+<tr>
+<td align="left">-A</td>
+<td align="left">同-a，但不列出“.”(表示当前目录)和“..”(表示当前目录的父目录)。</td>
+</tr>
+<tr>
+<td align="left">-c  配合 -lt</td>
+<td align="left">根据 ctime 排序及显示 ctime (文件状态最后更改的时间)配合 -lt：显示 ctime 但根据名称排序否则：根据 ctime 排序</td>
+</tr>
+<tr>
+<td align="left">-C</td>
+<td align="left">每栏由上至下列出项目</td>
+</tr>
+<tr>
+<td align="left">-color[&#x3D;WHEN]</td>
+<td align="left">控制是否使用色彩分辨文件。WHEN 可以是’never’、’always’或’auto’其中之一</td>
+</tr>
+<tr>
+<td align="left">-d,–directory</td>
+<td align="left">将目录象文件一样显示，而不是显示其下的文件。</td>
+</tr>
+<tr>
+<td align="left">-D,–dired</td>
+<td align="left">产生适合 Emacs 的 dired 模式使用的结果</td>
+</tr>
+<tr>
+<td align="left">-f</td>
+<td align="left">对输出的文件不进行排序，-aU 选项生效，-lst 选项失效</td>
+</tr>
+<tr>
+<td align="left">-g</td>
+<td align="left">类似 -l,但不列出所有者</td>
+</tr>
+<tr>
+<td align="left">-G, –no-group</td>
+<td align="left">不列出任何有关组的信息</td>
+</tr>
+<tr>
+<td align="left">-h,–human-readable</td>
+<td align="left">以容易理解的格式列出文件大小 (例如 1K 234M 2G)</td>
+</tr>
+<tr>
+<td align="left">–si</td>
+<td align="left">类似 -h,但文件大小取 1000 的次方而不是 1024</td>
+</tr>
+<tr>
+<td align="left">-H, –dereference-command-line</td>
+<td align="left">使用命令列中的符号链接指示的真正目的地</td>
+</tr>
+<tr>
+<td align="left">–indicator-style&#x3D;&lt;方式&gt;</td>
+<td align="left">指定在每个项目名称后加上指示符号&lt;方式&gt;：none (默认)，classify (-F)，file-type (-p)</td>
+</tr>
+<tr>
+<td align="left">-i, –inode</td>
+<td align="left">印出每个文件的 inode 号</td>
+</tr>
+<tr>
+<td align="left">-I,–ignore&#x3D;样式</td>
+<td align="left">不印出任何符合 shell 万用字符&lt;样式&gt;的项目</td>
+</tr>
+<tr>
+<td align="left">-k</td>
+<td align="left">即 –block-size&#x3D;1K,以 k 字节的形式表示文件的大小</td>
+</tr>
+<tr>
+<td align="left">-l</td>
+<td align="left">除了文件名之外，还将文件的权限、所有者、文件大小等信息详细列出来。</td>
+</tr>
+<tr>
+<td align="left">-L, –dereference</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">-m</td>
+<td align="left">所有项目以逗号分隔，并填满整行行宽</td>
+</tr>
+<tr>
+<td align="left">-o</td>
+<td align="left">类似 -l,显示文件的除组信息外的详细信息。</td>
+</tr>
+<tr>
+<td align="left">-r, –reverse</td>
+<td align="left">依相反次序排列</td>
+</tr>
+<tr>
+<td align="left">-R, –recursive</td>
+<td align="left">同时列出所有子目录层</td>
+</tr>
+<tr>
+<td align="left">-s,–size</td>
+<td align="left">以块大小为单位列出所有文件的大小</td>
+</tr>
+<tr>
+<td align="left">-S</td>
+<td align="left">根据文件大小排序</td>
+</tr>
+<tr>
+<td align="left">–sort&#x3D;WORD</td>
+<td align="left">可选用的 WORD 和它们代表的相应选项： <br>extension -X status -c<br>none -U time -t<br>size -S atime -u<br>time -t access -u<br>version -v use -u</td>
+</tr>
+<tr>
+<td align="left">-t</td>
+<td align="left">以文件修改时间排序</td>
+</tr>
+<tr>
+<td align="left">-u</td>
+<td align="left">配合 -lt:显示访问时间而且依访问时间排序<br>配合 -l:显示访问时间但根据名称排序<br>否则：根据访问时间排序</td>
+</tr>
+<tr>
+<td align="left">-U</td>
+<td align="left">不进行排序;依文件系统原有的次序列出项目</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">根据版本进行排序</td>
+</tr>
+<tr>
+<td align="left">-w, –width&#x3D;COLS</td>
+<td align="left">自行指定屏幕宽度而不使用目前的数值</td>
+</tr>
+<tr>
+<td align="left">-x</td>
+<td align="left">逐行列出项目而不是逐栏列出</td>
+</tr>
+<tr>
+<td align="left">-X</td>
+<td align="left">根据扩展名排序</td>
+</tr>
+<tr>
+<td align="left">-1</td>
+<td align="left">每行只列出一个文件</td>
+</tr>
+<tr>
+<td align="left">–help</td>
+<td align="left">显示此帮助信息并离开</td>
+</tr>
+<tr>
+<td align="left">–version</td>
+<td align="left">显示版本信息并离开</td>
+</tr>
+</tbody></table>
+<h3 id="常用范例"><a href="#常用范例" class="headerlink" title="常用范例"></a>常用范例</h3><p><strong><code>例一</code>：列出&#x2F;home&#x2F;faker&#x2F; 文件夹下的所有文件和目录的详细资料</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -l -R /home/faker</span><br><span class="line">$ <span class="built_in">ls</span> -lR /home/faker</span><br></pre></td></tr></table></figure>
+<p><strong><code>例二</code>：列出当前目录中所有以“t”开头的目录的详细内容，可以使用如下命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -l t*</span><br></pre></td></tr></table></figure>
+<p><strong><code>例三</code>：只列出文件下的子目录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -F /opt/soft |grep /$</span><br></pre></td></tr></table></figure>
+<p><strong><code>例四</code>：列出文件下的子目录详细情况</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -l /opt/soft | grep <span class="string">&quot;^d&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong><code>例五</code>：列出目前工作目录下所有名称是s 开头的文件，愈新的排愈后面，可以使用如下命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -ltr s*</span><br></pre></td></tr></table></figure>
+<p><strong><code>例六</code>：列出目前工作目录下所有档案及目录;目录于名称后加”&#x2F;“, 可执行档于名称后加<code>*</code></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -AF</span><br></pre></td></tr></table></figure>
+<p><strong><code>例七</code>：计算当前目录下的文件数和目录数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -l * |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l    ---文件个数</span><br><span class="line">$ <span class="built_in">ls</span> -l * |grep <span class="string">&quot;^d&quot;</span>|<span class="built_in">wc</span> -l    ---目录个数</span><br></pre></td></tr></table></figure>
+<p><strong><code>例八</code>：在ls中列出文件的绝对路径</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> | sed <span class="string">&quot;s:^:`pwd`/:&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong><code>例九</code>：列出当前目录下的所有文件（包括隐藏文件）的绝对路径， 对目录不做递归</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find <span class="variable">$PWD</span> -maxdepth 1 | xargs <span class="built_in">ls</span> -ld</span><br></pre></td></tr></table></figure>
+<p><strong><code>例十</code>：列出当前目录下的所有文件（包括隐藏文件）的绝对路径， 对目录不做递归</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find <span class="variable">$PWD</span> -maxdepth 1 | xargs <span class="built_in">ls</span> -ld</span><br></pre></td></tr></table></figure>
+<p><strong><code>例十</code>：递归列出当前目录下的所有文件（包括隐藏文件）的绝对路径</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find <span class="variable">$PWD</span> | xargs <span class="built_in">ls</span> -ld</span><br></pre></td></tr></table></figure>
+<p><strong><code>例十</code>：指定文件时间输出格式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -tl --time-style=full-iso</span><br><span class="line">$ <span class="built_in">ls</span> -ctl --time-style=long-iso</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016-08-05 22:17:06.020535551 +0800</span><br><span class="line">2016-10-29 12:03</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-1-LS</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

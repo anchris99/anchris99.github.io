@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="介绍BetterTouchTool 是一款专为Mac用户开发的 窗口管理&#x2F;Trackpad(触控板)&#x2F;Magic Mouse(苹果鼠标)&#x2F;Keyboard(键盘)&#x2F;TouchBar 功能增强制作的软件。 这款软件不但可以设置全局的 手势&#x2F;快捷键&#x2F;TouchBar ，还可以给不同的应用定义不同的姿势，再配合上 Alfred 的 workfl">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mac神器-BTT(BetterTouchTool)不完全教程">
+<meta property="og:url" content="https://anchris99.github.io/bak/tools/Mac-BetterTouchTool.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="介绍BetterTouchTool 是一款专为Mac用户开发的 窗口管理&#x2F;Trackpad(触控板)&#x2F;Magic Mouse(苹果鼠标)&#x2F;Keyboard(键盘)&#x2F;TouchBar 功能增强制作的软件。 这款软件不但可以设置全局的 手势&#x2F;快捷键&#x2F;TouchBar ，还可以给不同的应用定义不同的姿势，再配合上 Alfred 的 workfl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.saodiyang.com/Fm6s-GR0yVJgdndJwftdj9eXL7LB.png">
+<meta property="og:image" content="http://img.saodiyang.com/lhfTY9ysdWOzOOKprnh0X6MTfoT8.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FkluTBqX_n2UXj2ICsOE1tW1yFan.png">
+<meta property="og:image" content="http://img.saodiyang.com/FsPEIn9TlNOwHkWHgyD32snaT7bY.jpg">
+<meta property="og:image" content="http://img.saodiyang.com/FjNWJgoefc34vGaUhruvWQr2R--5.png">
+<meta property="og:image" content="http://img.saodiyang.com/Fnuaa2qtpdf28autM22l3RPRtCau.jpg">
+<meta property="og:image" content="http://img.saodiyang.com/FuTHBQJRvDVem9c14G608eXKtR7R.png">
+<meta property="og:image" content="http://img.saodiyang.com/FgwGsolKj59jVnOkgI5vb4zdxNwm.png">
+<meta property="og:image" content="http://img.saodiyang.com/FsuJ3xU8k5ANQkuXdgpy0Xxkhdme.png">
+<meta property="og:image" content="http://img.saodiyang.com/Fl0oSr-rNLr3f23_E_ZTlMEo46l1.png">
+<meta property="og:image" content="http://img.saodiyang.com/Fi4MOmPsZDPj0Z2UEUxOqCbeIV1o.png">
+<meta property="article:published_time" content="2017-12-13T09:04:25.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="mac">
+<meta property="article:tag" content="efficiency">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.saodiyang.com/Fm6s-GR0yVJgdndJwftdj9eXL7LB.png">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/tools/Mac-BetterTouchTool">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/tools/Mac-BetterTouchTool.html","path":"bak/tools/Mac-BetterTouchTool.html","title":"Mac神器-BTT(BetterTouchTool)不完全教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mac神器-BTT(BetterTouchTool)不完全教程 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">1. 窗口管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%AE-Trackpad-%E5%AE%9A%E4%B9%89%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF"><span class="nav-number">3.</span> <span class="nav-text">2. 帮 Trackpad 定义各种姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%BF%E5%8A%BF%E9%80%89%E6%8B%A9"><span class="nav-number">3.1.</span> <span class="nav-text">姿势选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%8A%9F%E8%83%BD"><span class="nav-number">3.2.</span> <span class="nav-text">绑定功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%AE-Magic-Mouse-%E5%AE%9A%E4%B9%89%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF"><span class="nav-number">4.</span> <span class="nav-text">3. 帮 Magic Mouse 定义各种姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B8%AE-Keyboard-%E5%AE%9A%E4%B9%89%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF"><span class="nav-number">5.</span> <span class="nav-text">4. 帮 Keyboard 定义各种姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B8%AE%E4%BB%BB%E4%BD%95%E5%BA%94%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89-TouchBar"><span class="nav-number">6.</span> <span class="nav-text">5. 帮任何应用自定义 TouchBar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">7.</span> <span class="nav-text">最后</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Mac神器-BTT(BetterTouchTool)不完全教程
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>MAC-BETTERTOUCHTOOL</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><img src="http://img.saodiyang.com/Fm6s-GR0yVJgdndJwftdj9eXL7LB.png" alt="BetterTouchTool"><br>BetterTouchTool 是一款专为Mac用户开发的 窗口管理&#x2F;<code>Trackpad</code>(触控板)&#x2F;<code>Magic Mouse</code>(苹果鼠标)&#x2F;<code>Keyboard</code>(键盘)&#x2F;<code>TouchBar</code> 功能增强制作的软件。</p>
+<p>这款软件不但可以设置全局的 手势&#x2F;快捷键&#x2F;TouchBar ，还可以给不同的应用定义不同的姿势，再配合上 Alfred 的 workflow，简直各种高难度姿势都能玩的出来。</p>
+<p>本文主要介绍以下功能：</p>
+<ol>
+<li>窗口管理</li>
+<li>帮 Trackpad 定义各种姿势</li>
+<li>帮 Magic Mouse 定义各种姿势</li>
+<li>帮 Keyboard 定义各种姿势</li>
+<li>帮任何应用自定义 TouchBar</li>
+</ol>
+<p><em>本文以 macbook pro 2017 touchbar 版为例</em></p>
+<h2 id="1-窗口管理"><a href="#1-窗口管理" class="headerlink" title="1. 窗口管理"></a>1. 窗口管理</h2><p>这个功能无需过多配置，默认配置即可很好使用（和windows的理念相似）</p>
+<ul>
+<li>将窗口移到左右边缘，最大化至半屏</li>
+<li>将窗口移到上边缘，最大化至全屏</li>
+</ul>
+<p><img src="http://img.saodiyang.com/lhfTY9ysdWOzOOKprnh0X6MTfoT8.gif" alt="窗口管理"><br>如果对默认配置不满意，也可以在如下图所示的位置来调整窗口展示：<br><img src="http://img.saodiyang.com/FkluTBqX_n2UXj2ICsOE1tW1yFan.png" alt="窗口管理配置"></p>
+<h2 id="2-帮-Trackpad-定义各种姿势"><a href="#2-帮-Trackpad-定义各种姿势" class="headerlink" title="2. 帮 Trackpad 定义各种姿势"></a>2. 帮 Trackpad 定义各种姿势</h2><h3 id="姿势选择"><a href="#姿势选择" class="headerlink" title="姿势选择"></a>姿势选择</h3><p>在界面选择 Trackpad（触摸板） -&gt; Add New Gesture（添加一个新姿势）</p>
+<p>左边可以选择生效的范围：全局或者某个应用</p>
+<p><img src="http://img.saodiyang.com/FsPEIn9TlNOwHkWHgyD32snaT7bY.jpg" alt="选择触摸板姿势"><br>如上图所示，姿势包括但不限于如：</p>
+<ol>
+<li>单指：左下角单击、单指轻拍右上角、单指轻拍上边中点</li>
+<li>双指：两个手指捏、张开两指以两指中心为圆轴逆时针、中指拍住中央食指轻拍面板、双指从上边缘下滑</li>
+<li>三指：三指轻拍、三指拍顶端、三指点击并向上滑、两指轻拍住，拍左、右二指固定拍住，左一下滑</li>
+<li>四指：四指双轻拍、中指无名小拍住，食单击、食中指无名拍住，小单击</li>
+<li>五指：五手指轻拍、五手指上滑</li>
+</ol>
+<p>上面只是列一些典型，更多姿势可以在上图中浏览。</p>
+<h3 id="绑定功能"><a href="#绑定功能" class="headerlink" title="绑定功能"></a>绑定功能</h3><p><img src="http://img.saodiyang.com/FjNWJgoefc34vGaUhruvWQr2R--5.png" alt="定义姿势功能"></p>
+<p>选择过姿势之后，也可以选择在按住某个功能键的时候才能使用（左下角）。</p>
+<p>右边是绑定功能：快捷键或动作。</p>
+<ul>
+<li><p>绑定快捷键举例：<br>比如 给chrome 设置 姿势（两指从触控板下边缘滑入），弹出开发者模式（快捷键绑定：command+option+i），如下图：<br><img src="http://img.saodiyang.com/Fnuaa2qtpdf28autM22l3RPRtCau.jpg" alt="给chrome设置姿势，弹出开发者模式"></p>
+</li>
+<li><p>绑定动作举例：<br>设置 在任何应用内，五指下滑 锁屏，如下图<br><img src="http://img.saodiyang.com/FuTHBQJRvDVem9c14G608eXKtR7R.png" alt="五指下滑锁屏"></p>
+</li>
+</ul>
+<h2 id="3-帮-Magic-Mouse-定义各种姿势"><a href="#3-帮-Magic-Mouse-定义各种姿势" class="headerlink" title="3. 帮 Magic Mouse 定义各种姿势"></a>3. 帮 Magic Mouse 定义各种姿势</h2><p>这个功能设置和 Trackpad 设置 大同小异，所以这边就不多讲，直接图示几个功能。<br><img src="http://img.saodiyang.com/FgwGsolKj59jVnOkgI5vb4zdxNwm.png" alt="两指上滑呼出Mission Control"></p>
+<p>我快捷键设置了 option+E 鼠标取词翻译（欧陆词典），然后绑定到双指轻拍鼠标，即可触发翻译。<br><img src="http://img.saodiyang.com/FsuJ3xU8k5ANQkuXdgpy0Xxkhdme.png" alt="双指轻拍-取词翻译"></p>
+<h2 id="4-帮-Keyboard-定义各种姿势"><a href="#4-帮-Keyboard-定义各种姿势" class="headerlink" title="4. 帮 Keyboard 定义各种姿势"></a>4. 帮 Keyboard 定义各种姿势</h2><p>这个功能比较简单，设置一些 键盘快捷键或录制案件序列 来触发 一些动作或者其他快捷键功能。</p>
+<h2 id="5-帮任何应用自定义-TouchBar"><a href="#5-帮任何应用自定义-TouchBar" class="headerlink" title="5. 帮任何应用自定义 TouchBar"></a>5. 帮任何应用自定义 TouchBar</h2><p>这个重磅功能，可以帮助不支持touchbar的软件定制 TouchBar，是不是有点厉害。</p>
+<p>下面就以我给 IntelliJ IDEA 定制 TouchBar 为例 (没有F1 ~ F12 功能键，debug真的很痛苦，这个软件真的是雪中送炭)，展示一下使用效果</p>
+<p><img src="http://img.saodiyang.com/Fl0oSr-rNLr3f23_E_ZTlMEo46l1.png" alt="定制 TouchBar"></p>
+<p>如上图所示，我给 IntelliJ IDEA 添加了 四个功能 step over&#x2F;step into&#x2F;resume&#x2F;evaluate</p>
+<p>添加完之后，切到 IntelliJ IDEA 软件中时，TouchBar 就显示我们添加的四个功能键， 如下图所示<br><img src="http://img.saodiyang.com/Fi4MOmPsZDPj0Z2UEUxOqCbeIV1o.png" alt="IntelliJ IDEA 定制 TouchBar"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>BTT还有其他很方便的功能，这盘就介绍到这里，等之后更新了 Alfred 的 workflow 开发指南之后，再一起更新一篇有意思的 BTT+Alfred 效率流。</p>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>MAC-BETTERTOUCHTOOL</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

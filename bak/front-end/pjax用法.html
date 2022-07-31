@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近在开发一款hexo主题3-hexo，其中使用了pjax大大提高了用户体验和加载速度，在此简单介绍一下pjax的用法github链接">
+<meta property="og:type" content="website">
+<meta property="og:title" content="pjax用法">
+<meta property="og:url" content="https://anchris99.github.io/bak/front-end/pjax%E7%94%A8%E6%B3%95.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="最近在开发一款hexo主题3-hexo，其中使用了pjax大大提高了用户体验和加载速度，在此简单介绍一下pjax的用法github链接">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-02-08T12:18:54.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="jQuery">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/front-end/pjax%E7%94%A8%E6%B3%95">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/front-end/pjax%E7%94%A8%E6%B3%95.html","path":"bak/front-end/pjax用法.html","title":"pjax用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pjax用法 | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pjax%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">pjax是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">2.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E6%96%87%E6%A1%A3"><span class="nav-number">3.</span> <span class="nav-text">详细文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pjax-options"><span class="nav-number">3.2.</span> <span class="nav-text">pjax options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Events"><span class="nav-number">3.3.</span> <span class="nav-text">Events</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">pjax用法
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/front-end/">FRONT-END</a></li>
+            <li>PJAX用法</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>最近在开发一款hexo主题3-hexo，其中使用了pjax大大提高了用户体验和加载速度，在此简单介绍一下pjax的用法<a target="_blank" rel="noopener" href="https://github.com/defunkt/jquery-pjax">github链接</a></p>
+<span id="more"></span>
+<h2 id="pjax是什么"><a href="#pjax是什么" class="headerlink" title="pjax是什么"></a>pjax是什么</h2><blockquote>
+<p>pjax是一款jQuery插件，使用了ajax和pushState的技术，在保留真正永久链接，网页标题和可用的返回功能的情况下，带来一种快速的浏览体验。 –官方介绍</p>
+</blockquote>
+<p><code>用人话说</code>，就是当跳转过去的网页和当前网页的一部分是一样的，这时可以通过pjax就会从响应页面中取出 <code>不同的那部分</code> （需指定），替换掉原来的内容。 如果在服务端判断处理，直接返回 <code>不同的那部分内容</code>，这样就可以减少带宽占用，提升加载速度。</p>
+<p>这样做的优势：</p>
+<ol>
+<li>由于从服务器取回的数据量变少，加载速度将会提升。</li>
+<li>并且采用异步刷新页面中的不一样的地方，用户体验也是满满的。</li>
+<li>保留了浏览器回退的功能（解决了ajax的尴尬）</li>
+</ol>
+<p>好了，开始操作。</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>第一步：引入jQuery和jQuery.pjax</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery.pjax/1.9.6/jquery.pjax.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>第二步：将指定的a的链接，转为pjax风格</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将#menu中的a的链接的页面，只取回class=pjax元素中的内容，替换掉当前页面class=pjax元素中的内容*/</span></span><br><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">pjax</span>(<span class="string">&#x27;.#menu a&#x27;</span>, <span class="string">&#x27;.pjax&#x27;</span>, &#123;<span class="attr">fragment</span>:<span class="string">&#x27;.pjax&#x27;</span>, <span class="attr">timeout</span>:<span class="number">8000</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第三步：如果需要在请求的过程中做一些自定义的事件，可以使用下面的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">on</span>(&#123;</span><br><span class="line">  <span class="string">&#x27;pjax:click&#x27;</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">//点击链接时，需要触发的事件写到这里</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&#x27;pjax:start&#x27;</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">//当开始获取请求时，需要触发的事件写在这里</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&#x27;pjax:end&#x27;</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">//当请求完成后，需要触发的事件写在这里</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>结束。</p>
+<h2 id="详细文档"><a href="#详细文档" class="headerlink" title="详细文档"></a>详细文档</h2><p>翻译于官方</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">document</span>).<span class="title function_">pjax</span>(selector, [container], options)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>selector</code> 触发点击事件的选择器，String类型</li>
+<li><code>container</code> 一个选择器，为唯一的pjax容器</li>
+<li><code>options</code> 一个可以包含下面这些选项的对象</li>
+</ol>
+<h3 id="pjax-options"><a href="#pjax-options" class="headerlink" title="pjax options"></a>pjax options</h3><table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">default</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>timeout</code></td>
+<td align="left">650</td>
+<td align="left">ajax超时时间，单位毫秒，超时后将请求整个页面进行刷新</td>
+</tr>
+<tr>
+<td align="left"><code>push</code></td>
+<td align="left">true</td>
+<td align="left">使用 pushState 添加一个浏览器历史导航条目</td>
+</tr>
+<tr>
+<td align="left"><code>replace</code></td>
+<td align="left">false</td>
+<td align="left">替换URL，而不添加浏览器历史条目</td>
+</tr>
+<tr>
+<td align="left"><code>maxCacheLength</code></td>
+<td align="left">20</td>
+<td align="left">历史内容 cache 的最大size</td>
+</tr>
+<tr>
+<td align="left"><code>version</code></td>
+<td align="left"></td>
+<td align="left">string ： 当前pjax版本</td>
+</tr>
+<tr>
+<td align="left"><code>scrollTo</code></td>
+<td align="left">0</td>
+<td align="left">垂直位置滚动，为了避免改变滚动条位置</td>
+</tr>
+<tr>
+<td align="left"><code>type</code></td>
+<td align="left">“GET”</td>
+<td align="left">可以查看<a target="_blank" rel="noopener" href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax()</a></td>
+</tr>
+<tr>
+<td align="left"><code>dataType</code></td>
+<td align="left">“html”</td>
+<td align="left">可以查看<a target="_blank" rel="noopener" href="http://api.jquery.com/jQuery.ajax/">jQuery.ajax()</a></td>
+</tr>
+<tr>
+<td align="left"><code>container</code></td>
+<td align="left"></td>
+<td align="left">css选择器，此元素内容将被替换</td>
+</tr>
+<tr>
+<td align="left"><code>url</code></td>
+<td align="left">link.href</td>
+<td align="left">string: ajax 请求的URL</td>
+</tr>
+<tr>
+<td align="left"><code>target</code></td>
+<td align="left">link</td>
+<td align="left">eventually the relatedTarget value for <a href="#Events">pjax events</a></td>
+</tr>
+<tr>
+<td align="left"><code>fragment</code></td>
+<td align="left"></td>
+<td align="left">从ajax响应的页面中抽取的‘片段’</td>
+</tr>
+</tbody></table>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><p>除了<code>pjax:click</code>和<code>pjax:clicked</code>外的所有pjax事件从pjax容器中触发，是不需要点击链接的。<br><strong>所有事件的生命周期在通过pjax请求链接的过程中</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">event</th>
+<th align="left">cancel</th>
+<th align="left">arguments</th>
+<th align="left">notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>pjax:click</code></td>
+<td align="left">✔︎</td>
+<td align="left"><code>options</code></td>
+<td align="left">在一个链接被激活（点击）时触发此事件，可以在此取消阻止pjax</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:beforeSend</code></td>
+<td align="left">✔︎</td>
+<td align="left"><code>xhr, options</code></td>
+<td align="left">可以设置 XHR 头</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:start</code></td>
+<td align="left"></td>
+<td align="left"><code>xhr, options</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pjax:send</code></td>
+<td align="left"></td>
+<td align="left"><code>xhr, options</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pjax:clicked</code></td>
+<td align="left"></td>
+<td align="left"><code>options</code></td>
+<td align="left">当链接被点击，并且已经开始pjax请求后触发</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:beforeReplace</code></td>
+<td align="left"></td>
+<td align="left"><code>contents, options	</code></td>
+<td align="left">从服务器已经加载到HTML内容，在替换HTML内容之前触发</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:success</code></td>
+<td align="left"></td>
+<td align="left"><code>data, status, xhr, options</code></td>
+<td align="left">从服务器已经加载到HTML内容，在替换HTML内容之后触发</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:timeout</code></td>
+<td align="left">✔︎</td>
+<td align="left"><code>xhr, options</code></td>
+<td align="left">页面将会在<code>options.timeout</code>之后直接发起请求刷新页面，除非取消pjax</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:error</code></td>
+<td align="left">✔︎</td>
+<td align="left">xhr, textStatus, error, options</td>
+<td align="left">ajax 错误，将会请求刷新页面，除非取消pjax</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:complete</code></td>
+<td align="left"></td>
+<td align="left">xhr, textStatus, options</td>
+<td align="left">不管结果是什么，在ajax后，都触发</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:end</code></td>
+<td align="left"></td>
+<td align="left"><code>xhr, options</code></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><strong>生命周期在浏览器返回或前进时触发</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">event</th>
+<th align="left">cancel</th>
+<th align="left">arguments</th>
+<th align="left">notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>pjax:popstate</code></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">事件方向(前进，后退)属性: “back”&#x2F;“forward”</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:start</code></td>
+<td align="left"></td>
+<td align="left"><code>null, options</code></td>
+<td align="left">替换内容前</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:beforeReplace</code></td>
+<td align="left"></td>
+<td align="left"><code>contents, options</code></td>
+<td align="left">从cache中读取内容后，替换html前</td>
+</tr>
+<tr>
+<td align="left"><code>pjax:end</code></td>
+<td align="left"></td>
+<td align="left"><code>null, options</code></td>
+<td align="left">替换内容后</td>
+</tr>
+</tbody></table>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/front-end/">FRONT-END</a></li>
+            <li>PJAX用法</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

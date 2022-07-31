@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="阮一峰曾言：喜欢写blog的人，会经历三个阶段  第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。  有对搭建个人blog有兴趣的朋友，可以翻看我往期文章。 笔者从去年开始通过hexo写blog，使用了yilia主题，但是随">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo主题3-hexo">
+<meta property="og:url" content="https://anchris99.github.io/bak/tools/3-hexo.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="阮一峰曾言：喜欢写blog的人，会经历三个阶段  第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。  有对搭建个人blog有兴趣的朋友，可以翻看我往期文章。 笔者从去年开始通过hexo写blog，使用了yilia主题，但是随">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.saodiyang.com/Fl2tl1Is5zx-D0DAt03bg0WkWXhO.png">
+<meta property="og:image" content="http://img.saodiyang.com/FmooXnOPeRPGBts5V5W7CV0AHuIo.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FkF9lgTJoLdmNlYbTVokSNB3zdS4.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FhbFRRPIDuz1pEKH-dr-RWDHVvXn.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FoJsDnsoLWKo7ECSzcLmzUX_uWgw.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FtDD77YX_xenS-AZQW56qrwrQc4D.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FhlNgOF7ipEIVrrztFdRam3WRikw.gif">
+<meta property="og:image" content="http://img.saodiyang.com/FhQLLqrRCr4yFGl9nDb_9oc4yME-.png">
+<meta property="og:image" content="http://img.saodiyang.com/FjpVByJViwYEWHHMTeayiQ-FD_qG.gif">
+<meta property="article:published_time" content="2017-03-07T03:15:50.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="3-hexo">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.saodiyang.com/Fl2tl1Is5zx-D0DAt03bg0WkWXhO.png">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/tools/3-hexo">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/tools/3-hexo.html","path":"bak/tools/3-hexo.html","title":"Hexo主题3-hexo"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo主题3-hexo | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">设计思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.1.</span> <span class="nav-text">整体设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%88%86%E7%B1%BB%E8%BF%87%E6%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">通过分类过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A0%87%E9%A2%98%E5%85%B3%E9%94%AE%E5%AD%97%E6%90%9C%E7%B4%A2"><span class="nav-number">1.3.</span> <span class="nav-text">通过标题关键字搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%BD%9C%E8%80%85%E6%90%9C%E7%B4%A2"><span class="nav-number">1.4.</span> <span class="nav-text">通过作者搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E6%90%9C%E7%B4%A2"><span class="nav-number">1.5.</span> <span class="nav-text">通过标签搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">1.6.</span> <span class="nav-text">评论功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E8%B5%8F%E5%8A%9F%E8%83%BD"><span class="nav-number">1.7.</span> <span class="nav-text">打赏功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%BD%AE%E9%A1%B6"><span class="nav-number">1.8.</span> <span class="nav-text">文章置顶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%A4%B4%E9%83%A8"><span class="nav-number">1.9.</span> <span class="nav-text">返回头部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2.配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9B%B4%E6%96%B0"><span class="nav-number">2.3.</span> <span class="nav-text">3.更新</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Hexo主题3-hexo
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>3-HEXO</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>阮一峰曾言：喜欢写blog的人，会经历三个阶段</p>
+<blockquote>
+<p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。<br>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。<br>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
+</blockquote>
+<p>有对搭建个人blog有兴趣的朋友，可以翻看我往期文章。</p>
+<p>笔者从去年开始通过hexo写blog，使用了yilia主题，但是随着文章数量的上升，检索等操作就显得特别笨重。</p>
+<p>在遍寻无果的情况下，就写下了<a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a>主题。Demo:<a target="_blank" rel="noopener" href="http://yelog.org/">http://yelog.org</a></p>
+<p>多图预警 ↓↓↓</p>
+<h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><h3 id="整体设计"><a href="#整体设计" class="headerlink" title="整体设计"></a>整体设计</h3><p><strong>三段式设计:</strong><br><img src="http://img.saodiyang.com/Fl2tl1Is5zx-D0DAt03bg0WkWXhO.png" alt="三段式设计"></p>
+<h3 id="通过分类过滤"><a href="#通过分类过滤" class="headerlink" title="通过分类过滤"></a>通过分类过滤</h3><p><img src="http://img.saodiyang.com/FmooXnOPeRPGBts5V5W7CV0AHuIo.gif" alt="分类过滤文章"></p>
+<h3 id="通过标题关键字搜索"><a href="#通过标题关键字搜索" class="headerlink" title="通过标题关键字搜索"></a>通过标题关键字搜索</h3><p><img src="http://img.saodiyang.com/FkF9lgTJoLdmNlYbTVokSNB3zdS4.gif" alt="文章标题关键字搜索"></p>
+<h3 id="通过作者搜索"><a href="#通过作者搜索" class="headerlink" title="通过作者搜索"></a>通过作者搜索</h3><p><strong>若开启了多作者模式，则可以通过输入@，进行作者搜索，如下所示</strong><br><img src="http://img.saodiyang.com/FhbFRRPIDuz1pEKH-dr-RWDHVvXn.gif" alt="通过作者搜索"></p>
+<h3 id="通过标签搜索"><a href="#通过标签搜索" class="headerlink" title="通过标签搜索"></a>通过标签搜索</h3><p><strong>输入#，就会出现标签提示</strong><br><img src="http://img.saodiyang.com/FoJsDnsoLWKo7ECSzcLmzUX_uWgw.gif" alt="通过标签搜索"></p>
+<h3 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h3><p><img src="http://img.saodiyang.com/FtDD77YX_xenS-AZQW56qrwrQc4D.gif" alt="测试一下评论"></p>
+<h3 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h3><p><img src="http://img.saodiyang.com/FhlNgOF7ipEIVrrztFdRam3WRikw.gif" alt="打赏功能"></p>
+<h3 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h3><p><img src="http://img.saodiyang.com/FhQLLqrRCr4yFGl9nDb_9oc4yME-.png" alt="文章置顶"></p>
+<h3 id="返回头部"><a href="#返回头部" class="headerlink" title="返回头部"></a>返回头部</h3><p><img src="http://img.saodiyang.com/FjpVByJViwYEWHHMTeayiQ-FD_qG.gif" alt="返回头部"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/yelog/hexo-theme-3-hexo.git themes/3-hexo</span><br></pre></td></tr></table></figure>
+<h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><p>1） 修改hexo根目录的<code>_config.yml</code>的两处，如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">theme: 3-hexo</span><br><span class="line">highlight:</span><br><span class="line">  enable: false #关闭hexo渲染高亮，使用主题代码块高亮</span><br></pre></td></tr></table></figure>
+
+<p>2） 在hexo 根目录source下添加<code>avatar.jpg</code>文件，作为头像</p>
+<ol start="3">
+<li>安装字数统计(由于主题使用这个插件，必须安装，否则会报错)<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ $ npm i --save hexo-wordcount</span><br></pre></td></tr></table></figure>
+<strong>注意：</strong> 如果没有安装会在 <code>hexo g</code> 的时候报错</li>
+</ol>
+<h3 id="3-更新"><a href="#3-更新" class="headerlink" title="3.更新"></a>3.更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> themes/3-hexo</span><br><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/tools/">TOOLS</a></li>
+            <li>3-HEXO</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

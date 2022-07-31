@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="介绍FirewallD 提供了支持网络&#x2F;防火墙区域(zone)定义网络链接以及接口安全等级的动态防火墙管理工具。它支持 IPv4, IPv6 防火墙设置以及以太网桥接，并且拥有运行时配置和永久配置选项。它也支持允许服务或者应用程序直接添加防火墙规则的接口。 安装123$ yum install firewalld# 如果需要图形界面的话，则再安装$ yum install firewal">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CentOS7使用Firewalld">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/CentOS7%E4%BD%BF%E7%94%A8Firewalld.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="介绍FirewallD 提供了支持网络&#x2F;防火墙区域(zone)定义网络链接以及接口安全等级的动态防火墙管理工具。它支持 IPv4, IPv6 防火墙设置以及以太网桥接，并且拥有运行时配置和永久配置选项。它也支持允许服务或者应用程序直接添加防火墙规则的接口。 安装123$ yum install firewalld# 如果需要图形界面的话，则再安装$ yum install firewal">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-09-19T01:53:53.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="firewall">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/CentOS7%E4%BD%BF%E7%94%A8Firewalld">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/CentOS7%E4%BD%BF%E7%94%A8Firewalld.html","path":"bak/linux/CentOS7使用Firewalld.html","title":"CentOS7使用Firewalld"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CentOS7使用Firewalld | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zone"><span class="nav-number">1.2.</span> <span class="nav-text">zone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="nav-number">1.3.</span> <span class="nav-text">过滤规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A7%84%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">查看规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E8%A7%84%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">管理规则</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">CentOS7使用Firewalld
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>CENTOS7使用FIREWALLD</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>FirewallD 提供了支持网络&#x2F;防火墙区域(zone)定义网络链接以及接口安全等级的动态防火墙管理工具。它支持 IPv4, IPv6 防火墙设置以及以太网桥接，并且拥有运行时配置和永久配置选项。它也支持允许服务或者应用程序直接添加防火墙规则的接口。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ yum install firewalld</span><br><span class="line"><span class="comment"># 如果需要图形界面的话，则再安装</span></span><br><span class="line">$ yum install firewall-config</span><br></pre></td></tr></table></figure>
+
+<h3 id="zone"><a href="#zone" class="headerlink" title="zone"></a>zone</h3><p>Firewall 能将不同的网络连接归类到不同的信任级别。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --list-all-zones    <span class="comment">#查看所有zone信息</span></span><br></pre></td></tr></table></figure>
+<p>Zone 提供了以下几个级别：</p>
+<ul>
+<li>drop: 丢弃所有进入的包，而不给出任何响应</li>
+<li>block: 拒绝所有外部发起的连接，允许内部发起的连接</li>
+<li>public: 允许指定的进入连接</li>
+<li>external: 同上，对伪装的进入连接，一般用于路由转发</li>
+<li>dmz: 允许受限制的进入连接</li>
+<li>work: 允许受信任的计算机被限制的进入连接，类似 workgroup</li>
+<li>home: 同上，类似 homegroup</li>
+<li>internal: 同上，范围针对所有互联网用户</li>
+<li>trusted: 信任所有连接</li>
+</ul>
+<h3 id="过滤规则"><a href="#过滤规则" class="headerlink" title="过滤规则"></a>过滤规则</h3><ul>
+<li>source: 根据源地址过滤</li>
+<li>interface: 根据网卡过滤</li>
+<li>service: 根据服务名过滤</li>
+<li>port: 根据端口过滤</li>
+<li>icmp-block: icmp 报文过滤，按照 icmp 类型配置</li>
+<li>masquerade: ip 地址伪装</li>
+<li>forward-port: 端口转发</li>
+<li>rule: 自定义规则</li>
+</ul>
+<p><em>过滤规则的优先级遵循如下顺序</em></p>
+<ol>
+<li>source</li>
+<li>interface</li>
+<li>firewalld.conf</li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl start firewalld         <span class="comment"># 启动</span></span><br><span class="line">$ systemctl stop firewalld          <span class="comment"># 关闭</span></span><br><span class="line">$ systemctl <span class="built_in">enable</span> firewalld        <span class="comment"># 开机启动</span></span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld       <span class="comment"># 取消开机启动</span></span><br></pre></td></tr></table></figure>
+<p>具体的规则管理，可以使用 <code>firewall-cmd</code>,具体的使用方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">--zone=NAME                         <span class="comment"># 指定 zone</span></span><br><span class="line">--permanent                         <span class="comment"># 永久修改，--reload 后生效</span></span><br><span class="line">--<span class="built_in">timeout</span>=seconds                   <span class="comment"># 持续效果，到期后自动移除，用于调试，不能与 --permanent 同时使用</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看规则"><a href="#查看规则" class="headerlink" title="查看规则"></a>查看规则</h3><p>查看运行状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --state</span><br></pre></td></tr></table></figure>
+<p>查看已被激活的 Zone 信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --get-active-zones</span><br><span class="line">public</span><br><span class="line">  interfaces: eth0 eth1</span><br></pre></td></tr></table></figure>
+<p>查看指定接口的 Zone 信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --get-zone-of-interface=eth0</span><br><span class="line">public</span><br></pre></td></tr></table></figure>
+<p>查看指定级别的接口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --list-interfaces</span><br><span class="line">eth0</span><br></pre></td></tr></table></figure>
+<p>查看指定级别的所有信息，譬如 public</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --list-all</span><br><span class="line">public (default, active)</span><br><span class="line">  interfaces: eth0</span><br><span class="line">  sources:</span><br><span class="line">  services: dhcpv6-client http ssh</span><br><span class="line">  ports:</span><br><span class="line">  masquerade: no</span><br><span class="line">  forward-ports:</span><br><span class="line">  icmp-blocks:</span><br><span class="line">  rich rules:</span><br></pre></td></tr></table></figure>
+<p>查看所有级别被允许的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --get-service</span><br></pre></td></tr></table></figure>
+<p>查看重启后所有 Zones 级别中被允许的服务，即永久放行的服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --get-service --permanent</span><br></pre></td></tr></table></figure>
+<h3 id="管理规则"><a href="#管理规则" class="headerlink" title="管理规则"></a>管理规则</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --panic-on           <span class="comment"># 丢弃</span></span><br><span class="line">$ firewall-cmd --panic-off          <span class="comment"># 取消丢弃</span></span><br><span class="line">$ firewall-cmd --query-panic        <span class="comment"># 查看丢弃状态</span></span><br><span class="line">$ firewall-cmd --reload             <span class="comment"># 更新规则，不重启服务</span></span><br><span class="line">$ firewall-cmd --complete-reload    <span class="comment"># 更新规则，重启服务</span></span><br></pre></td></tr></table></figure>
+<p>添加某接口至某信任等级，譬如添加 eth0 至 public，永久修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-interface=eth0 --permanent</span><br></pre></td></tr></table></figure>
+<p>设置 public 为默认的信任级别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --set-default-zone=public</span><br></pre></td></tr></table></figure>
+<p><strong><code>a. 管理端口</code></strong><br>列出 dmz 级别的被允许的进入端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=dmz --list-ports</span><br></pre></td></tr></table></figure>
+<p>允许 tcp 端口 8080 至 dmz 级别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=dmz --add-port=8080/tcp</span><br></pre></td></tr></table></figure>
+<p>允许某范围的 udp 端口至 public 级别，并永久生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-port=5060-5059/udp --permanent</span><br></pre></td></tr></table></figure>
+<p><strong><code>b. 网卡接口</code></strong><br>列出 public zone 所有网卡</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --list-interfaces</span><br></pre></td></tr></table></figure>
+<p>将 eth0 添加至 public zone，永久</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --permanent --add-interface=eth0</span><br></pre></td></tr></table></figure>
+<p>eth0 存在与 public zone，将该网卡添加至 work zone，并将之从 public zone 中删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=work --permanent --change-interface=eth0</span><br></pre></td></tr></table></figure>
+<p>删除 public zone 中的 eth0，永久</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --permanent --remove-interface=eth0</span><br></pre></td></tr></table></figure>
+<p><strong><code>c. 管理服务</code></strong><br>添加 smtp 服务至 work zone</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=work --add-service=smtp</span><br></pre></td></tr></table></figure>
+<p>移除 work zone 中的 smtp 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=work --remove-service=smtp</span><br></pre></td></tr></table></figure>
+<p><strong><code>d. 配置 external zone 中的 ip 地址伪装</code></strong><br>查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=external --query-masquerade</span><br></pre></td></tr></table></figure>
+<p>打开伪装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=external --add-masquerade</span><br></pre></td></tr></table></figure>
+<p>关闭伪装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=external --remove-masquerade</span><br></pre></td></tr></table></figure>
+<p><strong><code>e. 配置 public zone 的端口转发</code></strong><br>要打开端口转发，则需要先</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-masquerade</span><br></pre></td></tr></table></figure>
+<p>然后转发 tcp 22 端口至 3753</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-forward-port=port=22:proto=tcp:toport=3753</span><br></pre></td></tr></table></figure>
+<p>转发 22 端口数据至另一个 ip 的相同端口上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-forward-port=port=22:proto=tcp:toaddr=192.168.1.100</span><br></pre></td></tr></table></figure>
+<p>转发 22 端口数据至另一 ip 的 2055 端口上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.100</span><br></pre></td></tr></table></figure>
+<p><strong><code>f. 配置 public zone 的 icmp</code></strong><br>查看所有支持的 icmp 类型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --get-icmptypes</span><br><span class="line">destination-unreachable echo-reply echo-request parameter-problem redirect router-advertisement router-solicitation source-quench time-exceeded</span><br></pre></td></tr></table></figure>
+<p>列出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --list-icmp-blocks</span><br></pre></td></tr></table></figure>
+<p>添加 echo-request 屏蔽</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --add-icmp-block=echo-request [--<span class="built_in">timeout</span>=seconds]</span><br></pre></td></tr></table></figure>
+<p>移除 echo-reply 屏蔽</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --zone=public --remove-icmp-block=echo-reply</span><br></pre></td></tr></table></figure>
+<p><strong><code>g. IP 封禁</code></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --permanent --add-rich-rule=<span class="string">&quot;rule family=&#x27;ipv4&#x27; source address=&#x27;222.222.222.222&#x27; reject&quot;</span></span><br></pre></td></tr></table></figure>
+<p>当然，我们仍然可以通过 ipset 来封禁 ip</p>
+<p>封禁 ip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --permanent --zone=public --new-ipset=blacklist --<span class="built_in">type</span>=<span class="built_in">hash</span>:ip</span><br><span class="line">$ firewall-cmd --permanent --zone=public --ipset=blacklist --add-entry=222.222.222.222</span><br></pre></td></tr></table></figure>
+<p>封禁网段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --permanent --zone=public --new-ipset=blacklist --<span class="built_in">type</span>=<span class="built_in">hash</span>:net</span><br><span class="line">$ firewall-cmd --permanent --zone=public --ipset=blacklist --add-entry=222.222.222.0/24</span><br></pre></td></tr></table></figure>
+<p>倒入 ipset 规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --permanent --zone=public --new-ipset-from-file=/path/blacklist.xml</span><br></pre></td></tr></table></figure>
+<p>然后封禁 blacklist</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --permanent --zone=public --add-rich-rule=<span class="string">&#x27;rule source ipset=blacklist drop&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>重新载入以生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li>CENTOS7使用FIREWALLD</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

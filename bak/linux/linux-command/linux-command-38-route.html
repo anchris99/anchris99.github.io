@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux系统的route命令用于显示和操作IP路由表（show &#x2F; manipulate the IP routing table）。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。在Linux系统中，设置路由通常是为了解决以下问题：该Linux系统在一个局域网中，局域网中有一个网关，能够让机器访问Internet，那么就需要将这台机">
+<meta property="og:type" content="website">
+<meta property="og:title" content="每天一个linux命令（38）: route">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/linux-command/linux-command-38-route.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="Linux系统的route命令用于显示和操作IP路由表（show &#x2F; manipulate the IP routing table）。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。在Linux系统中，设置路由通常是为了解决以下问题：该Linux系统在一个局域网中，局域网中有一个网关，能够让机器访问Internet，那么就需要将这台机">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-01-07T02:16:34.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="linux命令">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/linux-command/linux-command-38-route">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/linux-command/linux-command-38-route.html","path":"bak/linux/linux-command/linux-command-38-route.html","title":"每天一个linux命令（38）: route"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>每天一个linux命令（38）: route | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">命令格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">命令功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">使用实例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">每天一个linux命令（38）: route
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-38-ROUTE</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>　　Linux系统的route命令用于显示和操作IP路由表（show &#x2F; manipulate the IP routing table）。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。在Linux系统中，设置路由通常是为了解决以下问题：该Linux系统在一个局域网中，局域网中有一个网关，能够让机器访问Internet，那么就需要将这台机器的IP地址设置为Linux机器的默认路由。要注意的是，直接在命令行下执行route命令来添加路由，不会永久保存，当网卡重启或者机器重启之后，该路由就失效了；可以在&#x2F;etc&#x2F;rc.local中添加route命令来保证该路由设置永久有效。</p>
+<span id="more"></span>
+<h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route [-f] [-p] [Command [Destination] [mask Netmask] [Gateway] [metric Metric]] [<span class="keyword">if</span> Interface]]</span><br></pre></td></tr></table></figure>
+<h3 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h3><p>　　Route命令是用于操作基于内核ip路由表，它的主要作用是创建一个静态路由让指定一个主机或者一个网络通过一个网络接口，如eth0。当使用”add”或者”del”参数时，路由表被修改，如果没有参数，则显示路由表当前的内容。</p>
+<h3 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h3><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-c</td>
+<td align="left">显示更多信息</td>
+</tr>
+<tr>
+<td align="left">-n</td>
+<td align="left">不解析名字</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示详细的处理信息</td>
+</tr>
+<tr>
+<td align="left">-F</td>
+<td align="left">显示发送信息</td>
+</tr>
+<tr>
+<td align="left">-C</td>
+<td align="left">显示路由缓存</td>
+</tr>
+<tr>
+<td align="left">-f</td>
+<td align="left">清除所有网关入口的路由表</td>
+</tr>
+<tr>
+<td align="left">-p 与 add 命令</td>
+<td align="left">-p 与 add 命令一起使用时使路由具有永久性。</td>
+</tr>
+<tr>
+<td align="left">add</td>
+<td align="left">添加一条新路由</td>
+</tr>
+<tr>
+<td align="left">del</td>
+<td align="left">删除一条路由</td>
+</tr>
+<tr>
+<td align="left">-net</td>
+<td align="left">目标地址是一个网络</td>
+</tr>
+<tr>
+<td align="left">-host</td>
+<td align="left">目标地址是一个主机</td>
+</tr>
+<tr>
+<td align="left">netmask</td>
+<td align="left">当添加一个网络路由时，需要使用网络掩码</td>
+</tr>
+<tr>
+<td align="left">gw</td>
+<td align="left">路由数据包通过网关。注意，你指定的网关必须能够达到</td>
+</tr>
+<tr>
+<td align="left">metric</td>
+<td align="left">设置路由跳数</td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">指定您想运行的命令 (Add&#x2F;Change&#x2F;Delete&#x2F;Print)</td>
+</tr>
+<tr>
+<td align="left">Destination</td>
+<td align="left">指定该路由的网络目标</td>
+</tr>
+<tr>
+<td align="left">mask Netmask</td>
+<td align="left">指定与网络目标相关的网络掩码（也被称作子网掩码）</td>
+</tr>
+<tr>
+<td align="left">Gateway</td>
+<td align="left">指定网络目标定义的地址集和子网掩码可以到达的前进或下一跃点 IP 地址</td>
+</tr>
+<tr>
+<td align="left">metric Metric</td>
+<td align="left">为路由指定一个整数成本值标（从 1 至 9999），当在路由表(与转发的数据包目标地址最匹配)的多个路由中进行选择时可以使用</td>
+</tr>
+<tr>
+<td align="left">if Interface</td>
+<td align="left">为可以访问目标的接口指定接口索引。若要获得一个接口列表和它们相应的接口索引，使用 route print 命令的显示功能。可以使用十进制或十六进制值进行接口索引</td>
+</tr>
+</tbody></table>
+<h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><p><strong><code>例一</code>：显示当前路由</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ route</span><br><span class="line">$ route -n</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># route</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">192.168.120.0   *               255.255.255.0   U     0      0        0 eth0</span><br><span class="line">e192.168.0.0     192.168.120.1   255.255.0.0     UG    0      0        0 eth0</span><br><span class="line">10.0.0.0        192.168.120.1   255.0.0.0       UG    0      0        0 eth0</span><br><span class="line">default         192.168.120.240 0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">[root@localhost ~]<span class="comment"># route -n</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">192.168.120.0   0.0.0.0         255.255.255.0   U     0      0        0 eth0</span><br><span class="line">192.168.0.0     192.168.120.1   255.255.0.0     UG    0      0        0 eth0</span><br><span class="line">10.0.0.0        192.168.120.1   255.0.0.0       UG    0      0        0 eth0</span><br><span class="line">0.0.0.0         192.168.120.240 0.0.0.0         UG    0      0        0 eth0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>说明：</strong><br>　　第一行表示主机所在网络的地址为192.168.120.0，若数据传送目标是在本局域网内通信，则可直接通过eth0转发数据包;<br>　　第四行表示数据传送目的是访问Internet，则由接口eth0，将数据包发送到网关192.168.120.240<br>　　其中Flags为路由标志，标记当前网络节点的状态。<br>　　Flags标志说明：<br>　　U Up表示此路由当前为启动状态<br>　　H Host，表示此网关为一主机<br>　　G Gateway，表示此网关为一路由器<br>　　R Reinstate Route，使用动态路由重新初始化的路由<br>　　D Dynamically,此路由是动态性地写入<br>　　M Modified，此路由是由路由守护程序或导向器动态修改<br>　　! 表示此路由当前为关闭状态<br><strong>备注：</strong><br>　　route -n (-n 表示不解析名字,列出速度会比route 快)</p>
+</blockquote>
+<p><strong><code>例二</code>：添加网关&#x2F;设置网关</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 增加一条 到达244.0.0.0的路由</span></span><br><span class="line">$ route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</span><br></pre></td></tr></table></figure>
+<p><strong><code>例三</code>：屏蔽一条路由</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 增加一条屏蔽的路由，目的地址为 224.x.x.x 将被拒绝</span></span><br><span class="line">$ route add -net 224.0.0.0 netmask 240.0.0.0 reject</span><br></pre></td></tr></table></figure>
+<p><strong><code>例四</code>：删除路由记录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ route del -net 224.0.0.0 netmask 240.0.0.0</span><br><span class="line">$ route del -net 224.0.0.0 netmask 240.0.0.0 reject</span><br></pre></td></tr></table></figure>
+<p><strong><code>例五</code>：删除和添加设置默认网关</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ route del default gw 192.168.120.240</span><br><span class="line">$ route add default gw 192.168.120.240</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-38-ROUTE</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"anchris99.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在windows系统中，windows提供了计划任务这一功能，在控制面板 -&gt; 性能与维护 -&gt; 任务计划， 它的功能就是安排自动运行的任务。 通过’添加任务计划’的一步步引导，则可建立一个定时执行的任务。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="每天一个linux命令（54）: at">
+<meta property="og:url" content="https://anchris99.github.io/bak/linux/linux-command/linux-command-54-at.html">
+<meta property="og:site_name" content="BLOG OF ANCHRIS">
+<meta property="og:description" content="在windows系统中，windows提供了计划任务这一功能，在控制面板 -&gt; 性能与维护 -&gt; 任务计划， 它的功能就是安排自动运行的任务。 通过’添加任务计划’的一步步引导，则可建立一个定时执行的任务。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-01-22T02:23:44.000Z">
+<meta property="article:modified_time" content="2022-06-27T09:11:57.000Z">
+<meta property="article:author" content="AnChris">
+<meta property="article:tag" content="linux命令">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://anchris99.github.io/bak/linux/linux-command/linux-command-54-at">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":true,"permalink":"https://anchris99.github.io/bak/linux/linux-command/linux-command-54-at.html","path":"bak/linux/linux-command/linux-command-54-at.html","title":"每天一个linux命令（54）: at"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>每天一个linux命令（54）: at | BLOG OF ANCHRIS
+</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BLOG OF ANCHRIS</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">未经反省的人生不值一过.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">命令格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">命令功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">使用实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#atd-%E7%9A%84%E5%90%AF%E5%8A%A8%E4%B8%8E-at-%E8%BF%90%E8%A1%8C%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">atd 的启动与 at 运行的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#atd-%E7%9A%84%E5%90%AF%E5%8A%A8"><span class="nav-number">5.1.</span> <span class="nav-text">atd 的启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#at-%E7%9A%84%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">5.2.</span> <span class="nav-text">at 的运行方式</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnChris"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">AnChris</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/anchris99" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anchris99" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="en"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">每天一个linux命令（54）: at
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-54-AT</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <p>　　在windows系统中，windows提供了计划任务这一功能，在控制面板 -&gt; 性能与维护 -&gt; 任务计划， 它的功能就是安排自动运行的任务。 通过’添加任务计划’的一步步引导，则可建立一个定时执行的任务。</p>
+<span id="more"></span>
+<p>　　在linux系统中你可能已经发现了为什么系统常常会自动的进行一些任务？这些任务到底是谁在支配他们工作的？在linux系统如果你想要让自己设计的备份程序可以自动在某个时间点开始在系统底下运行，而不需要手动来启动它，又该如何处置呢？ 这些例行的工作可能又分为一次性定时工作与循环定时工作，在系统内又是哪些服务在负责？ 还有，如果你想要每年在老婆的生日前一天就发出一封信件提醒自己不要忘记，linux系统下该怎么做呢？</p>
+<p>　　今天我们主要学习一下一次性定时计划任务的at命令的用法！</p>
+<h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ at [参数] [时间]</span><br></pre></td></tr></table></figure>
+<h3 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h3><p>　　在一个指定的时间执行一个指定任务，只能执行一次，且需要开启atd进程（ps -ef | grep atd查看， 开启用&#x2F;etc&#x2F;init.d&#x2F;atd start or restart； 开机即启动则需要运行 chkconfig –level 2345 atd on）。</p>
+<h3 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-m</td>
+<td align="left">当指定的任务被完成之后，将给用户发送邮件，即使没有标准输出</td>
+</tr>
+<tr>
+<td align="left">-I</td>
+<td align="left">atq的别名</td>
+</tr>
+<tr>
+<td align="left">-d</td>
+<td align="left">atrm的别名</td>
+</tr>
+<tr>
+<td align="left">-v</td>
+<td align="left">显示任务将被执行的时间</td>
+</tr>
+<tr>
+<td align="left">-c</td>
+<td align="left">打印任务的内容到标准输出</td>
+</tr>
+<tr>
+<td align="left">-V</td>
+<td align="left">显示版本信息</td>
+</tr>
+<tr>
+<td align="left">-q&lt;列队&gt;</td>
+<td align="left">使用指定的列队</td>
+</tr>
+<tr>
+<td align="left">-f&lt;文件&gt;</td>
+<td align="left">从指定文件读入任务而不是从标准输入读入</td>
+</tr>
+<tr>
+<td align="left">-t&lt;时间参数&gt;</td>
+<td align="left">以时间参数的形式提交要运行的任务<br>at允许使用一套相当复杂的指定时间的方法。他能够接受在当天的hh:mm（小时:分钟）式的时间指定。假如该时间已过去，那么就放在第二天执行。当然也能够使用midnight（深夜），noon（中午），teatime（饮茶时间，一般是下午4点）等比较模糊的 词语来指定时间。用户还能够采用12小时计时制，即在时间后面加上AM（上午）或PM（下午）来说明是上午还是下午。 也能够指定命令执行的具体日期，指定格式为month day（月 日）或mm&#x2F;dd&#x2F;yy（月&#x2F;日&#x2F;年）或dd.mm.yy（日.月.年）。指定的日期必须跟在指定时间的后面。 上面介绍的都是绝对计时法，其实还能够使用相对计时法，这对于安排不久就要执行的命令是很有好处的。指定格式为：now + count time-units ，now就是当前时间，time-units是时间单位，这里能够是minutes（分钟）、hours（小时）、days（天）、weeks（星期）。count是时间的数量，究竟是几天，还是几小时，等等。 更有一种计时方法就是直接使用today（今天）、tomorrow（明天）来指定完成命令的时间。</td>
+</tr>
+<tr>
+<td align="left">TIME</td>
+<td align="left">时间格式，这里可以定义出什么时候要进行 at 这项任务的时间</td>
+</tr>
+<tr>
+<td align="left">TIME的格式：</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">HH:MM</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ex&gt; 04:00</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">在今日的 HH:MM 时刻进行，若该时刻已超过，则明天的 HH:MM 进行此任务。</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>HH:MM YYYY-MM-DD<br>ex&gt; 04:00 2009-03-17<br>强制规定在某年某月的某一天的特殊时刻进行该项任务</p>
+<p>HH:MM[am|pm] [Month] [Date]<br>ex&gt; 04pm March 17<br>也是一样，强制在某年某月某日的某时刻进行该项任务</p>
+<p>HH:MM[am|pm] + number [minutes|hours|days|weeks]<br>ex&gt; now + 5 minutes<br>ex&gt; 04pm + 3 days<br>就是说，在某个时间点再加几个时间后才进行该项任务。</p>
+<h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><p><strong><code>例一</code>：三天后的下午 5 点锺执行 &#x2F;bin&#x2F;ls</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ at 5pm+3 days</span><br><span class="line">at&gt; /bin/ls</span><br><span class="line">at&gt; &lt;EOT&gt; <span class="comment"># 按一下Ctrl+d就会出现&lt;EOT&gt;结束符</span></span><br><span class="line">job 2 at Thu Feb  2 17:00:00 2017</span><br></pre></td></tr></table></figure>
+<p><strong><code>例二</code>：明天17点钟，输出时间到指定文件内</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ at 17:20 tomorrow</span><br><span class="line">at&gt; <span class="built_in">date</span> &gt;/root/2013.<span class="built_in">log</span>   </span><br><span class="line">at&gt; &lt;EOT&gt;</span><br></pre></td></tr></table></figure>
+<p><strong><code>例三</code>：计划任务设定后，在没有执行之前我们可以用atq命令来查看系统没有执行工作任务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ atq</span><br><span class="line">2	Thu Feb  2 17:00:00 2017 a faker</span><br></pre></td></tr></table></figure>
+<p><strong><code>例四</code>：删除已经设置的任务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2 为atq查出来的最前面的任务id</span></span><br><span class="line">$ atrm 2</span><br></pre></td></tr></table></figure>
+<p><strong><code>例五</code>：显示已经设置的任务内容</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ at -c 2</span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"><span class="comment"># atrun uid=1000 gid=1000</span></span><br><span class="line"><span class="comment"># mail faker 0</span></span><br><span class="line"><span class="built_in">umask</span> 22</span><br><span class="line">此处省略n个字符</span><br><span class="line">/bin/ls</span><br></pre></td></tr></table></figure>
+<h3 id="atd-的启动与-at-运行的方式"><a href="#atd-的启动与-at-运行的方式" class="headerlink" title="atd 的启动与 at 运行的方式"></a>atd 的启动与 at 运行的方式</h3><h4 id="atd-的启动"><a href="#atd-的启动" class="headerlink" title="atd 的启动"></a>atd 的启动</h4><p>　　要使用一次性计划任务时，我们的 Linux 系统上面必须要有负责这个计划任务的服务，那就是 atd 服务。 不过并非所有的 Linux distributions 都默认会把他打开的，所以，某些时刻我们需要手动将atd 服务激活才行。 激活的方法很简单，就是这样：<br><strong>命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/atd start</span><br><span class="line">$ /etc/init.d/atd restart</span><br></pre></td></tr></table></figure>
+<p><strong>配置一下启动时就启动这个服务，免得每次重新启动都得再来一次</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chkconfig atd on</span><br></pre></td></tr></table></figure>
+<h4 id="at-的运行方式"><a href="#at-的运行方式" class="headerlink" title="at 的运行方式"></a>at 的运行方式</h4><p>　　既然是计划任务，那么应该会有任务执行的方式，并且将这些任务排进行程表中。那么产生计划任务的方式是怎么进行的? 事实上，我们使用 at 这个命令来产生所要运行的计划任务，并将这个计划任务以文字档的方式写入 &#x2F;var&#x2F;spool&#x2F;at&#x2F; 目录内，该工作便能等待 atd 这个服务的取用与运行了。就这么简单。</p>
+<p>　　不过，并不是所有的人都可以进行 at 计划任务。为什么? 因为系统安全的原因。很多主机被所谓的攻击破解后，最常发现的就是他们的系统当中多了很多的黑客程序， 这些程序非常可能运用一些计划任务来运行或搜集你的系统运行信息,并定时的发送给黑客。 所以，除非是你认可的帐号，否则先不要让他们使用 at 命令。那怎么达到使用 at 的可控呢?</p>
+<p>　　我们可以利用 &#x2F;etc&#x2F;at.allow 与 &#x2F;etc&#x2F;at.deny 这两个文件来进行 at 的使用限制。加上这两个文件后， at 的工作情况是这样的：</p>
+<p>　　先找寻 &#x2F;etc&#x2F;at.allow 这个文件，写在这个文件中的使用者才能使用 at ，没有在这个文件中的使用者则不能使用 at (即使没有写在 at.deny 当中);</p>
+<p>　　如果 &#x2F;etc&#x2F;at.allow 不存在，就寻找 &#x2F;etc&#x2F;at.deny 这个文件，若写在这个 at.deny 的使用者则不能使用 at ，而没有在这个 at.deny 文件中的使用者，就可以使用 at 命令了。</p>
+<p>　　如果两个文件都不存在，那么只有 root 可以使用 at 这个命令。</p>
+<p>　　透过这个说明，我们知道 &#x2F;etc&#x2F;at.allow 是管理较为严格的方式，而 &#x2F;etc&#x2F;at.deny 则较为松散 (因为帐号没有在该文件中，就能够运行 at 了)。在一般的 distributions 当中，由于假设系统上的所有用户都是可信任的， 因此系统通常会保留一个空的 &#x2F;etc&#x2F;at.deny 文件，意思是允许所有人使用 at 命令的意思 (您可以自行检查一下该文件)。 不过，万一你不希望有某些使用者使用 at 的话，将那个使用者的帐号写入 &#x2F;etc&#x2F;at.deny 即可！ 一个帐号写一行。</p>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/bak/">BAK</a></li>
+            <li><a href="/bak/linux/">LINUX</a></li>
+            <li><a href="/bak/linux/linux-command/">LINUX-COMMAND</a></li>
+            <li>LINUX-COMMAND-54-AT</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnChris</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
